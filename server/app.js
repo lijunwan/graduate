@@ -4,9 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var MongoStore = require('connect-mongo');
+var settings = require('./Settings');
 
 var app = express();
+app.configure(function(){
+      app.use(express.bodyParser());//express.bodyParser()是Cookie解析的中间件
+      app.use(express.methodOverride());
+      app.use(express.cookieParser());
+      app.use(express.router(routes));
+      app.use(express.session({//express.session提供会话支持
+            secret: settings.cookieParser,
+            store:new MongoStore({//把会话信息存储到数据库中避免丢失
+              db:settings.db
+            })
+      }));
+});
 app.get("/",function(req,res){
      var options={
           root:'dist'

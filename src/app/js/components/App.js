@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as clientAC from '../actions/client';
 import Router from 'react-router';
 // import '../../scss/common.scss';
+import '../../scss/modalForm.scss'
 var RouteHandler = Router.RouteHandler;
 
 class App extends Component{
