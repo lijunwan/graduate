@@ -21,19 +21,20 @@ import HttpRequest from 'superagent';
 //     });
 //   };
 // }
-// export function checkLogin(params) {
-//   return dispatch => {
-//     HttpRequest.post('/api/user/login')
-//       .send(params)
-//       .end(function(err,resp){
-//        let info=loginCode(err, resp);
-//         dispatch({
-//           type: CHECK_LOGIN,
-//           data: info
-//         });
-//     });
-//   };
-// }
+export function checkLogin(params) {
+  return dispatch => {
+    console.log("????")
+    HttpRequest.post('/api/user/login')
+      .send(params)
+      .end(function(err,resp){
+       //let info=loginCode(err, resp);
+        dispatch({
+          type: CHECK_LOGIN,
+          data: resp.body
+        });
+    });
+  };
+}
 
 // export function logOut(params) {
 //   return dispatch => {

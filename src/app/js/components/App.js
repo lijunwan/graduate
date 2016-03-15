@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as clientAC from '../actions/client';
 import Router from 'react-router';
 // import '../../scss/common.scss';
-import '../../scss/modalForm.scss'
+//import '../../scss/modalForm.scss'
 var RouteHandler = Router.RouteHandler;
 
 class App extends Component{
@@ -16,8 +16,10 @@ class App extends Component{
   }
 
   render() {
+    console.log("dkfjd",this.props.children)
       return (
           <div>
+            <div>Header</div>
              {React.cloneElement(this.props.children, this.props)}
           </div>
       );

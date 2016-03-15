@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import __assign from "lodash/object/assign";
-import __has from 'lodash/object/has';
+//import __assign from "lodash/isobject/assign";
+// import __has from 'lodash/object/has';
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
 import MD5 from 'crypto-js/md5';
@@ -42,14 +42,12 @@ export default class Login extends Component {
 		// }
     	}
     	loginIn(e){
-    		e.preventDefault();
-    		var params = this.state.formValue;
-    		if(params.auth != "" && params.password != "" && params.captcha !=""){
-		      //params.password = encHex.stringify(MD5(params.password));
-		            //this.props.clientBoundAC.checkLogin(params);
-		}else if(params.auth == "" || params.password == ""){
-		    	message.error("Missing user name or password")
-		}
+    	  console.log(this.props,"123");
+    	  var params ={"account":"wan","password":"123456"}
+		  this.props.clientBoundAC.checkLogin(params);
+		  e.preventDefault();
+		  return false;
+		  
     	}
     	onChange(e) {
 	    	let json = {};
@@ -64,7 +62,7 @@ export default class Login extends Component {
   	// }
 	 enterToLogin(e) {
 	    if(e.keyCode == 13){
-	      this.login();
+	      //this.login();
 	    }
 	  }
 	// clearCaptchaInput() {
@@ -77,6 +75,7 @@ export default class Login extends Component {
     		//var captchaUrl = "/api/site/captcha?t=" + d.getTime();
     		//var captchaUrl = "/api/site/captcha";
     		//console.log(this.props.client.toJS().captcha);
+    		console.log(this.props,"1213")
     		return (
     			<div>
 	    			<form className="ModalForm">

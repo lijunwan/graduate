@@ -1,5 +1,5 @@
 module.export = {
 	cookieSecret: 'onlineBookstroebyvoid' ,
-	db: 'onlineBookstroe' ,
+	db: 'bookstroe' ,
 	host: 'localhost',
 }

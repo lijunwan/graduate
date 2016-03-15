@@ -11,11 +11,10 @@ var Redirect = Router.Redirect;
 var DefaultRoute = Router.DefaultRoute;
 var IndexRoute  = Router.IndexRoute;
 var routes = (
-    <Route name="track"  path="/" handler={App}>
-     <Route name="login" path='login' handler={Login} />
-     <IndexRoute component={Login}/>
-      <Route name="index" path='index' handler={Index}>
-    </Route> 
+    <Route name="main"  path="/" component={App}>
+     <Route name="login" path='login' component={Login} />
+      <Route name="index" path='index' component={Index}/>
+      <IndexRoute component={Login} />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}
     </Route>
 );
