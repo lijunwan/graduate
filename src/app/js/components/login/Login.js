@@ -43,11 +43,11 @@ export default class Login extends Component {
     	}
     	loginIn(e){
     	  console.log(this.props,"123");
-    	  var params ={"account":"wan","password":"123456"}
+    	  var params ={"account":"15123578379","password":"123456"}
 		  this.props.clientBoundAC.checkLogin(params);
 		  e.preventDefault();
 		  return false;
-		  
+
     	}
     	onChange(e) {
 	    	let json = {};
@@ -85,14 +85,14 @@ export default class Login extends Component {
 		    				</a>
 	    				</p>
 	    				<p className="ModalForm-title">Login</p>
-	    				<input id="auth" 
-	    						type="text" 
-						    	placeholder="Email" 
+	    				<input id="auth"
+	    						type="text"
+						    	placeholder="Email"
 							value = {this.state.formValue.auth}
 							onChange={this.onChange.bind(this)}/><br/>
-	    				<input id="password" 
-	    						type="password" 
-	    						placeholder="Password" 
+	    				<input id="password"
+	    						type="password"
+	    						placeholder="Password"
 	    						value={this.state.formValue.password}
 	    						onChange={this.onChange.bind(this)}/><br/>
 	    				<input className="ModalForm-submit" type="submit" value="Login" onClick={this.loginIn.bind(this)}/><br/>
