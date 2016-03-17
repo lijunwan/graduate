@@ -4,6 +4,9 @@ import React, { Component, PropTypes } from 'react';
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
 import MD5 from 'crypto-js/md5';
+import '../../../scss/login.css'
+import logoImg from '../../../images/logo.jpg';
+import adImg from '../../../images/ad.jpg';
 var Icon = antd.Icon;
 var message = antd.message;
 var url;
@@ -13,7 +16,7 @@ export default class Login extends Component {
 	    super(props);
 	    this.state={
 	    	formValue:{
-	    		auth:"",
+	    		account:"",
 	    		password:"",
 	    	},
 	    }
@@ -44,61 +47,53 @@ export default class Login extends Component {
     	loginIn(e){
     	  console.log(this.props,"123");
     	  var params ={"account":"15123578379","password":"123456"}
-		  this.props.clientBoundAC.checkLogin(params);
-		  e.preventDefault();
-		  return false;
+			  this.props.clientBoundAC.checkLogin(params);
+			  e.preventDefault();
+			  return false;
 
     	}
     	onChange(e) {
 	    	let json = {};
 	    	json[e.target.id] = e.target.value.replace(/^\s+|\s+$/g, "");
-		this.setState({formValue: __assign(this.state.formValue, json)});
-  	}
-  	// freshenCaptcha() {
-  	// 	var d = new Date();
-   //        	var captchaUrl = "/api/site/captcha?t=" + d.getTime();
-   //  		this.setState({captchaImg:captchaUrl});
-   //  		this.clearCaptchaInput();
-  	// }
+				this.setState({formValue: __assign(this.state.formValue, json)});
+  		}
 	 enterToLogin(e) {
 	    if(e.keyCode == 13){
 	      //this.login();
 	    }
 	  }
-	// clearCaptchaInput() {
-	// 	let json = {};
-	//     	json["captcha"] = "";
-	//     	this.setState({formValue: __assign(this.state.formValue, json)});
-	// }
     	render() {
-    		//var d = new Date();
-    		//var captchaUrl = "/api/site/captcha?t=" + d.getTime();
-    		//var captchaUrl = "/api/site/captcha";
-    		//console.log(this.props.client.toJS().captcha);
     		console.log(this.props,"1213")
     		return (
     			<div>
-	    			<form className="ModalForm">
-	    				<p className="ModalForm-cross">
-		    				<a herf="#" >
-		    					<Icon type="cross-circle-o" />
-		    				</a>
-	    				</p>
-	    				<p className="ModalForm-title">Login</p>
-	    				<input id="auth"
-	    						type="text"
-						    	placeholder="Email"
-							value = {this.state.formValue.auth}
-							onChange={this.onChange.bind(this)}/><br/>
-	    				<input id="password"
-	    						type="password"
-	    						placeholder="Password"
-	    						value={this.state.formValue.password}
-	    						onChange={this.onChange.bind(this)}/><br/>
-	    				<input className="ModalForm-submit" type="submit" value="Login" onClick={this.loginIn.bind(this)}/><br/>
-	    				<p className="ModalForm-linkregister">No account,<a >register now</a></p>
-	    			</form>
-	    			<div className="ModalForm-box"></div>
+						<div className="Login-header">
+							<img src={logoImg}/>
+							<ul>
+								<li className="Login-icon1"><a href="javascript:void(0)" >货到付款</a></li>
+								<li className="Login-icon2"><a href="javascript:void(0)">正品保障</a></li>
+								<li className="Login-icon3"><a href="javascript:void(0)">上门退款</a></li>
+							</ul>
+						</div>
+						<div className="Login-box">
+								<div className="Login-box-ad">
+									<img src={adImg} />
+								</div>
+			    			<form className="Login-box-form">
+			    				<p className="Login-box-title">账户登录</p>
+			    				<input id="auth"
+			    						type="text"
+								    	placeholder="手机号"
+											value = {this.state.formValue.auth}
+											onChange={this.onChange.bind(this)}/><br/>
+			    				<input id="password"
+			    						type="password"
+			    						placeholder="密码"
+			    						value={this.state.formValue.password}
+			    						onChange={this.onChange.bind(this)}/><br/>
+			    				<input className="ModalForm-submit" type="submit" value="Login" onClick={this.loginIn.bind(this)}/><br/>
+			    				<p className="ModalForm-linkregister">立即注册</p>
+			    			</form>
+	    			</div>
     			</div>
     		)
     	}

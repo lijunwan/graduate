@@ -19,7 +19,6 @@ class App extends Component{
     console.log("dkfjd",this.props.children)
       return (
           <div>
-            <div>Header</div>
              {React.cloneElement(this.props.children, this.props)}
           </div>
       );

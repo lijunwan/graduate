@@ -4,10 +4,10 @@ function Users (user) {
 	this.password = user.password;
 }
 module.exports = Users;
-Users.findOne = function findOne(obj,callback) {
-	db["users"].findOne(obj,function(err,user){
+Users.findOne = function findOne(callback) {
+	db["users"].findOne(function(err,user){
 		if(err) return console.error(err);
-		console.log(user,"------");
-		callback(err,user);
+		// console.log(user,"------");
+	   callback(err,user);
 	})
 }

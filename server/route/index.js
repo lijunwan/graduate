@@ -6,15 +6,12 @@ app.post('/api/user/login',function(req, res) {
 	// var md5 = crypto.createHash('md5');
 	// var password = md5.update(req.body.password).digest('base64');
 
-	User.findOne({"account":req.body.account},function(err, user){
+	User.findOne(function(err, user){
 		if(err){
-			console.log(err);
-		}else if(user.length<1){
-			res.setHeader('Content-Type','application/json');
-			res.end("用户名不存在")
-		}else{
-			res.setHeader('Content-Type','application/json');
-      res.end(user)
+			res.statusCode=400;
+			res.end({errorCode:400400,message:"未知错误"})
+		}else if(user){
+
 		}
 		console.log(user)
 
