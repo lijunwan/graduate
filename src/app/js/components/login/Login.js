@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-//import __assign from "lodash/isobject/assign";
-// import __has from 'lodash/object/has';
+import __assign from "lodash/object/assign";
+import __has from 'lodash/object/has';
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
 import MD5 from 'crypto-js/md5';
@@ -19,14 +19,13 @@ export default class Login extends Component {
 	    		account:"",
 	    		password:"",
 	    	},
+				message:[],
+				isPass:{
+					account:false,
+					password:false,
+				}
 	    }
-    	}
-    	componentWillMount(){
-    		//this.freshenCaptcha();
-    	}
-    	componentDidMount() {
-    		//captchaInput = document.getElementById("captchaInput")
-    	}
+    }
     	componentWillReceiveProps(nextProps){
   //   		if(nextProps && nextProps.client){
 	 //    		if(nextProps && nextProps.client.toJS().info.id != undefined){
@@ -45,17 +44,48 @@ export default class Login extends Component {
 		// }
     	}
     	loginIn(e){
-    	  console.log(this.props,"123");
-    	  var params ={"account":"15123578379","password":"123456"}
-			  this.props.clientBoundAC.checkLogin(params);
-			  e.preventDefault();
-			  return false;
+				e.preventDefault();
+				if(!this.state.isPass.password && !this.state.isPass.account){
+					var message=["","用户名和密码不能为空"]
+					this.setState({
+						message:__assign({},this.state.message,message)
+					})
+				}else if(!this.state.formValue.account){
+					var message=["用户名不能为空",""]
+					this.setState({
+						message:__assign({},this.state.message,message)
+					})
+				}else if(!this.state.formValue.password){
+					var message=["","密码不能为空"]
+					this.setState({
+						message:__assign({},this.state.message,message)
+					})
+				}else{
+					var message=["",""];
+					this.setState({
+						message:__assign({},this.state.message,message)
+					})
+					var params = __assign({},this.state.formValue)
+					params.password = encHex.stringify(MD5(this.state.formValue.password));
+					console.log(params.password,"password")
+					this.props.clientBoundAC.checkLogin(params);
+				}
 
     	}
     	onChange(e) {
 	    	let json = {};
-	    	json[e.target.id] = e.target.value.replace(/^\s+|\s+$/g, "");
-				this.setState({formValue: __assign(this.state.formValue, json)});
+				let value = e.target.value.replace(/^\s+|\s+$/g, "");
+				let isPass = {};
+	    	json[e.target.id] = value;
+				if(value==""){
+					isPass[e.target.id]=false;
+				}else{
+					isPass[e.target.id]=true;
+				}
+				this.setState({
+					formValue: __assign({},this.state.formValue, json),
+					isPass: __assign({},this.state.isPass, isPass)
+				});
   		}
 	 enterToLogin(e) {
 	    if(e.keyCode == 13){
@@ -63,7 +93,6 @@ export default class Login extends Component {
 	    }
 	  }
     	render() {
-    		console.log(this.props,"1213")
     		return (
     			<div>
 						<div className="Login-header">
@@ -82,12 +111,13 @@ export default class Login extends Component {
 			    				<p className="Login-box-title">账户登录</p>
 									<div className="Login-box-input">
 									<i className="fa fa-user"></i>
-			    				<input id="auth"
+			    				<input id="account"
 			    						type="text"
 								    	placeholder="手机号"
 											value = {this.state.formValue.auth}
 											onChange={this.onChange.bind(this)}/><br/>
 									</div>
+									<p className="Login-box-mess">{this.state.message[0]}</p>
 									<div className="Login-box-input">
 										<i className="fa fa-lock"></i>
 				    				<input id="password"
@@ -96,8 +126,9 @@ export default class Login extends Component {
 				    						value={this.state.formValue.password}
 				    						onChange={this.onChange.bind(this)}/><br/>
 									</div>
+									<p className="Login-box-mess">{this.state.message[1]}</p>
 			    				<input className="Login-box-submit" type="submit" value="登录" onClick={this.loginIn.bind(this)}/><br/>
-			    				<p className="Login-box-linkregister">立即注册</p>
+			    				<p className="Login-box-linkregister"><a href="#">立即注册</a></p>
 									<div className="Login-box-partner">
 										<p>合作伙伴</p>
 										<i className="Login-box-icon qq"></i>

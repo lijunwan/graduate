@@ -1,7 +1,9 @@
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 //var favicon = require('serve-favicon');
 var logger = require('morgan');
+var https = require('https');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -61,11 +63,16 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-var server = app.listen(3333,function(){
+var options = {
+  key:fs.readFileSync(path.join(__dirname, 'ssh/key.pem'),'utf8'),
+  cert:fs.readFileSync(path.join(__dirname, 'ssh/key-cert.pem'),'utf8'),
+}
+var server = https.createServer(options, app);
+   server.listen(3333,function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log(path.join(__dirname, '../dist'))
-  console.log('Example app listening at http://%s:%s', host, port)
+  console.log('Example app listening at https://%s:%s', host, port)
 })
 
 
