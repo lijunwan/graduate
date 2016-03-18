@@ -12,8 +12,8 @@ var DefaultRoute = Router.DefaultRoute;
 var IndexRoute  = Router.IndexRoute;
 var routes = (
     <Route name="main"  path="/" component={App}>
-     <Route name="login" path='login' component={Login} />
-      <Route name="index" path='index' component={Index}/>
+     <Route name="login" path='/login' component={Login} />
+      <Route name="index" path='/index' component={Index}/>
       <IndexRoute component={Login} />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}
     </Route>

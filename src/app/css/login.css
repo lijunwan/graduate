@@ -88,6 +88,16 @@
   color: #fff;
   margin-top: 20px;
 }
+.Login-box-submitWrap{
+  position: relative;
+}
+.Login-box-submitWrap i{
+  position: absolute;
+  font-size: 20px;
+  color: #fff;
+  top: 30px;
+  right: 100px;
+}
 .Login-box-linkregister{
   text-align: right;
   margin-top: 10px;

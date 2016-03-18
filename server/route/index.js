@@ -16,13 +16,12 @@ app.post('/api/user/login',function(req, res) {
 			console.log(req.body.password)
 			if(user.password == req.body.password){
 				res.statusCode=200;
-				res.send({phone:user.account,id:user["_id"]})
+				res.send({phone:user.account,id:user["_id"]});
 			}else{
 				 res.statusCode=404;
 				 res.send({errorCode:400403,message:"密码错误"})
 			}
 		}else{
-			 res.statusCode=400;
 			 res.statusCode=400;
 			 res.send({errorCode:400400,message:"未知错误"})
 		}

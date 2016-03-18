@@ -67,8 +67,11 @@ var options = {
   key:fs.readFileSync(path.join(__dirname, 'ssh/key.pem'),'utf8'),
   cert:fs.readFileSync(path.join(__dirname, 'ssh/key-cert.pem'),'utf8'),
 }
-var server = https.createServer(options, app);
-   server.listen(3333,function(){
+var httpsServer = https.createServer(options, app);
+    httpsServer.listen(4444,function(){
+      console.log('Example app listening at https://%s:%s', 4444, 4444)
+    })
+var server = app.listen(3333,function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log(path.join(__dirname, '../dist'))

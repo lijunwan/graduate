@@ -23,25 +23,27 @@ export default class Login extends Component {
 				isPass:{
 					account:false,
 					password:false,
-				}
+				},
+				isSubmit:false,
 	    }
     }
     	componentWillReceiveProps(nextProps){
-  //   		if(nextProps && nextProps.client){
-	 //    		if(nextProps && nextProps.client.toJS().info.id != undefined){
-	 //    			message.success("Success");
-	 //    			this.props.closeLogin();
-	 //      			//this.props.loginInSuccess();
-	 //      			//this.props.closeLogin();
-	 //    		}
-		// 	else if(nextProps.client.toJS().info.errorCode == 403999){
-		// 		message.error("Invalid security code ");
-		// 		this.freshenCaptcha();
-		// 	}else if(__has(nextProps.client.toJS().info,"errorCode")){
-	 //    			message.error("Invalid username or password");
-	 //    			this.freshenCaptcha();
-		// 	}
-		// }
+    		if(nextProps && nextProps.client){
+	    		if(nextProps && nextProps.client.toJS().info.id != undefined){
+						this.props.history.pushState('null','/index');
+	    		}
+			else if(nextProps.client.toJS().info.errorCode == 403999){
+				message.error("Invalid security code ");
+				this.setState({
+					isSubmit:false,
+				})
+			}else if(__has(nextProps.client.toJS().info,"errorCode")){
+  			message.error("Invalid username or password");
+				this.setState({
+					isSubmit:false,
+				})
+			}
+		}
     	}
     	loginIn(e){
 				e.preventDefault();
@@ -69,6 +71,9 @@ export default class Login extends Component {
 					params.password = encHex.stringify(MD5(this.state.formValue.password));
 					console.log(params.password,"password")
 					this.props.clientBoundAC.checkLogin(params);
+					this.setState({
+						isSubmit:true,
+					})
 				}
 
     	}
@@ -127,7 +132,11 @@ export default class Login extends Component {
 				    						onChange={this.onChange.bind(this)}/><br/>
 									</div>
 									<p className="Login-box-mess">{this.state.message[1]}</p>
-			    				<input className="Login-box-submit" type="submit" value="登录" onClick={this.loginIn.bind(this)}/><br/>
+									<div className="Login-box-submitWrap">
+				    				<input className="Login-box-submit" type="submit" value="登录" onClick={this.loginIn.bind(this)}></input>
+										{this.state.isSubmit?<i className="fa fa-spinner fa-spin"></i>:""}
+									</div>
+									<br/>
 			    				<p className="Login-box-linkregister"><a href="#">立即注册</a></p>
 									<div className="Login-box-partner">
 										<p>合作伙伴</p>
