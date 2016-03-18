@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import Navbar from './common/Navbar';
-// import Header from './common/Header';
-// import Breadcrumb from './common/Breadcrumb';
 import * as clientAC from '../actions/client';
 import Router from 'react-router';
-// import '../../scss/common.scss';
-//import '../../scss/modalForm.scss'
+import Footer from '../components/common/Footer';
+import '../../css/normalize.css'
 var RouteHandler = Router.RouteHandler;
 
 class App extends Component{
@@ -19,7 +16,8 @@ class App extends Component{
     console.log("dkfjd",this.props.children)
       return (
           <div>
-             {React.cloneElement(this.props.children, this.props)}
+            {React.cloneElement(this.props.children, this.props)}
+            <Footer />
           </div>
       );
   }

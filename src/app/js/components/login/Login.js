@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
 import MD5 from 'crypto-js/md5';
-import '../../../scss/login.css'
+import '../../../css/login.css'
 import logoImg from '../../../images/logo.jpg';
 import adImg from '../../../images/ad.jpg';
 var Icon = antd.Icon;
@@ -80,18 +80,31 @@ export default class Login extends Component {
 								</div>
 			    			<form className="Login-box-form">
 			    				<p className="Login-box-title">账户登录</p>
+									<div className="Login-box-input">
+									<i className="fa fa-user"></i>
 			    				<input id="auth"
 			    						type="text"
 								    	placeholder="手机号"
 											value = {this.state.formValue.auth}
 											onChange={this.onChange.bind(this)}/><br/>
-			    				<input id="password"
-			    						type="password"
-			    						placeholder="密码"
-			    						value={this.state.formValue.password}
-			    						onChange={this.onChange.bind(this)}/><br/>
-			    				<input className="ModalForm-submit" type="submit" value="Login" onClick={this.loginIn.bind(this)}/><br/>
-			    				<p className="ModalForm-linkregister">立即注册</p>
+									</div>
+									<div className="Login-box-input">
+										<i className="fa fa-lock"></i>
+				    				<input id="password"
+				    						type="password"
+				    						placeholder="密码"
+				    						value={this.state.formValue.password}
+				    						onChange={this.onChange.bind(this)}/><br/>
+									</div>
+			    				<input className="Login-box-submit" type="submit" value="登录" onClick={this.loginIn.bind(this)}/><br/>
+			    				<p className="Login-box-linkregister">立即注册</p>
+									<div className="Login-box-partner">
+										<p>合作伙伴</p>
+										<i className="Login-box-icon qq"></i>
+										<i className="Login-box-icon weixin"></i>
+										<i className="Login-box-icon weibo"></i>
+										<i className="Login-box-icon pay"></i>
+									</div>
 			    			</form>
 	    			</div>
     			</div>

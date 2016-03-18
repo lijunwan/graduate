@@ -1,0 +1,14 @@
+.Footer{
+  width: 960px;
+  margin: 50px auto;
+}
+.Footer>p{
+  text-align: center;
+}
+.Footer-img{
+  text-align: center;
+  margin-top: 20px;
+}
+.Footer-img>img{
+  margin-right: 10px;
+}
