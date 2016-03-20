@@ -7,13 +7,12 @@ import Footer from '../components/common/Footer';
 import '../../css/normalize.css'
 var RouteHandler = Router.RouteHandler;
 
-class App extends Component{
+export default class App extends Component{
   componentDidMount() {
-     //this.props.clientBoundAC.loadClientInfo();
+    console.log("this.props",this.props)
+    this.props.clientBoundAC.getLog();
   }
-
-  render() {
-    console.log("dkfjd",this.props.children)
+  render() { 
       return (
           <div>
             {React.cloneElement(this.props.children, this.props)}

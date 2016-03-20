@@ -79,6 +79,9 @@
   border: 1px solid #ddd;
   margin: 10px 0;
 }
+.Login-box-form input:focus{
+  box-shadow: 0 0 2px #007DC9;
+}
 .Login-box-form .Login-box-submit{
   line-height: 0;
   padding: 0;

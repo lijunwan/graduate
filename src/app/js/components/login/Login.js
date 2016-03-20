@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import __assign from "lodash/object/assign";
-import __has from 'lodash/object/has';
+import __ from "lodash";
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
 import MD5 from 'crypto-js/md5';
@@ -32,17 +31,14 @@ export default class Login extends Component {
 	    		if(nextProps && nextProps.client.toJS().info.id != undefined){
 						this.props.history.pushState('null','/index');
 	    		}
-			else if(nextProps.client.toJS().info.errorCode == 403999){
-				message.error("Invalid security code ");
-				this.setState({
-					isSubmit:false,
-				})
-			}else if(__has(nextProps.client.toJS().info,"errorCode")){
-  			message.error("Invalid username or password");
-				this.setState({
-					isSubmit:false,
-				})
-			}
+				else if(__.has(nextProps.client.toJS().info,"errorCode")){
+					if(nextProps.client.toJS().info.errorCode!="401400")
+	  			var message=["","用户名或密码错误"]
+					this.setState({
+						message:__.assign({},this.state.message,message),
+						isSubmit:false,
+					})
+				}
 		}
     	}
     	loginIn(e){
@@ -50,7 +46,7 @@ export default class Login extends Component {
 				if(!this.state.isPass.password && !this.state.isPass.account){
 					var message=["","用户名和密码不能为空"]
 					this.setState({
-						message:__assign({},this.state.message,message)
+						message:__.assign({},this.state.message,message)
 					})
 				}else if(!this.state.formValue.account){
 					var message=["用户名不能为空",""]
@@ -60,16 +56,16 @@ export default class Login extends Component {
 				}else if(!this.state.formValue.password){
 					var message=["","密码不能为空"]
 					this.setState({
-						message:__assign({},this.state.message,message)
+						message:__.assign({},this.state.message,message)
 					})
 				}else{
 					var message=["",""];
 					this.setState({
-						message:__assign({},this.state.message,message)
+						message:__.assign({},this.state.message,message)
 					})
-					var params = __assign({},this.state.formValue)
+					var params = __.assign({},this.state.formValue)
 					params.password = encHex.stringify(MD5(this.state.formValue.password));
-					console.log(params.password,"password")
+					console.log(params,"password")
 					this.props.clientBoundAC.checkLogin(params);
 					this.setState({
 						isSubmit:true,
@@ -88,8 +84,8 @@ export default class Login extends Component {
 					isPass[e.target.id]=true;
 				}
 				this.setState({
-					formValue: __assign({},this.state.formValue, json),
-					isPass: __assign({},this.state.isPass, isPass)
+					formValue: __.assign({},this.state.formValue, json),
+					isPass: __.assign({},this.state.isPass, isPass)
 				});
   		}
 	 enterToLogin(e) {
@@ -133,7 +129,10 @@ export default class Login extends Component {
 									</div>
 									<p className="Login-box-mess">{this.state.message[1]}</p>
 									<div className="Login-box-submitWrap">
-				    				<input className="Login-box-submit" type="submit" value="登录" onClick={this.loginIn.bind(this)}></input>
+				    				<input className="Login-box-submit" 
+				    							 type="submit" value="登录" 
+				    							 onClick={this.loginIn.bind(this)} 
+				    							 disabled={this.state.isSubmit?"disabled":""}></input>
 										{this.state.isSubmit?<i className="fa fa-spinner fa-spin"></i>:""}
 									</div>
 									<br/>

@@ -35,7 +35,19 @@ export function checkLogin(params) {
     });
   };
 }
-
+export function getLog(){
+  return dispatch => {
+    console.log("????")
+    HttpRequest.get('/api/log')
+      .end(function(err,resp){
+       //let info=loginCode(err, resp);
+        dispatch({
+          type: CHECK_LOGIN,
+          data: resp.body
+        });
+    });
+  };
+}
 // export function logOut(params) {
 //   return dispatch => {
 //     HttpRequest.get('/api/user/logout')

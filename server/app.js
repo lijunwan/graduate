@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
+
 //var favicon = require('serve-favicon');
 var logger = require('morgan');
 var https = require('https');
@@ -14,6 +15,7 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../dist')));
 app.get("/",function(req,res){
      var options={
@@ -37,8 +39,19 @@ app.get("/app.min.js",function(req,res){
           }
      })
 })
-
 app.use('/', routes);
+app.get("/*",function(req,res){
+     var options={
+          root:'dist'
+     }
+     res.sendFile("index.html",options,function(err){
+          if(err){
+            console.log(err);
+            res.status(err.status).end();
+          }
+     })
+})
+
 // 404错误处理
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
