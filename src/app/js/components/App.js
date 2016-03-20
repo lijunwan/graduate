@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as clientAC from '../actions/client';
 import Router from 'react-router';
 import Footer from '../components/common/Footer';
+import Header from '../components/common/Header';
 import '../../css/normalize.css'
 var RouteHandler = Router.RouteHandler;
 
@@ -15,6 +16,7 @@ export default class App extends Component{
   render() { 
       return (
           <div>
+            {this.props.routes[1]&&this.props.routes[1].name=="login" ? "" :<Header {...this.props}/>}
             {React.cloneElement(this.props.children, this.props)}
             <Footer />
           </div>

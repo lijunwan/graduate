@@ -28,7 +28,7 @@ Users.checkLogin = function checkLogin(req,res){
 			    	console.log(item,"123")
 			    });
 			    res.statusCode=200;
-				res.send({phone:user.account,id:user["_id"]});
+				res.send({account:user.account,id:user["_id"]});
 			}else{
 				 res.statusCode=404;
 				 res.send({errorCode:400403,message:"密码错误"})
@@ -43,7 +43,7 @@ Users.checkLogin = function checkLogin(req,res){
 Users.isLogin = function isLogin(req,res){
 	res.setHeader('Content-Type','application/json');
 	if(req.cookies.bookstore){		
-		res.send({'account':req.cookies.bookstore.account})
+		res.send({'account':req.cookies.bookstore.account,'id':req.cookies.bookstore.id})
 	}else{
 		res.statusCode=401;
 		res.send({errorCode:401400,message:"未登录"})
