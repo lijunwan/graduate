@@ -1,0 +1,58 @@
+.Register{
+  width: 960px;
+  margin: 30px auto;
+}
+.Register-header-right{
+  float: right;
+  line-height: 60px;
+}
+.Register-form {
+  box-shadow: -1px 1px 10px #ccc;
+  margin-top: 30px;
+  padding: 50px;
+}
+.Register-form h3{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+.Register-form form{
+
+}
+.Register-form form i{
+  font-size: 20px;
+  margin-right: 8px;
+}
+.Register-form input{
+  border: 1px solid #e6e6e6;
+  height: 38px;
+  width: 312px;
+  margin-bottom: 20px;
+  padding: 5px 5px 5px 30px;
+  border-radius: 5px;
+}
+.Register-input{
+  width: 350px;
+  text-align: right;
+  margin: auto;
+  position: relative;
+}
+.Register-input i{
+  position: absolute;
+  top: 9px;
+  margin-left: 5px;
+  color: #ccc;
+}
+.Register-submit{
+  background-color: #007DC9;
+  color: #fff;
+  border-radius: 10px;
+}
+.Register-header-link a{
+  color: #646464;
+  margin-right: 10px;
+}
+.Register-header-link i{
+  color: #007DC9;
+  margin-right: 2px;
+}

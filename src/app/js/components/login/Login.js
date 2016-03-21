@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {Link} from 'react-router';
 import __ from "lodash";
 import antd from 'antd';
 import encHex from 'crypto-js/enc-hex';
@@ -129,14 +130,14 @@ export default class Login extends Component {
 									</div>
 									<p className="Login-box-mess">{this.state.message[1]}</p>
 									<div className="Login-box-submitWrap">
-				    				<input className="Login-box-submit" 
-				    							 type="submit" value="登录" 
-				    							 onClick={this.loginIn.bind(this)} 
+				    				<input className="Login-box-submit"
+				    							 type="submit" value="登录"
+				    							 onClick={this.loginIn.bind(this)}
 				    							 disabled={this.state.isSubmit?"disabled":""}></input>
 										{this.state.isSubmit?<i className="fa fa-spinner fa-spin"></i>:""}
 									</div>
 									<br/>
-			    				<p className="Login-box-linkregister"><a href="#">立即注册</a></p>
+			    				<p className="Login-box-linkregister"><Link to="/register">立即注册</Link></p>
 									<div className="Login-box-partner">
 										<p>合作伙伴</p>
 										<i className="Login-box-icon qq"></i>

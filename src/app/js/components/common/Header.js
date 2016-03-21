@@ -19,14 +19,14 @@ export default class Header extends Component {
   		})
   	}
 	render() {
-		console.log(this.props.client.toJS(),"Header")
+		//console.log(this.props.client.toJS(),"Header")
 		let info = this.props.client.toJS().info;
 		let userClass = this.state.isShowMenu ? "Header-user Header-user-show" :"Header-user Header-user-hide";
 		return(
 			<div className="Header">
 				<div className="Header-wrap">
 					<div className="Header-left">
-						{ info && info.id != undefined 
+						{ info && info.id != undefined
 						?<div>
 							<ul className="Header-user-wrap" onMouseEnter={this.showMenu.bind(this)} onMouseLeave={this.hideMenu.bind(this)}>
 								{info.account}
@@ -40,7 +40,7 @@ export default class Header extends Component {
 						 </div>
 						:<p>欢迎光临智源，请
 							<span className="Header-link"><Link to='/login'>登录</Link></span>
-							&nbsp;<a>免费注册</a>
+							&nbsp;<Link to='/register'>免费注册</Link>
 						</p>
 						}
 					</div>

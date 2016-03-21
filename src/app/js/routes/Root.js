@@ -3,7 +3,8 @@ import { Provider } from 'react-redux';
 import configureStore from '../store/configureStore';
 import App from '../components/App';
 import Index from '../components/index/Index';
-import Login from '../components/login/Login'
+import Login from '../components/login/Login';
+import Register from '../components/common/Register';
 var Router = require('react-router');
 var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -12,8 +13,9 @@ var DefaultRoute = Router.DefaultRoute;
 var IndexRoute  = Router.IndexRoute;
 var routes = (
     <Route name="main"  path="/" component={App}>
-      <Route name="login" path='/login' component={Login} />
       <Route name="index" path='/index' component={Index}/>
+      <Route name="login" path='/login' component={Login} />
+      <Route name="register" path='/register' component={Register} />
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}
