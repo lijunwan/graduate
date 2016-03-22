@@ -64,6 +64,22 @@ export function checkPhone(params){
     });
   };
 }
+export function resetUser() {
+  return dispatch => {
+    dispatch({
+      type:CREATE_USER,
+      data:{}
+    });
+  };
+}
+export function resetPhone(){
+  return dispatch => {
+    dispatch({
+      type: CHECK_PHONE,
+      data: {}
+    });
+  };
+}
 export function createUser(params) {
   return dispatch => {
     HttpRequest.post('/api/user/register')
@@ -76,13 +92,12 @@ export function createUser(params) {
     });
   };
 }
-
-// export function logOut() {
-//   console.log("logout")
-//   return dispatch => {
-//     HttpRequest.get('/api/user/logout')
-//       .end(function(err,resp){
-//             console.log(resp);
-//     });
-//   };
-//}
+export function logOut() {
+  console.log("logout")
+  return dispatch => {
+    HttpRequest.del('/api/user/logout')
+      .end(function(err,resp){
+            console.log(resp);
+    });
+  };
+}

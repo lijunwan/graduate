@@ -29,7 +29,7 @@ export default class Header extends Component {
 						{ info && info.id != undefined
 						?<div>
 							<ul className="Header-user-wrap" onMouseEnter={this.showMenu.bind(this)} onMouseLeave={this.hideMenu.bind(this)}>
-								{info.account}
+								{info.phone}
 								<i className="fa fa-angle-down"></i>
 								<ul className={userClass}>
 									<div className="Header-triangle"></div>

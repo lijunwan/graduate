@@ -36,8 +36,6 @@ export default class Register extends Component {
 			if(id=="phone" && result.flag==0){
 				this.props.clientBoundAC.checkPhone({phone:value});
 			}
-			// console.log(id,"blurId")
-			// console.log(result,"result")
 			let message = __.assign({},this.state.message);
 			message[id+"Mess"] = result.message;
 			let flag = __.assign({},this.state.flag);
@@ -185,6 +183,7 @@ export default class Register extends Component {
 			keys.map((key)=>{
 				if(this.state.flag[key]==-1){
 					flag = -1;
+					console.log(key,"key//////////")
 				}else if(this.state.flag[key]==-2){
 					flag = -2;
 				}
@@ -194,11 +193,24 @@ export default class Register extends Component {
 				message.warn('填写的信息有误，请更正');
 			}else if(flag==-1){
 				e.preventDefault();
+
 				message.warn('请填写完整的信息!!');
 			}else if(flag==0){
 				this.props.clientBoundAC.createUser(this.state.formValue)
 			}
 			return false;
+		}
+		componentWillReceiveProps(nextProps){
+			var registerInfo = nextProps.client.toJS().registerInfo
+			if(__.has(registerInfo,"errorCode")){
+				message.error('表单信息验证未通过!');
+			}else if(registerInfo.status && registerInfo.status=="ok"){
+				message.success('注册成功');
+				this.props.history.pushState(null,'/login')
+			}
+		}
+		componentWillUnmount() {
+			this.props.clientBoundAC.resetPhone();
 		}
     render(){
 			let phoneInfo = this.props.client.toJS().phoneInfo;

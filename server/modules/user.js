@@ -51,13 +51,17 @@ Users.isLogin = function isLogin(req,res){
 
 }
 Users.checkPhone = function checkPhone(req,res){
-	findOne({phone:req.body.phone},'users',function(err,data){
+	findOne({phone:req.query.phone},'users',function(err,data){
+		console.log(err,data,req.query.phone,"///////")
 		if(data){
 			res.statusCode=404;
 			res.send({errorCode:404500,message:"手机号被占用"})
+		}else if(err){
+			res.statusCode=404;
+			res.send({errorCode:404503,message:"未知错误"})//数据库错误
 		}else{
 			res.statusCode=200;
-			res.send({status:"ok"})
+			res.send({status:"ok"})//数据库错误
 		}
 	});
 }
@@ -67,68 +71,69 @@ Users.createUser = function createUser(req,res) {
 	var phone = req.body.phone;
 	var userName = req.body.userName;
 	var password = req.body.password;
-	 findOne({phone:req.body.phone},'users',function(err,data){
+	//必须等查询完手机号，才能执行下面的代码，所以后面的所有逻辑都应该写在回调函数内
+	findOne({phone:req.body.phone},'users',function(err,data){
 		if(data){
-		 var message = "手机号被占用 "
+		  message += "手机号被占用 "
 		}
-		return message
+		if(!reg.test(phone)){
+			message+="手机号不合法 ";
+		}
+		if(userName.length<2 || userName.length>20){
+			message+="用户名为2-20个字符 ";
+		}
+		if(password.length<6 || password.length>20) {
+			message+="密码为6-20个字符 ";
+		}
+		if(password != req.body.twicePass){
+				message+="两次密码不一致 ";
+		}
+		console.log(message,"!!!!!!!!!!!!!!!!1")
+		if(message!=""){
+			res.statusCode=404;
+			res.send({errorCode:404501,message:"提交的表单信息不合法"})
+		}else{
+			var baseInfo = {
+				sex:0,
+				birthday:"",
+				headImg:"",
+				identity:"",
+				address:"",
+				addressStatus:"",
+				interests:"",
+				lovePerson:"",
+				introduce:"",
+				ShippingAddress:[],
+			}
+			var baseInfoId = "123";
+			saveOne(baseInfo,'baseInfo',function(err,item){
+				if(item){
+					console.log(baseInfoId,".............")
+					console.log(item,item["_id"]);
+					baseInfoId = item["_id"];
+					console.log(baseInfoId,"======")
+				}
+				var obj = {
+					phone:phone,
+					password:password,
+					userName:userName,
+					baseInfoId:baseInfoId,
+				}
+				saveOne(obj,'users',function(err,item){
+					if(item){
+						res.statusCode=200;
+						res.send({status:"ok"})
+					}else{
+						res.statusCode=404;
+						res.send({errorCode:404502,message:"注册用户失败"})
+					}
+				})
+			})
+		}
 	});
-	console.log(str,"message")
-	if(!reg.test(phone)){
-		message+="手机号不合法 ";
-	}
-	if(userName.length<2 || userName.length>20){
-		message+="用户名为2-20个字符 ";
-	}
-	if(password.length<6 || password.length>20) {
-		message+="密码为6-20个字符 ";
-	}
-	if(password != req.body.twicePass){
-			message+="两次密码不一致 ";
-	}
-	if(message!=""){
-		res.statusCode=404;
-		res.send({errorCode:404501,message:"提交的表单信息不合法"})
-	}else{
-		var baseInfo = {
-			sex:0,
-			birthday:"",
-			headImg:"",
-			identity:"",
-			address:"",
-			addressStatus:"",
-			interests:"",
-			lovePerson:"",
-			introduce:"",
-			ShippingAddress:[],
-		}
-		var baseInfoId = "";
-		saveOne(baseInfo,'baseInfo',function(err,item){
-			if(item){
-				console.log(item,item["_id"]);
-				baseInfoId = item["_id"]
-			}
-		})
-		var obj = {
-			phone:phone,
-			password:password,
-			userName:userName,
-			baseInfoId:baseInfoId,
-		}
-		saveOne(obj,'users',function(err,item){
-			if(item){
-				res.statusCode=200;
-				res.send({status:"ok"})
-			}else{
-				res.statusCode=404;
-				res.send({errorCode:404502,message:"注册用户失败"})
-			}
-		})
-	}
-
 }
 function findOne(obj,dataBase,callback) {
-	db[dataBase].findOne(obj,function(err,item){
+  db[dataBase].findOne(obj,function(err,item){
 		if(err) return console.error(err);
 	  callback(err,item);
 	})
