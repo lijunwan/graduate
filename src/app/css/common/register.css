@@ -31,22 +31,23 @@
   border-radius: 5px;
 }
 .Register-input{
-  width: 312px;
-  text-align: right;
+  text-align: center;;
   margin: auto;
   position: relative;
 }
-.Register-input i{
+.Register-input>i{
   position: absolute;
   top: 9px;
   margin-left: 5px;
   color: #ccc;
 }
 .Register-input p{
-  text-align: left;
+  width: 312px;
+  margin: auto;
   height: 40px;
   padding: 10px 0;
   color: red;
+  text-align: left;
 }
 .Register-submit{
   background-color: #007DC9;
@@ -60,4 +61,16 @@
 .Register-header-link i{
   color: #007DC9;
   margin-right: 2px;
+}
+.Register-phone{
+  position: absolute;
+  top:9px;
+  margin-left: 5px;
+}
+.Register-phone>i{
+  color:#007DC9;
+  font-size: 16px !important;
+}
+.Register-error{
+  color: red;
 }

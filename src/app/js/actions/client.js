@@ -1,8 +1,7 @@
-export const CLIENT_INFO = 'CLIENT_INFO';
 export const CHECK_LOGIN = 'CHECK_LOGIN';
-export const CLIENT_INFO_UPDATE = 'CLIENT_INFO_UPDATE';
-export const CLIENT_PWD_UPDATE = 'CLIENT_PWD_UPDATE';
-export const PWD_STATUS = 'PWD_STATUS';
+export const CHECK_PHONE = 'CHECK_PHONE';
+export const CREATE_USER = 'CREATE_USER';
+
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -48,25 +47,42 @@ export function getLog(){
     });
   };
 }
-// export function logOut(params) {
-//   return dispatch => {
-//     HttpRequest.get('/api/user/logout')
-//       .end(function (err, resp) {
-//         console.log(err);
-//         console.log(resp);
-//         // location.href = '/portal/login';
-//         //ocation.href = 'https://socialcredits.cn';
-//       });
-//   };
-// }
+export function checkPhone(params){
+  return dispatch => {
+    dispatch({
+      type: CHECK_PHONE,
+      data: {status:'wating'}
+    });
+    HttpRequest.get('/api/user/phone')
+      .query(params)
+      .end(function(err,resp){
+       //let info=loginCode(err, resp);
+        dispatch({
+          type: CHECK_PHONE,
+          data: resp.body
+        });
+    });
+  };
+}
+export function createUser(params) {
+  return dispatch => {
+    HttpRequest.post('/api/user/register')
+      .send(params)
+      .end(function(err,resp){
+        dispatch({
+          type:CREATE_USER,
+          data: resp.body
+        });
+    });
+  };
+}
+
 // export function logOut() {
 //   console.log("logout")
 //   return dispatch => {
 //     HttpRequest.get('/api/user/logout')
 //       .end(function(err,resp){
-//             console.log(resp); 
+//             console.log(resp);
 //     });
 //   };
 //}
-
-

@@ -32,12 +32,12 @@ export default class Register extends Component {
 		inputBlur(e) {
 			let value = e.target.value;
 			let id = e.target.id;
-			if(id=="phone"){
-				//发送请求，验证号码是否已经注册
-			}
-			console.log(id,"blurId")
 			let result = this.validateValue(value, id);
-			console.log(result,"result")
+			if(id=="phone" && result.flag==0){
+				this.props.clientBoundAC.checkPhone({phone:value});
+			}
+			// console.log(id,"blurId")
+			// console.log(result,"result")
 			let message = __.assign({},this.state.message);
 			message[id+"Mess"] = result.message;
 			let flag = __.assign({},this.state.flag);
@@ -196,11 +196,12 @@ export default class Register extends Component {
 				e.preventDefault();
 				message.warn('请填写完整的信息!!');
 			}else if(flag==0){
-				//提交表单信息
+				this.props.clientBoundAC.createUser(this.state.formValue)
 			}
 			return false;
 		}
     render(){
+			let phoneInfo = this.props.client.toJS().phoneInfo;
     	return(
 				<div className="Register">
 					<div className="Register-header">
@@ -224,6 +225,11 @@ export default class Register extends Component {
 										 value={this.state.formValue.phone}
 										 onChange={this.inputChange.bind(this)}
 										 onBlur={this.inputBlur.bind(this)}></input>
+									 {phoneInfo.status
+										? phoneInfo.status =="wating"
+												? <span className="Register-phone"><i className="fa fa-spinner fa-spin"></i><span>正在检测</span></span>
+												:<span className="Register-phone"><i className="fa fa-check"></i>手机号可以使用</span>
+											: phoneInfo.errorCode ?<span className="Register-phone"><i className="fa fa-times Register-error"></i>手机号已被占用</span>:"" }
 							<p id="phoneMess">{this.state.message.phoneMess}</p>
 						</div>
 

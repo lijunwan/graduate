@@ -16,12 +16,12 @@ export default class Login extends Component {
 	    super(props);
 	    this.state={
 	    	formValue:{
-	    		account:"",
+	    		phone:"",
 	    		password:"",
 	    	},
 				message:[],
 				isPass:{
-					account:false,
+					phone:false,
 					password:false,
 				},
 				isSubmit:false,
@@ -44,12 +44,12 @@ export default class Login extends Component {
     	}
     	loginIn(e){
 				e.preventDefault();
-				if(!this.state.isPass.password && !this.state.isPass.account){
+				if(!this.state.isPass.password && !this.state.isPass.phone){
 					var message=["","用户名和密码不能为空"]
 					this.setState({
 						message:__.assign({},this.state.message,message)
 					})
-				}else if(!this.state.formValue.account){
+				}else if(!this.state.formValue.phone){
 					var message=["用户名不能为空",""]
 					this.setState({
 						message:__assign({},this.state.message,message)
@@ -65,7 +65,7 @@ export default class Login extends Component {
 						message:__.assign({},this.state.message,message)
 					})
 					var params = __.assign({},this.state.formValue)
-					params.password = encHex.stringify(MD5(this.state.formValue.password));
+					//params.password = encHex.stringify(MD5(this.state.formValue.password));
 					console.log(params,"password")
 					this.props.clientBoundAC.checkLogin(params);
 					this.setState({
@@ -113,7 +113,7 @@ export default class Login extends Component {
 			    				<p className="Login-box-title">账户登录</p>
 									<div className="Login-box-input">
 									<i className="fa fa-user"></i>
-			    				<input id="account"
+			    				<input id="phone"
 			    						type="text"
 								    	placeholder="手机号"
 											value = {this.state.formValue.auth}
