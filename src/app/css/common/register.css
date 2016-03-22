@@ -27,12 +27,11 @@
   border: 1px solid #e6e6e6;
   height: 38px;
   width: 312px;
-  margin-bottom: 20px;
   padding: 5px 5px 5px 30px;
   border-radius: 5px;
 }
 .Register-input{
-  width: 350px;
+  width: 312px;
   text-align: right;
   margin: auto;
   position: relative;
@@ -42,6 +41,12 @@
   top: 9px;
   margin-left: 5px;
   color: #ccc;
+}
+.Register-input p{
+  text-align: left;
+  height: 40px;
+  padding: 10px 0;
+  color: red;
 }
 .Register-submit{
   background-color: #007DC9;
