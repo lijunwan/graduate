@@ -18,6 +18,10 @@ export default class Header extends Component {
   			"isShowMenu":false,
   		})
   	}
+	logOut(){
+		this.props.clientBoundAC.logOut();
+	  //this.props.history.pushState(null,'/')
+	}
 	render() {
 		//console.log(this.props.client.toJS(),"Header")
 		let info = this.props.client.toJS().info;
@@ -34,7 +38,7 @@ export default class Header extends Component {
 								<ul className={userClass}>
 									<div className="Header-triangle"></div>
 									<li><a>账号管理</a></li>
-									<li><a>退&nbsp;&nbsp;出</a></li>
+									<li><a href="javascript:;" onClick={this.logOut.bind(this)}>退&nbsp;&nbsp;出</a></li>
 								</ul>
 							</ul>
 						 </div>

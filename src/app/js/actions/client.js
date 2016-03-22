@@ -97,7 +97,8 @@ export function logOut() {
   return dispatch => {
     HttpRequest.del('/api/user/logout')
       .end(function(err,resp){
-            console.log(resp);
+        console.log(resp);
+        window.location="/"
     });
   };
 }

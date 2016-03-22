@@ -132,6 +132,10 @@ Users.createUser = function createUser(req,res) {
 		}
 	});
 }
+Users.logout = function(req,res){
+	res.clearCookie('bookstore');
+	res.end();
+}
 function findOne(obj,dataBase,callback) {
   db[dataBase].findOne(obj,function(err,item){
 		if(err) return console.error(err);

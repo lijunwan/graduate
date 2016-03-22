@@ -6,4 +6,5 @@ app.post('/api/user/login',User.checkLogin);
 app.get('/api/log',User.isLogin);
 app.get('/api/user/phone',User.checkPhone);
 app.post('/api/user/register',User.createUser);
+app.del('/api/user/logout',User.logout)
 module.exports = app;
