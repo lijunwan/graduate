@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "./node_modules/.bin/gulp clean",
-    "dev": "./node_modules/.bin/gulp clean && ./node_modules/.bin/gulp build --env=dev && ./node_modules/webpack/bin/webpack.js --watch",
+    "dev": "./node_modules/.bin/gulp clean && ./node_modules/.bin/gulp build --env=dev && ./node_modules/webpack/bin/webpack.js --watch --progress --config webpack.config.js",
     "prod": "./node_modules/.bin/gulp clean && ./node_modules/webpack/bin/webpack.js && ./node_modules/.bin/gulp build --env=prod",
     "test": "./node_modules/.bin/gulp clean && ./node_modules/webpack/bin/webpack.js && ./node_modules/.bin/gulp build --env=dev",
     "clean-root": "sudo ./node_modules/.bin/gulp clean",
@@ -16,7 +16,7 @@
     }
   },
   "dependencies": {
-    "antd": "0.10.4",
+    "antd": "^0.12.12",
     "body-parser": "~1.13.2",
     "classnames": "1.1.4",
     "connect-mongo": "^1.1.0",

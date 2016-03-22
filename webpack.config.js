@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css?sourceMap'
+        loader: 'style!css'
       },
       {
         test: /\.(png|jpg|gif)$/,

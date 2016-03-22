@@ -5,7 +5,8 @@ import * as clientAC from '../actions/client';
 import Router from 'react-router';
 import Footer from '../components/common/Footer';
 import Header from '../components/common/Header';
-import '../../css/normalize.css'
+import '../../css/normalize.css';
+import 'antd/lib/index.css';
 var RouteHandler = Router.RouteHandler;
 
 export default class App extends Component{
@@ -13,7 +14,7 @@ export default class App extends Component{
     console.log("this.props",this.props)
     this.props.clientBoundAC.getLog();
   }
-  render() { 
+  render() {
       return (
           <div>
             {this.props.routes[1]&&this.props.routes[1].name=="login" ? "" :<Header {...this.props}/>}
