@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as clientAC from '../actions/client';
+import * as bookAC from '../actions/book';
 import Router from 'react-router';
 import Footer from '../components/common/Footer';
 import Header from '../components/common/Header';
@@ -29,6 +30,7 @@ export default class App extends Component{
 function mapStateToProps(state) {
   return {
       client: state.client,
+      bookInfo: state.bookInfo
       // tablepage:  state.page,
       // dataPlatform: state.dataPlatform,
       // dataCondition:state.dataCondition,
@@ -43,7 +45,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
       return {
             clientBoundAC: bindActionCreators(clientAC, dispatch),
-            // tablepageBoundAC: bindActionCreators(tablepageAC, dispatch),
+            bookeBoundAC: bindActionCreators(bookAC, dispatch),
             // getDataPlatformBoundAC:bindActionCreators( getPlatformDataAC,dispatch),
             // getDataConditionBoundAC:bindActionCreators( getDataConditionAC,dispatch),
             // getDataNavigationBoundAC:bindActionCreators( getDataNavigationAC,dispatch),
