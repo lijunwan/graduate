@@ -1,10 +1,10 @@
-import {SEARCH_BOOKS} from '../actions/book';
+import {AUTO_COMPLETE} from '../actions/book';
 import Immutable from 'immutable';
 
-export default function (state = Immutable.fromJS({searchReasult:[],bookList:{}}), action) {
+export default function (state = Immutable.fromJS({autoComplete:{}}), action) {
   switch (action.type) {
-  case SEARCH_BOOKS:
-    return state.set("searchReasult", action.data);
+  case AUTO_COMPLETE:
+    return state.set("autoComplete", action.data);
   default:
     return state;
   }

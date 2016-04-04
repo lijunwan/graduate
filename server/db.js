@@ -57,13 +57,19 @@ db.once('open', function (callback) {
 		saleNumber:Number,//销售量，
 		introduce:[],//简介，
 		scores:String,//评分
+	});
+	var bookClassSchema = new Schema({
+		flag:String,//标志
+		name:String,//分类的名字``
+		children:[],
 	})
 	dataModel["users"] = db.model('users',userSchema,'users');
 	dataModel["baseInfo"] = db.model('baseInfo',baseInfoSchema,'baseInfo');
 	dataModel["logs"] = db.model('logs',logSchema);
 	dataModel["bookInfo"] = db.model('bookInfo',bookInfoSchema,'bookInfo');
+	dataModel['bookClass'] = db.model('bookClass', bookClassSchema, 'bookClass')
 	// var obj = {
-	// 	bookName:"深入浅出Node.js",
+	// 	bookName:"javascript权威指南",
 	// 	author:"朴灵",
 	// 	pubHouse:"人民邮电出版社",
 	// 	pubDate:"2013-12",
@@ -86,5 +92,39 @@ db.once('open', function (callback) {
 	// 	if(err) return console.error(err);
 	// 	console.log(data);
 	// })
+	var obj = {
+	flag:'J',
+	name:'教育',
+	children:[
+		{
+			flag:'J',
+			name:'教材',
+			children:[
+				{
+					flag:'JG',
+					name:'高职高专教材'
+				},
+				{
+					flag: 'JZ',
+					name: '中职教材'
+				}
+			]
+		},
+		{
+			flag:'W',
+			name:'外语',
+			children:[
+				{
+					flag:'WK',
+					name:'口语'
+				}
+			]
+		}
+	]
+}
+	dataModel['bookClass'].create(obj,function(err,data){
+		if(err) return console.error(err);
+		console.log(data);
+	})
 })
 module.exports = dataModel;

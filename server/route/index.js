@@ -2,9 +2,11 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var User = require('../modules/user.js');
+var Book = require('../modules/book');
 app.post('/api/user/login',User.checkLogin);
 app.get('/api/log',User.isLogin);
 app.get('/api/user/phone',User.checkPhone);
 app.post('/api/user/register',User.createUser);
-app.del('/api/user/logout',User.logout)
+app.del('/api/user/logout',User.logout);
+app.get('/api/book/autoComplete', Book.autoComplete);
 module.exports = app;
