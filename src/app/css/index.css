@@ -1,12 +1,38 @@
 .Index{
-  width: 960px;
+  width: 1200px;
   margin: 50px auto;;
 }
 .Index-header img{
   vertical-align: middle;
+  float: left;
+  margin-left: 49.5px;
 }
 .Index-search{
-  float: right;
-  margin-right: 300px;
+  float: left;
+  margin-left: 221.5px;
   margin-top: 10px;
+}
+.Index-bookMenu {
+    float: left;
+}
+.Index-container {
+    padding-top: 50px;
+}
+.Index-slider img {
+    width: 720px;
+    height: 296px;
+}
+.Index-slider {
+    width: 720px;
+    margin-left: 50px;
+    height: 296px;
+}
+.Index-center{
+    float: left;
+}
+.Index-right{
+    float: right;
+    height: 800px;
+    width: 190px;
+    border: 1px solid #ccc;
 }
