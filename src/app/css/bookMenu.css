@@ -1,0 +1,103 @@
+.BookMenu {
+	margin-top: 20px;
+}
+.BookMenu a {
+	color: #666;
+}
+.BookMenu-title {
+	height: 35px;
+	width: 190px;
+	text-align: center;
+	font-size: 18px;
+	background: #007DC9;
+	border-radius: 4px 4px 0 0;
+	line-height: 34px;
+	color: #fff;
+	font-family: "Microsoft Yahei";
+}
+.BookMenu-body{
+	width:190px;
+	border-top:2px dotted #007DC9;
+}
+.BookMenu-level{
+	width: 190px;
+	position: relative;
+}
+.BookMenu-ul-wrap {
+	border: 1px solid #007DC9;
+	border-width: 0 1px;
+	clear:both;
+	padding-left: 9px;
+	padding-right: 10px;
+	position: relative;
+	background-color: #fff;
+}
+.BookMenu-ul-wrap-hover{
+	z-index: 10;
+	border-width: 0 0 1px 1px;
+}
+.BookMenu-ul {
+	border-bottom: 1px dotted #0973BD;
+	overflow: hidden;
+	padding-top: 3px;
+	padding-bottom: 2px;
+}
+.BookMenu-ul-hover{
+	border: none;
+}
+.BookMenu-ul >li {
+	float: left;
+}
+a.BookMenu-meun {
+	color: #007DC9;
+	font-size: 14px;
+	height: 24px;
+	line-height: 24px;
+	font-weight: bold;
+	display: block;
+	padding-bottom: 3px;
+
+}
+.BookMenu-level2{
+	height: 24px;
+	line-height: 24px;
+	padding-right: 5px;
+	white-space: nowrap;
+	margin-right: 5px;
+	border-right: 1px solid #0973BD;
+}
+.HideMenu{
+	left: 200px;
+	position: absolute;
+	left: 189px;
+	top: -1px;
+	width: 590px;
+	border: 1px solid #007DC9;
+	padding: 6px 12px 15px 16px;
+	z-index: 5;
+	box-shadow: -1px 1px 8px #bbb;
+	background: #fff;
+}
+.HideMenu-title {
+	line-height: 28px;
+	font-size: 12px;
+	font-family: "Microsoft Yahei";
+	color: #007DC9;
+	font-weight: bold;
+}
+.HideMenu li{
+	float: left;
+}
+.HideMenu ul{
+	clear: both;
+}
+.HideMenu li a {
+	padding-right: 9px;
+	white-space: nowrap;
+	margin: 5px 8px 5px 0;
+	float: left;
+	line-height: 10px;
+	font-size: 12px;
+	border-right: 1px solid #0973BD;
+	display: inline-block;
+}
