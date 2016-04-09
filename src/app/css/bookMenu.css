@@ -28,7 +28,7 @@
 	border-width: 0 1px;
 	clear:both;
 	padding-left: 9px;
-	padding-right: 10px;
+	padding-right: 3px;
 	position: relative;
 	background-color: #fff;
 }
@@ -57,6 +57,9 @@ a.BookMenu-meun {
 	display: block;
 	padding-bottom: 3px;
 
+}
+.BookMenu-ul li:nth-last-child(1) a {
+	border-right: 1px solid #FFF;
 }
 .BookMenu-level2{
 	height: 24px;
