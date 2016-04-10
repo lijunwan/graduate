@@ -3,6 +3,7 @@ import logoImg from '../../../images/logo.jpg';
 import '../../../css/index.css';
 import Search from '../common/Search';
 import BookMenu from './BookMenu';
+import ContentSlider from './ContentSlider';
 import { Carousel } from 'antd';
 import sliderImg1 from '../../../images/slider1.jpg';
 import sliderImg2 from '../../../images/slider2.jpg';
@@ -14,7 +15,11 @@ export default class  Index extends Component{
 	constructor(props){
 		super(props)
 	}
+	componentWillMount() {
+		this.props.bookeBoundAC.getBooksOnSale();
+	}
 	render(){
+		console.log(this.props.bookInfo.toJS())
 		return(
 			<div className="Index">
 				<div className="Index-header clearfix">
@@ -39,7 +44,7 @@ export default class  Index extends Component{
 						</div>
 					</div>
 					<div className="Index-right">
-						
+						<ContentSlider title="最新优惠" data = {this.props.bookInfo.toJS().bookOnSale} />
 					</div>
 			  </div>
 			</div>

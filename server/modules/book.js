@@ -19,6 +19,21 @@ Books.autoComplete = function autoComplete(req, res) {
 		res.send({data:list})
 	});
 }
+Books.getOnSaleBooks = function getOnSaleBook (reg, res) {
+	getBooks('bookOnSale', function(err, data){
+		if(data){
+			res.send({data:data})
+		}else {
+			res.statusCode=404;
+			res.send({errorCode:404601,message:"未知错误"})//数据库错误
+		}
+	})
+}
+function getBooks (dataBase, callback) {
+	db[dataBase].find().limit(24).exec(function(err, data){
+  	  callback(err, data);
+    })
+}
 function queryBook(reg,dataBase,callback) {
   db[dataBase].find().or([{bookName:reg}, {author:reg}]).limit(10).exec(function(err, data){
 	  callback(err, data);
