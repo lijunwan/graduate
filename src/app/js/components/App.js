@@ -8,6 +8,8 @@ import Footer from '../components/common/Footer';
 import Header from '../components/common/Header';
 import '../../css/normalize.css';
 import 'antd/lib/index.css';
+import logoImg from '../../images/logo.jpg';
+import Search from './common/Search';
 var RouteHandler = Router.RouteHandler;
 
 export default class App extends Component{
@@ -18,8 +20,21 @@ export default class App extends Component{
   render() {
       return (
           <div>
-            {this.props.routes[1]&&this.props.routes[1].name=="login" ? "" :<Header {...this.props}/>}
-            {React.cloneElement(this.props.children, this.props)}
+            {
+                this.props.routes[1]&&this.props.routes[1].name=="login" ? "" :
+                <div>
+                    <Header {...this.props}/>
+                    <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
+    					<img src={logoImg} alt=""/>
+    					<div className="Index-search">
+    						<Search {...this.props} />
+    					</div>
+    				</div>
+                </div>
+            }
+            <div style={{width:'1200px',margin: 'auto'}}>
+                {React.cloneElement(this.props.children, this.props)}
+            </div>
             <Footer />
           </div>
       );

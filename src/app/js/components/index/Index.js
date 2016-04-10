@@ -17,17 +17,12 @@ export default class  Index extends Component{
 	}
 	componentWillMount() {
 		this.props.bookeBoundAC.getBooksOnSale();
+		this.props.bookeBoundAC.getBooksNew();
 	}
 	render(){
 		console.log(this.props.bookInfo.toJS())
 		return(
 			<div className="Index">
-				<div className="Index-header clearfix">
-					<img src={logoImg} alt=""/>
-					<div className="Index-search">
-						<Search {...this.props} />
-					</div>
-				</div>
 				<div className="clearfix Index-container">
 					<div className="Index-bookMenu">
 						<BookMenu {...this.props} />
@@ -42,9 +37,21 @@ export default class  Index extends Component{
 								<div><img src={sliderImg5} /></div>
 							</Carousel>
 						</div>
+						<div style={{marginTop:'50px'}}>
+							<ContentSlider titleFirst ="最"
+											title="新优惠"
+											data = {this.props.bookInfo.toJS().bookOnSale}
+											{...this.props}/>
+						</div>
+						<div style={{marginTop:'50px'}}>
+							<ContentSlider titleFirst ="新"
+											title="书上架"
+											data = {this.props.bookInfo.toJS().bookNew}
+											{...this.props}/>
+						</div>
 					</div>
 					<div className="Index-right">
-						<ContentSlider title="最新优惠" data = {this.props.bookInfo.toJS().bookOnSale} />
+
 					</div>
 			  </div>
 			</div>

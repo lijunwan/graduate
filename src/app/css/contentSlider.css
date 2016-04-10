@@ -1,0 +1,67 @@
+.ContentSlider-Item {
+    width: 150px;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 16px;
+    height: 250px;
+}
+.ContentSlider-Item img {
+    width: 150px;
+}
+.ContentSlider-title {
+    color: #007DC9;
+    font-size: 18px;
+}
+.ContentSlider-title-first{
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: #007DC9;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 5px;
+}
+.ContentSlider-hr{
+    border: none;
+    border-top: 1px solid #007DC9;
+    margin-left: 45px;
+    margin-top: -2px;
+    margin-bottom: 20px;
+}
+.ContentSlider-bookName {
+    padding: 7px 20px 0;
+    height: 36px;
+    line-height: 18px;
+    overflow: hidden;
+}
+.ContentSlider-bookName a{
+    color: #000;
+}
+.ContentSlider-bookName a:hover{
+    color: #ec7814;
+    text-decoration: underline;
+}
+.ContentSlider-Item-author {
+    padding: 0 20px;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    color: #aaa;
+}
+.ContentSlider-Item-price {
+    padding-left: 20px;
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    font-family: "Arial";
+    font-size: 14px;
+}
+.ContentSlider-Item-priceDis {
+    color: #c30;
+    overflow: hidden;
+    font-weight: bold;
+    margin-right: 12px;
+}

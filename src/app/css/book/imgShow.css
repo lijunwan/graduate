@@ -1,0 +1,13 @@
+.ImgShow-nav {
+    margin-top: 5px;
+}
+.ImgShow-nav li {
+    float: left;
+    margin-left: 5px;
+}
+.ImgShow-nav li img{
+    width: 54px;
+}
+.ImgShow-nav li img:hover{
+    outline: 3px red solid;
+}
