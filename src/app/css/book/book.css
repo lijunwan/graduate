@@ -1,5 +1,123 @@
 .Book-img {
-    width: 320px;
-    float:left;
-    padding: 0 20px 30px 0;
+  width: 390px;
+  float: left;
+  padding: 20px 20px 30px 20px;
+}
+.Book-basic-info{
+  width: 869px;
+  margin-left: 420px;
+}
+.Info-box{
+  float: left;
+  width: 624px;
+}
+.Info-bookName {
+  line-height: 70px;
+  overflow: hidden;
+  color: #323232;
+  font-size: 18px;
+  margin: 0 auto;
+  border-bottom: 1px solid #f5f5f5;
+}
+.Info-pub {
+  margin-top: 30px;
+}
+.Info-pub-item {
+  margin-right: 10px;
+}
+.price-info {
+  background-color: #ebebeb;
+  padding: 10px 10px;
+  margin: 30px 0 0 -10px;
+  font: 12px "Verdana","Simsun";
+  border-radius: 2px;
+}
+.price-key {
+    color: #969696;
+    margin-right: 5px;
+}
+.price-money {
+  font-size: 24px;
+  color: #ff2832;
+}
+.letter01 {
+  letter-spacing: 6px;
+}
+.letter02 {
+  letter-spacing: 24px;
+}
+.marginRight {
+  margin-right: 23px;
+}
+.marginLeft{
+  margin-left: 5px;
+}
+.Book-button {
+  height: 36px;
+  line-height: 36px;
+  margin: 30px 20px 10px 0px;
+  display: inline-block;
+  padding: 0 15px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.shop-button {
+  color: #fff;
+  background-color: #007DC9;
+}
+.buy-button {
+  border: 1px solid #007DC9;
+  color: #007DC9;
+  background-color: rgba(99, 195, 255, 0.19);
+}
+.NumberBox-input {
+  width: 38px;
+  height: 35px;
+  text-align: center;
+}
+.NumberBox-button {
+  background: #E9E9E9;
+  padding: 2px;
+}
+.recommend {
+  float: left;
+  width: 210px;
+  border: 1px solid #eee;
+  height: 800px;
+  margin-right: 20px;
+}
+.book-detai{
+  float: left;
+  width: 970px;
+}
+.Book-start {
+  color: #969696;
+}
+.star-text{
+  color: #969696;
+}
+.BookTab {
+  padding: 0 29px 1px;
+}
+.tab-item-active {
+  color: #007DC9 !important;
+  border: 1px solid #007DC9;
+  position: relative;
+  z-index: 5;
+}
+.tab-item {
+  padding: 5px 29px;
+  display: inline-block;
+  border-bottom: none;
+  margin-right: 10px;
+  color: #969696;
+  font-size: 14px;
+  background-color: #fff;
+}
+.detail-content {
+  height: 10px;
+  border-top: #007DC9 1px solid;
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
 }

@@ -120,10 +120,10 @@ db.once('open', function (callback) {
 		if(err) return console.error(err);
 		console.log(data);
 	})
-	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
-	// 	if(err) return console.error(err);
-	// 	console.log(data);
-	// })
+	dataModel['bookOnSale'].create(objOnSale,function(err,data){
+		if(err) return console.error(err);
+		console.log(data);
+	})
 	dataModel['bookNew'].create(objOnSale,function(err,data){
 		if(err) return console.error(err);
 		console.log(data);
