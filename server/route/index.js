@@ -12,4 +12,5 @@ app.get('/api/book/autoComplete', Books.autoComplete);
 app.get('/api/book/bookOnSale', Books.getOnSaleBooks);
 app.get('/api/book/bookNew', Books.getNewBooks);
 app.get('/api/book/bookInfo', Books.getBookInfo);
+app.get('/api/book/searchBook', Books.searchBook);
 module.exports = app;

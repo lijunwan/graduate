@@ -25,7 +25,7 @@ export default class App extends Component{
                 <div>
                     <Header {...this.props}/>
                     <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
-    					<img src={logoImg} alt=""/>
+    					<a href="/"><img src={logoImg} alt=""/></a>
     					<div className="Index-search">
     						<Search {...this.props} />
     					</div>

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import '../../../css/common/search.css'
+import '../../../css/common/search.css';
+import {Row, Col} from 'antd';
 export default class Search extends Component {
     constructor(props) {
         super(props);
@@ -12,14 +13,24 @@ export default class Search extends Component {
         this.setState({
             searchKey: event.target.value
         });
-        console.log(event.target.value,'??@')
-        this.props.bookeBoundAC.searchBooks({searchKey: event.target.value});
+        if(event.target.value !== ''){
+            this.props.bookeBoundAC.searchBooks({searchKey: event.target.value});
+        } else {
+            this.props.bookeBoundAC.clearAutoComplete();
+        }
+    }
+    showSearchResult() {
+        this.props.history.pushState(null, '/searchResult', {searchKey: this.state.searchKey});
+        this.props.bookeBoundAC.clearAutoComplete();
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             autoComplete: nextProps.bookInfo.toJS().autoComplete.data
         });
-        console.log('-----123',nextProps.bookInfo.toJS())
+    }
+    showBookDetai(id) {
+        this.props.history.pushState(null, '/book/'+ id);
+        this.props.bookeBoundAC.clearAutoComplete();
     }
     createBookList() {
         var list = [];
@@ -29,9 +40,11 @@ export default class Search extends Component {
         }
         autoComplete.map((data)=>{
             list.push(
-                <li>
-                    <span>{data.bookName}</span>
-                    <span>{data.author}</span>
+                <li onClick={this.showBookDetai.bind(this, data.id)}>
+                    <Row>
+                        <Col span="12">{data.bookName}</Col>
+                        <Col span="12" style={{textAlign: 'right'}}>{data.author}</Col>
+                    </Row>
                 </li>
             )
         })
@@ -41,10 +54,14 @@ export default class Search extends Component {
         return(
             <div className="Search">
                 <input placeholder="请输入图书名或者作者名字进行搜索" onChange = {this.onChangeHandel.bind(this)} value={this.state.searchKey}/>
-                <a href="javascript:;"><i className="fa fa-search"></i></a>
-                <ul>
-                    {this.createBookList()}
-                </ul>
+                <a href="javascript:;" onClick={this.showSearchResult.bind(this)}><i className="fa fa-search"></i></a>
+                {
+                    this.state.autoComplete && this.state.autoComplete.length > 0 ?
+                    <ul className="Search-list">
+                        {this.createBookList()}
+                    </ul>
+                    : ''
+                }
             </div>
         )
     }

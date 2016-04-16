@@ -15,6 +15,14 @@ export function searchBooks(params){
     });
   };
 }
+export function clearAutoComplete() {
+    return dispatch => {
+        dispatch({
+          type: AUTO_COMPLETE,
+          data: {}
+        });
+    }
+}
 export function getBooksOnSale(){
   return dispatch => {
       HttpRequest.get('/api/book/bookOnSale')

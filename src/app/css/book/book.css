@@ -4,7 +4,7 @@
   padding: 20px 20px 30px 20px;
 }
 .Book-basic-info{
-  width: 869px;
+  width: 780px;
   margin-left: 420px;
 }
 .Info-box{
@@ -115,9 +115,25 @@
   background-color: #fff;
 }
 .detail-content {
-  height: 10px;
   border-top: #007DC9 1px solid;
   position: relative;
   z-index: 1;
   margin-top: -1px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.BookDetai-recom p:first-child {
+    text-indent: 2em;
+}
+.BookDetai-recom h3 {
+    color: #007DC9;
+    border-left: 5px #007DC9 solid;
+    padding-left: 5px;
+    line-height: 1;
+    margin: 10px 0;
+}
+.BookDetai-blockName{
+    color: #007DC9;
+    font-size: 18px;
+    margin-bottom: 5px;
 }

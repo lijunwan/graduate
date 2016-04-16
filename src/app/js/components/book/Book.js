@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import '../../../css/book/book.css';
 import NumberBox from './NumberBox'
 import ImgShow from './ImgShow';
-import BookTab from './BookTab'
+import BookTab from './BookTab';
+import BookDetail from './BookDetail'
 import {Icon, Row, Col} from 'antd';
 export default class  Book extends Component{
     constructor(props) {
@@ -59,9 +60,12 @@ export default class  Book extends Component{
                     <div className="clearfix" style={{marginTop : '20px'}}>
                       <div className="recommend">推荐区</div>
                       <div className="book-detai">
-                        <BookTab />
-                        <div className="detail-content">
-                          
+                        <h3  className="BookDetai-blockName">商品详情</h3>
+                        <div className="detail-content clearfix">
+                            <BookDetail {...this.props} data={bookInfo.data}/>
+                        </div>
+                        <h3  className="BookDetai-blockName" style={{marginTop: '20px'}}>商品评价</h3>
+                        <div className="detail-content clearfix">
                         </div>
                       </div>
                     </div>
