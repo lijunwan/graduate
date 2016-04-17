@@ -24,4 +24,5 @@ app.use('/api/user/authorization/*', function(req, res, next){
     }
 });
 app.get('/api/user/authorization/addShopCarts', ShopCart.addBook)
+app.get('/api/user/authorization/getShopCarts', ShopCart.getShopCartInfo)
 module.exports = app;

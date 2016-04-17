@@ -23,7 +23,7 @@ Users.checkLogin = function checkLogin(req,res){
 					'id':user["_id"],
 					'lastTime':Date().toString()
 				}
-				res.cookie("bookstore",obj,{maxAge:600000})
+				res.cookie("bookstore",obj,{maxAge:6000000})
 			    saveOne(obj,"logs",function(err,item){
 			    	console.log(item,"123")
 			    });

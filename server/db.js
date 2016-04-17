@@ -132,14 +132,14 @@ db.once('open', function (callback) {
 	dataModel['bookInfo'].create(obj,function(err,data){
 		if(err) return console.error(err);
 	})
-	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
-	// 	if(err) return console.error(err);
-	// 	console.log(data);
-	// })
-	// dataModel['bookNew'].create(objOnSale,function(err,data){
-	// 	if(err) return console.error(err);
-	// 	console.log(data);
-	// })
+	dataModel['bookOnSale'].create(objOnSale,function(err,data){
+		if(err) return console.error(err);
+		console.log(data);
+	})
+	dataModel['bookNew'].create(objOnSale,function(err,data){
+		if(err) return console.error(err);
+		console.log(data);
+	})
 // 	var obj = {
 // 	flag:'J',
 // 	name:'教育',

@@ -8,8 +8,9 @@ import {Icon, Row, Col} from 'antd';
 export default class  Book extends Component{
     constructor(props) {
       super(props);
-      this.sate = {
+      this.state = {
         showContent: 'bookDetai',
+        count: 1,
       }
     }
     componentDidMount () {
@@ -23,15 +24,26 @@ export default class  Book extends Component{
     }
     addBookIntoCars() {
         var obj = {
-            bookId: '5712382235882384277f6b33',
-            count: 1,
+            bookId: this.props.params.bookId,
+            count: this.state.count,
         }
         this.props.clientBoundAC.addBookIntoCars(obj);
     }
+   addNumber() {
+    this.setState({
+      count: this.state.count + 1,
+    })
+  }
+  subNumber() {
+    if(this.state.count>1) {
+      this.setState({
+        count: this.state.count - 1,
+      })
+    }
+  }
     render() {
         const bookInfo = this.props.bookInfo.toJS().bookInfo;
         if(bookInfo.data) {
-            console.log('=====', bookInfo);
             const money = this.modifyMoney(bookInfo.data.price);
             const salePrice = this.modifyMoney(bookInfo.data.price * (bookInfo.data.discount * 0.1));
             return(
@@ -53,7 +65,10 @@ export default class  Book extends Component{
                               <p><span className="price-key letter01 marginRight">折扣价</span><span className="price-money">￥{salePrice}</span><span className="marginLeft">({bookInfo.data.discount}折)</span></p>
                             </div>
                             <div style={{paddingTop: '30px'}}>
-                              <NumberBox maxNumber= {parseInt(100)} />
+                              <NumberBox maxNumber= {parseInt(100)} 
+                                         count={this.state.count}
+                                         addNumber={this.addNumber.bind(this)}
+                                         subNumber={this.subNumber.bind(this)}/>
                             </div>
                             <a className="Book-button shop-button" onClick = {this.addBookIntoCars.bind(this)}>加入购物车</a>
                             <a className="Book-button buy-button">一建购买</a>
