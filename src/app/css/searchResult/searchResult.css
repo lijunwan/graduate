@@ -1,0 +1,65 @@
+.Item-wrap {
+    width: 960px;
+    float:left;
+}
+.BookItem{
+    margin: 20px 0 40px;
+}
+.BookItem img {
+    width: 200px;
+}
+.sort-menu li{
+    float: left;
+}
+.text-wrap {
+    float: left;
+    width: 704px;
+    padding-left: 20px;
+
+}
+.bookName {
+    padding: 7px 0 0;
+    height: 36px;
+    line-height: 18px;
+    overflow: hidden;
+}
+.bookName a{
+    color: #000;
+}
+.bookName a:hover{
+    color: #ec7814;
+    text-decoration: underline;
+}
+.author {
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    color: #aaa;
+}
+.price {
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    font-family: "Arial";
+    font-size: 14px;
+}
+.priceDis {
+    color: #c30;
+    overflow: hidden;
+    font-weight: bold;
+    margin-right: 12px;
+}
+.BookItem-introduce {
+    height: 40px;
+    overflow: hidden;
+    line-height: 20px;
+}
+.SearchResult-recomend{
+    float: left;
+    width: 220px;
+    margin-left: 14px;
+}
+.SearchResult-recomendContent{
+    height: 800px;
+    border: 1px solid #ccc;
+}

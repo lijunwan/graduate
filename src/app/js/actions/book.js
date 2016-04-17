@@ -2,6 +2,7 @@ export const AUTO_COMPLETE = 'AUTO_COMPLETE';
 export const GET_BOOK_ON_SALE = 'GET_BOOK_ON_SALE';
 export const GET_BOOK_NEW = 'GET_BOOK_NEW';
 export const GET_BOOK_INFO = 'GET_BOOK_INFO';
+export const SEARCH_BOOK = 'SEARCH_BOOK';
 import HttpRequest from 'superagent';
 export function searchBooks(params){
   return dispatch => {
@@ -22,6 +23,18 @@ export function clearAutoComplete() {
           data: {}
         });
     }
+}
+export function getBookList(params){
+  return dispatch => {
+      HttpRequest.get('/api/book/searchBook')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: SEARCH_BOOK,
+          data: resp.body
+        });
+    });
+  };
 }
 export function getBooksOnSale(){
   return dispatch => {

@@ -428,5 +428,23 @@ th {
 .clearfix:before,.clearfix:after{
     content:"";
     display:table;
-} 
-.clearfix:after{clear:both;} 
+}
+.clearfix:after{clear:both;}
+.button {
+  height: 36px;
+  line-height: 36px;
+  margin: 30px 20px 10px 0px;
+  display: inline-block;
+  padding: 0 15px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.button01 {
+  color: #fff;
+  background-color: #007DC9;
+}
+.button02 {
+  border: 1px solid #007DC9;
+  color: #007DC9;
+  background-color: rgba(99, 195, 255, 0.19);
+}

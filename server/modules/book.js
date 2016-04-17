@@ -1,12 +1,13 @@
 var db = require('../db');
+var  __pick = require('lodash/pick');
 function Books (book) {
 	this.bookName = book.bookName;
 }
 module.exports = Books;
 Books.autoComplete = function autoComplete(req, res) {
-	var req = new RegExp(req.query.searchKey,'i');
-	console.log(req,'!!!!')
-	queryBook(req,'bookInfo', function(err, data){
+	var reg = new RegExp(req.query.searchKey,'i');
+	console.log(reg,'!!!!')
+	queryBook(reg,'bookInfo', function(err, data){
 		console.log(data,'----');
 		var list = [];
 		data.map((item)=>{
@@ -14,10 +15,26 @@ Books.autoComplete = function autoComplete(req, res) {
 			obj.id = item['_id'];
 			obj.bookName = item.bookName;
 			obj.author = item.author;
+			obj.price = item.price;
+
 			list.push(obj)
 		});
 		res.send({data:list})
 	});
+}
+Books.searchBook = function searchBook(req, res) {
+	var reg = new RegExp(req.query.searchKey,'i');
+	searchBookMongo(reg, 'bookInfo', function(err, data){
+		console.log('================',data)
+		var list = [];
+		data.map((item)=>{
+			var obj = __pick(item, ['bookName', 'author', 'pubHouse', 'pubDate', 'price', 'discount', 'cover', 'introduce']);
+			obj.id = item['_id'];
+			list.push(obj);
+			console.log(obj);
+		});
+		res.send({data:list});
+	})
 }
 Books.getOnSaleBooks = function getOnSaleBook (req, res) {
 	getBooks('bookOnSale', function(err, data){
@@ -60,8 +77,14 @@ function getBooks (dataBase, callback) {
   	  callback(err, data);
     })
 }
-function queryBook(req,dataBase,callback) {
-  db[dataBase].find().or([{bookName:req}, {author:req}]).limit(10).exec(function(err, data){
+function queryBook(reg,dataBase,callback) {
+  db[dataBase].find().or([{bookName:reg}, {author:reg}]).limit(10).exec(function(err, data){
 	  callback(err, data);
   })
+}
+function searchBookMongo(reg, dataBase, callback) {
+	console.log('//////////===',reg);
+	db[dataBase].find().or([{bookName:reg}, {author:reg}]).exec(function(err, data){
+  	  callback(err, data);
+    })
 }

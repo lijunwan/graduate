@@ -96,7 +96,7 @@ db.once('open', function (callback) {
 		comment:[],
 		price:"69",
 		discount:"8.92",
-		cover:"",
+		cover:"/book/cover.jpg",
 		picture:['/book/cover.jpg','/book/testImage2.jpg', '/book/testImage3.jpg', '/book/testImage4.jpg', '/book/testImage5.jpg'],
 		editions:"1",
 		pages:348,
@@ -120,14 +120,14 @@ db.once('open', function (callback) {
 		if(err) return console.error(err);
 		console.log(data);
 	})
-	dataModel['bookOnSale'].create(objOnSale,function(err,data){
-		if(err) return console.error(err);
-		console.log(data);
-	})
-	dataModel['bookNew'].create(objOnSale,function(err,data){
-		if(err) return console.error(err);
-		console.log(data);
-	})
+	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
+	// 	if(err) return console.error(err);
+	// 	console.log(data);
+	// })
+	// dataModel['bookNew'].create(objOnSale,function(err,data){
+	// 	if(err) return console.error(err);
+	// 	console.log(data);
+	// })
 // 	var obj = {
 // 	flag:'J',
 // 	name:'教育',
