@@ -1,14 +1,14 @@
-import {CHECK_LOGIN,CHECK_PHONE,CREATE_USER} from '../actions/client';
+import {CHECK_LOGIN,CHECK_PHONE,CREATE_USER,ADD_BOOK} from '../actions/client';
 import Immutable from 'immutable';
 
-export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registerInfo:{}}), action) {
+export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registerInfo:{}, addBookMess:{}}), action) {
   switch (action.type) {
   case CHECK_LOGIN:
     return state.set("info", action.data);
   case CHECK_PHONE:
     return state.set("phoneInfo",action.data);
-  case CREATE_USER:
-    return state.set("registerInfo",action.data);
+  case ADD_BOOK:
+    return state.set("addBookMess",action.data);
   default:
     return state;
   }

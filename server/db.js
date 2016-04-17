@@ -19,6 +19,14 @@ db.once('open', function (callback) {
 		favorite:[]//收藏夹
 
 	});
+	var shopCartSchema = new Schema({
+		bookId: String,//书的id
+		aprice: Number,//售价
+		sumMon: Number, //金额
+		count: Number,//数量
+		bookName: String,
+		userId: String, //用户ID
+	})
 	//暂时不用
 	var logSchema = new Schema({
 		id:String,
@@ -44,8 +52,9 @@ db.once('open', function (callback) {
 		pubHouse:String,//出版社
 		pubDate:String,//出版时间
 		comment:[],//评论 存放评论的id
-		price:String,//定价
-		discount:String,//折扣
+		price: Number,//定价
+		discount: Number,//折扣
+		aprice: Number,//售价
 		cover:String,//封面 保存 照片位置
 		picture:[],//书籍的图片
 		editions:String,//版次
@@ -62,8 +71,9 @@ db.once('open', function (callback) {
 	var bookOnSaleSchema = new Schema ({
 		bookName:String,//书名
 		author:String,//作者
-		price:String,//定价
-		discount:String,//折扣
+		price: Number,//定价
+		discount: Number,//折扣
+		aprice: Number,
 		cover:String,//封面 保存 照片位置
 		detail: String,
 	});
@@ -71,8 +81,9 @@ db.once('open', function (callback) {
 	var bookNewSchema = new Schema ({
 		bookName:String,//书名
 		author:String,//作者
-		price:String,//定价
-		discount:String,//折扣
+		price: Number,//定价
+		discount: Number,//折扣
+		aprice: Number,
 		cover:String,//封面 保存 照片位置
 		detail: String,
 	});
@@ -88,14 +99,16 @@ db.once('open', function (callback) {
 	dataModel['bookClass'] = db.model('bookClass', bookClassSchema, 'bookClass');
 	dataModel['bookOnSale'] = db.model('bookOnSale', bookOnSaleSchema, 'bookOnSale');
 	dataModel['bookNew'] = db.model('bookNew', bookNewSchema, 'bookNew');
+	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
 		pubHouse:"人民邮电出版社",
 		pubDate:"2013-12",
 		comment:[],
-		price:"69",
-		discount:"8.92",
+		price: 69.00,
+		discount: 8.92,
+		aprice: 61.55,
 		cover:"/book/cover.jpg",
 		picture:['/book/cover.jpg','/book/testImage2.jpg', '/book/testImage3.jpg', '/book/testImage4.jpg', '/book/testImage5.jpg'],
 		editions:"1",
@@ -111,14 +124,13 @@ db.once('open', function (callback) {
 	var objOnSale = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
-		price:"69",
+		price: 69.00,
 		discount:"8.92",
 		cover:"book/cover.jpg",
 		detail: '5709b6499180abb00defee0a'
 	}
 	dataModel['bookInfo'].create(obj,function(err,data){
 		if(err) return console.error(err);
-		console.log(data);
 	})
 	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
 	// 	if(err) return console.error(err);

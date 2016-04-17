@@ -21,6 +21,13 @@ export default class  Book extends Component{
     modifyMoney (value) {
       return Math.round(value).toFixed(2);
     }
+    addBookIntoCars() {
+        var obj = {
+            bookId: '5712382235882384277f6b33',
+            count: 1,
+        }
+        this.props.clientBoundAC.addBookIntoCars(obj);
+    }
     render() {
         const bookInfo = this.props.bookInfo.toJS().bookInfo;
         if(bookInfo.data) {
@@ -48,7 +55,7 @@ export default class  Book extends Component{
                             <div style={{paddingTop: '30px'}}>
                               <NumberBox maxNumber= {parseInt(100)} />
                             </div>
-                            <a className="Book-button shop-button">加入购物车</a>
+                            <a className="Book-button shop-button" onClick = {this.addBookIntoCars.bind(this)}>加入购物车</a>
                             <a className="Book-button buy-button">一建购买</a>
                             <p style={{marginTop: '20px'}}>
                               <a className=" anticon anticon-star Book-start" style={{marginRight: '5px'}} type="star-o" />

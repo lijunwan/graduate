@@ -3,6 +3,7 @@ var app = express();
 var router = express.Router();
 var User = require('../modules/user.js');
 var Books = require('../modules/book');
+var ShopCart = require('../modules/shopCart');
 app.post('/api/user/login',User.checkLogin);
 app.get('/api/log',User.isLogin);
 app.get('/api/user/phone',User.checkPhone);
@@ -22,7 +23,5 @@ app.use('/api/user/authorization/*', function(req, res, next){
         res.send({errorCode:400100,message:"未授权"})
     }
 });
-app.get('/api/user/authorization/shopCarts', function(req, res){
-    res.end('ok123')
-})
+app.get('/api/user/authorization/addShopCarts', ShopCart.addBook)
 module.exports = app;

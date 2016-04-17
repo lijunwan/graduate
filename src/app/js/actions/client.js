@@ -1,7 +1,7 @@
 export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const CHECK_PHONE = 'CHECK_PHONE';
 export const CREATE_USER = 'CREATE_USER';
-
+export const ADD_BOOK = 'ADD_BOOK';
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -99,6 +99,18 @@ export function logOut() {
       .end(function(err,resp){
         console.log(resp);
         window.location="/"
+    });
+  };
+}
+export function addBookIntoCars(params){
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/addShopCarts')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: ADD_BOOK,
+          data: resp.body
+        });
     });
   };
 }
