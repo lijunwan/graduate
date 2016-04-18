@@ -23,6 +23,12 @@ export default class  Index extends Component{
 		console.log(this.props.bookInfo.toJS())
 		return(
 			<div className="Index">
+				<div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
+					<a href="/"><img src={logoImg} alt=""/></a>
+				<div className="Index-search">
+					<Search {...this.props} />
+				</div>
+			</div>
 				<div className="clearfix Index-container">
 					<div className="Index-bookMenu">
 						<BookMenu {...this.props} />

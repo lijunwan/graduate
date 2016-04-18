@@ -15,17 +15,15 @@ export default class  NumberBox extends Component{
       })
     }
   }
-  
+
   render () {
     return (
-      <div className="clearfix">
+      <div className="clearfix NumberBox">
+        <p style={{float: 'left'}}><i className="anticon anticon-plus NumberBox-button" style={{marginBottom: '3px'}} onClick={this.props.addNumber.bind(this)} /></p>
         <div style={{float: 'left'}}>
           <input type="text" className="NumberBox-input" value={this.props.count} onChange={this.changeValue.bind(this)}/>
         </div>
-        <div style={{float: 'left'}}>
-          <p><i className="anticon anticon-plus NumberBox-button" style={{marginBottom: '3px'}} onClick={this.props.addNumber.bind(this)} /></p>
-          <p><i className="anticon anticon-minus NumberBox-button" onClick={this.props.subNumber.bind(this)} /></p>
-        </div>
+        <p style={{float: 'left'}}><i className="anticon anticon-minus NumberBox-button" onClick={this.props.subNumber.bind(this)} /></p>
       </div>
     )
   }

@@ -26,6 +26,7 @@ db.once('open', function (callback) {
 		count: Number,//数量
 		bookName: String,
 		userId: String, //用户ID
+		cover: String,
 	})
 	//暂时不用
 	var logSchema = new Schema({

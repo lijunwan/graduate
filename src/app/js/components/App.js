@@ -24,17 +24,19 @@ export default class App extends Component{
                 this.props.routes[1]&&this.props.routes[1].name=="login" ? "" :
                 <div>
                     <Header {...this.props}/>
-                    <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
-    					<a href="/"><img src={logoImg} alt=""/></a>
-    					<div className="Index-search">
-    						<Search {...this.props} />
-    					</div>
-    				</div>
                 </div>
             }
-            <div style={{width:'1200px',margin: 'auto'}}>
-                {React.cloneElement(this.props.children, this.props)}
-            </div>
+            {
+              this.props.routes[1]&&this.props.routes[1].name=="shopCart" ?
+              <div>
+                  {React.cloneElement(this.props.children, this.props)}
+              </div>
+              :
+              <div style={{width:'1200px',margin: 'auto'}}>
+                  {React.cloneElement(this.props.children, this.props)}
+              </div>
+            }
+
             <Footer />
           </div>
       );

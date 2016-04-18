@@ -5,6 +5,8 @@ import ImgShow from './ImgShow';
 import BookTab from './BookTab';
 import BookDetail from './BookDetail'
 import {Icon, Row, Col} from 'antd';
+import logoImg from '../../../images/logo.jpg';
+import Search from '../common/Search'
 export default class  Book extends Component{
     constructor(props) {
       super(props);
@@ -47,6 +49,13 @@ export default class  Book extends Component{
             const money = this.modifyMoney(bookInfo.data.price);
             const salePrice = this.modifyMoney(bookInfo.data.price * (bookInfo.data.discount * 0.1));
             return(
+                <div>
+                  <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
+          					<a href="/"><img src={logoImg} alt=""/></a>
+          				<div className="Index-search">
+          					<Search {...this.props} />
+          				</div>
+                </div>
                 <div className="Book clearfix">
                     <div className="Book-infor">
                         <div className="Book-img">
@@ -65,7 +74,7 @@ export default class  Book extends Component{
                               <p><span className="price-key letter01 marginRight">折扣价</span><span className="price-money">￥{salePrice}</span><span className="marginLeft">({bookInfo.data.discount}折)</span></p>
                             </div>
                             <div style={{paddingTop: '30px'}}>
-                              <NumberBox maxNumber= {parseInt(100)} 
+                              <NumberBox maxNumber= {parseInt(100)}
                                          count={this.state.count}
                                          addNumber={this.addNumber.bind(this)}
                                          subNumber={this.subNumber.bind(this)}/>
@@ -91,6 +100,7 @@ export default class  Book extends Component{
                         </div>
                       </div>
                     </div>
+                  </div>
                 </div>
             )
         }

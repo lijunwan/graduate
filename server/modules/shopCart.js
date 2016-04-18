@@ -8,31 +8,31 @@ function ShopCart (cart) {
 module.exports = ShopCart;
 ShopCart.addBook = function addBook (req, res) {
     var obj = __pick(req.query, ['bookId','count']);
-	if(obj.bookId && obj.count) {
+	  if(obj.bookId && obj.count) {
     	obj.userId = req.cookies.bookstore.id;
-        db['shopCart'].findOne({bookId: obj.bookId}, function(err, book){
+        db['shopCart'].findOne({bookId: obj.bookId, userId: obj.userId}, function(err, book){
             if(err) return console.error(err);
             if(book) {
                 book.count += parseInt(obj.count);
                 book.save();
-                res.send({message: 'ok'})
+                res.send({bookId: obj.bookId})
             } else {
-                db['bookInfo'].findOne({_id: obj.bookId}, function(err, item){
+                db['bookInfo'].findOne({_id: obj.bookId}, function(err, book){
                     if(err) return console.error(err);
-                    if(item) {
-                        obj.price = item.price;
-                        obj.aprice = item.aprice;
-                        obj.discount = item.discount;
-                        obj.bookName = item.bookName;
+                    if(book) {
+                        obj.price = book.price;
+                        obj.aprice = book.aprice;
+                        obj.discount = book.discount;
+                        obj.bookName = book.bookName;
+												obj.cover = book.cover;
                     }
                     db['shopCart'].create(obj,function(err,shopCart){
                         if(err) return console.error(err);
                         db['users'].findOne({_id: obj.userId},function(err,user){
                             if(err) return console.error(err);
-                            console.log(user, '====')
                             user.shopCart.push(shopCart['_id']);
                             user.save();
-                            res.send({message: 'ok'})
+                            res.send({bookId: obj.bookId});
                         });
                     });
                 })
@@ -49,4 +49,22 @@ ShopCart.getShopCartInfo = function getShopCartInfo(req, res) {
             if(err) return console.error(err);
             res.send({data: data});
         })
+}
+ShopCart.updateShopCart = function updateShopCart(req, res) {
+	var obj = __pick(req.query, ['bookId','count']);
+	if(obj.bookId && obj.count) {
+		obj.userId = req.cookies.bookstore.id;
+		db['shopCart'].findOne({bookId: obj.bookId, userId: obj.userId}, function(err, shopCart){
+				if(err) return console.error(err);
+				console.log('???',shopCart);
+				if(shopCart) {
+						shopCart.count = parseInt(obj.count);
+						shopCart.save();
+				}
+				db.shopCart.find({'userId':obj.userId}, function(err,data) {
+						if(err) return console.error(err);
+						res.send({data: data});
+				})
+		});
+	}
 }

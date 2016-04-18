@@ -1,0 +1,42 @@
+.ShopCartItem-img{
+  width: 80px;
+  height: 80px;
+  margin-left: 14px;
+  margin-bottom: 40px;
+}
+.ShopCart-procedure{
+  float: right;
+  width: 634px;
+  background: url(../images/procedure_bg.png) 0 0 no-repeat;
+  font: bold 14px/36px "Microsoft Yahei";
+  color: #646464;
+  background-position-y: 10px;
+  line-height: 60px;
+  height: 60px;
+}
+.ShopCart-procedure span.current {
+    color: #fff;
+    width: 206px;
+}
+.ShopCart-procedure span {
+    width: 211px;
+    display: inline-block;
+    text-align: center;
+}
+.ShopCart-hr {
+  border: none;
+  border-bottom: 4px solid #ff2832;
+  width: 100%;
+  margin-bottom: 35px;
+}
+.ShopCart-button {
+  display: inline-block;
+  width: 116px;
+  height: 38px;
+  font: bold 18px/38px "Microsoft Yahei";
+  color: #fff;
+  background-color: #ff2832;
+  border-radius: 2px;
+  text-align: center;
+  margin-top: 12.5px;
+}
