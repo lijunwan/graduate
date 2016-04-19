@@ -13,6 +13,8 @@ export default class  Book extends Component{
       this.state = {
         showContent: 'bookDetai',
         count: 1,
+        isFavorite: false,
+        favoriteLen: 0,
       }
     }
     componentDidMount () {
@@ -20,6 +22,27 @@ export default class  Book extends Component{
         if(this.props.params.bookId) {
             this.props.bookeBoundAC.getBookInfo(this.props.params.bookId)
         }
+    }
+    componentWillReceiveProps(nextProps) {
+      const bookInfo = nextProps.bookInfo.toJS().bookInfo.data;
+      const userId = nextProps.client.toJS().info.id;
+      const favoriteMess = nextProps.favorite.toJS().addFavoriteMess.data;
+      if(bookInfo && bookInfo.favorite) {
+        bookInfo.favorite.map((favorUserId)=>{
+          if(favorUserId == userId){
+              this.setState({
+                isFavorite: true,
+                favoriteLen: bookInfo.favorite.length,
+              })
+          }
+        });
+      }
+      if(favoriteMess && favoriteMess.bookId) {
+        this.setState({
+          isFavorite: true,
+          favoriteLen: this.state.favoriteLen+1,
+        })
+      }
     }
     modifyMoney (value) {
       return Math.round(value).toFixed(2);
@@ -43,8 +66,21 @@ export default class  Book extends Component{
       })
     }
   }
+  addFavorite() {
+    var obj = {
+      bookId : this.props.params.bookId,
+    };
+    if(!this.state.isFavorite) {
+      this.props.favoriteBoundAC.addFavorite(obj);
+      this.setState({
+        isFavorite: true,
+      })
+    }
+  }
     render() {
         const bookInfo = this.props.bookInfo.toJS().bookInfo;
+        const favoriteStarClass = this.state.isFavorite ? 'anticon anticon-star Book-start-active' : 'anticon anticon-star Book-start';
+        const favoriteText = this.state.isFavorite ? '已收藏' : '收藏商品';
         if(bookInfo.data) {
             const money = this.modifyMoney(bookInfo.data.price);
             const salePrice = this.modifyMoney(bookInfo.data.price * (bookInfo.data.discount * 0.1));
@@ -82,8 +118,8 @@ export default class  Book extends Component{
                             <a className="Book-button shop-button" onClick = {this.addBookIntoCars.bind(this)}>加入购物车</a>
                             <a className="Book-button buy-button">一建购买</a>
                             <p style={{marginTop: '20px'}}>
-                              <a className=" anticon anticon-star Book-start" style={{marginRight: '5px'}} type="star-o" />
-                              <span className="star-text">收藏商品(人气1133)</span>
+                              <a className={favoriteStarClass} style={{marginRight: '5px'}} type="star-o" onClick={this.addFavorite.bind(this)}/>
+                              <span className="star-text">{favoriteText}(人气{this.state.favoriteLen})</span>
                             </p>
                           </div>
                         </div>

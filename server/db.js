@@ -67,6 +67,8 @@ db.once('open', function (callback) {
 		saleNumber:Number,//销售量，
 		introduce:[],//简介，
 		scores:String,//评分
+		flag: String,//书籍的状态
+		favorite: [],
 	});
 	//折扣书籍
 	var bookOnSaleSchema = new Schema ({
@@ -92,7 +94,63 @@ db.once('open', function (callback) {
 		flag:String,//标志
 		name:String,//分类的名字``
 		children:[],
-	})
+	});
+	var favoriteSchema = new Schema({
+		time: Date,
+		bookId: String,
+		userId: String,
+		collectPrice: Number,//收藏夹
+		//aprice 此时的价格 bookInfo 数据库
+		//bookName bookInfo 数据库
+		//bookCover bookInfo 数据库
+		// flag 标志 bookInfo 降价 促销 缺货 正常
+	});
+	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
+	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
+	favoriteSchema.statics.findFavoriteById = findItemById({errorCode:404407,message:"未找到相关的收藏夹"});
+	favoriteSchema.statics.createFavorite = createItem({errorCode:405401,message:"操作收藏夹失败"});
+	favoriteSchema.statics.hasRecords = dbHasRecords();
+	// function useUpdate (errorObj) {
+	// 	this.findOne(userId,)
+	// }
+	function createItem(errorObj) {
+		return function(obj,callback) {
+			this.create(obj, function(error, data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(data);
+				} else {
+					res.statusCode="405";
+					res.send({errorCode:errorObj.errorCode,message: errorObj.message});
+				}
+			});
+		}
+	}
+	function findItemById(errorObj) {
+		return function(id, callback) {
+			this.findOne({'_id': id}, function(error, data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(data);
+				} else {
+					res.statusCode="404";
+					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
+				}
+			});
+		}
+	}
+	function dbHasRecords() {//判断数据库里是否存在这条记录
+		return function(obj, callback) {
+			this.findOne(obj, function(error, data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(true);
+				} else {
+					callback(false);
+				}
+			});
+		}
+	}
 	dataModel["users"] = db.model('users',userSchema,'users');
 	dataModel["baseInfo"] = db.model('baseInfo',baseInfoSchema,'baseInfo');
 	dataModel["logs"] = db.model('logs',logSchema);
@@ -101,6 +159,7 @@ db.once('open', function (callback) {
 	dataModel['bookOnSale'] = db.model('bookOnSale', bookOnSaleSchema, 'bookOnSale');
 	dataModel['bookNew'] = db.model('bookNew', bookNewSchema, 'bookNew');
 	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
+	dataModel['favorite'] = db.model('favorite', favoriteSchema, 'favorite');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
@@ -121,11 +180,12 @@ db.once('open', function (callback) {
 		saleNumber:0,
 		introduce:["本书从不同的视角介绍了 Node 内在的特点和结构。由首章Node 介绍为索引，涉及Node的各个方面，主要内容包含模块机制的揭示、异步I/O 实现原理的展现、异步编程的探讨、内存控制的介绍、二进制数据Buffer的细节、Node 中的网络编程基础、Node 中的Web 开发、进程间的消息传递、Node 测试以及通过Node构建产品需要的注意事项。最后的附录介绍了Node 的安装、调试、编码规范和NPM 仓库等事宜。","本书适合想深入了解 Node 的人员阅读。"],
 		scores:0,
+		favorite:[],
 	}
 	var objOnSale = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
-		price: 69.00,
+		price: 61.00,
 		discount:"8.92",
 		cover:"book/cover.jpg",
 		detail: '5709b6499180abb00defee0a'
@@ -133,14 +193,14 @@ db.once('open', function (callback) {
 	dataModel['bookInfo'].create(obj,function(err,data){
 		if(err) return console.error(err);
 	})
-	dataModel['bookOnSale'].create(objOnSale,function(err,data){
-		if(err) return console.error(err);
-		console.log(data);
-	})
-	dataModel['bookNew'].create(objOnSale,function(err,data){
-		if(err) return console.error(err);
-		console.log(data);
-	})
+	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
+	// 	if(err) return console.error(err);
+	// 	console.log(data);
+	// })
+	// dataModel['bookNew'].create(objOnSale,function(err,data){
+	// 	if(err) return console.error(err);
+	// 	console.log(data);
+	// })
 // 	var obj = {
 // 	flag:'J',
 // 	name:'教育',

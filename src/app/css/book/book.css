@@ -114,6 +114,9 @@
 .Book-start {
   color: #969696;
 }
+.Book-start-active {
+  color: #ff2832;
+}
 .star-text{
   color: #969696;
 }

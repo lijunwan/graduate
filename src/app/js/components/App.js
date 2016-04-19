@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as clientAC from '../actions/client';
 import * as bookAC from '../actions/book';
+import * as favoriteAC from '../actions/favorite';
 import Router from 'react-router';
 import Footer from '../components/common/Footer';
 import Header from '../components/common/Header';
@@ -47,15 +48,8 @@ export default class App extends Component{
 function mapStateToProps(state) {
   return {
       client: state.client,
-      bookInfo: state.bookInfo
-      // tablepage:  state.page,
-      // dataPlatform: state.dataPlatform,
-      // dataCondition:state.dataCondition,
-      // dataNavigation:state.dataNavigation,
-      // dataSuggest:state.dataSuggest,
-      // dataProvince:state.dataProvince,
-      // dataStatistic:state.dataStatistic,
-      // dataSource: state.dataSource
+      bookInfo: state.bookInfo,
+      favorite: state.favorite,
   };
 }
 
@@ -63,13 +57,7 @@ function mapDispatchToProps(dispatch) {
       return {
             clientBoundAC: bindActionCreators(clientAC, dispatch),
             bookeBoundAC: bindActionCreators(bookAC, dispatch),
-            // getDataPlatformBoundAC:bindActionCreators( getPlatformDataAC,dispatch),
-            // getDataConditionBoundAC:bindActionCreators( getDataConditionAC,dispatch),
-            // getDataNavigationBoundAC:bindActionCreators( getDataNavigationAC,dispatch),
-            // getDataSuggestBoundAC:bindActionCreators( getDataSuggestAC,dispatch),
-            // getDataProvinceBoundAC:bindActionCreators( getDataProvinceAC,dispatch),
-            // getDataStatisticBoundAC:bindActionCreators( getDatastatisticAC,dispatch),
-            // getDataSourceBoundAC:bindActionCreators( getDataSourceAC,dispatch),
+            favoriteBoundAC:  bindActionCreators(favoriteAC, dispatch),
       }
 }
 

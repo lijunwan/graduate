@@ -56,7 +56,7 @@ export default class  ShopCartItem extends Component {
     return(
       <Row>
         <Col span="4">
-          <Checkbox style={{position: 'absolute', top: '33px', left: '0', zIndex:'2'}} checked={this.props.checkboxChild[this.props.index]} onChange={this.choiceBook.bind(this)}/><img className="ShopCartItem-img" src= {data.cover} />
+          <Checkbox style={{position: 'absolute',left: '0'}} checked={this.props.checkboxChild[this.props.index]} onChange={this.choiceBook.bind(this)}/><img className="ShopCartItem-img" src= {data.cover} />
         </Col>
         <Col span="4">
           <p>{data.bookName}</p>

@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../modules/user.js');
 var Books = require('../modules/book');
 var ShopCart = require('../modules/shopCart');
+var Favorite = require('../modules/favorite');
 app.post('/api/user/login',User.checkLogin);
 app.get('/api/log',User.isLogin);
 app.get('/api/user/phone',User.checkPhone);
@@ -23,7 +24,9 @@ app.use('/api/user/authorization/*', function(req, res, next){
         res.send({errorCode:400100,message:"未授权"})
     }
 });
-app.get('/api/user/authorization/addShopCarts', ShopCart.addBook)
-app.get('/api/user/authorization/getShopCarts', ShopCart.getShopCartInfo)
-app.get('/api/user/authorization/updateShopCart', ShopCart.updateShopCart)
+app.get('/api/user/authorization/addShopCarts', ShopCart.addBook);
+app.get('/api/user/authorization/getShopCarts', ShopCart.getShopCartInfo);
+app.get('/api/user/authorization/updateShopCart', ShopCart.updateShopCart);
+app.get('/api/user/authorization/addFavorite', Favorite.addFavorite);
+app.get('/api/user/authorization/getFavorite', Favorite.getFavorite);
 module.exports = app;
