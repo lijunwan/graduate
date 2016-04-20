@@ -1,5 +1,7 @@
 var db = require('../db');
 var __pick = require('lodash/pick');
+var __assign = require('lodash/assign');
+var __find = require('lodash/find');
 function Favorite (favorite) {
   this.time = favorite.time;
 	this.userId = favorite.userId;
@@ -12,16 +14,15 @@ Favorite.addFavorite = function addFavorite (req, res) {
   obj.userId = req.cookies.bookstore.id;
   obj.bookId = req.query.bookId;
   obj.time = new Date();
-  db['favorite'].hasRecords({userId: obj.userId, bookId: obj.bookId}, function(result){
+  db['favorite'].hasRecords(req, res, {userId: obj.userId, bookId: obj.bookId}, function(result){
     if(!result) {
-      db['bookInfo'].findBookById(obj.bookId, function(book){
+      db['bookInfo'].findBookById(req, res, obj.bookId, function(book){
           obj.collectPrice = book.aprice;
-          console.log('book1243',book.favorite);
           book.favorite.push(obj.userId);
           book.save();
-          db['favorite'].createFavorite(obj,function(favorite){
+          db['favorite'].createFavorite(req, res, obj,function(favorite){
             var favoriteData = __pick(favorite,['userId','bookId','time','collectPrice']);
-            db['users'].findUserById(obj.userId, function(data) {
+            db['users'].findUserById(req, res, obj.userId, function(data) {
               data.favorite.push(obj.bookId);
               data.save();
               res.send({data: favoriteData});
@@ -34,27 +35,33 @@ Favorite.addFavorite = function addFavorite (req, res) {
   })
 }
 Favorite.getFavorite = function getFavorite(req, res) {
-  var boj = {}
   var userId = req.cookies.bookstore.id;
   if(userId) {
-    db['favorite'].find({userId: userId}, function(err,favorite){
-      if(err) return console.error(err);
-      if (favorite) {
-        obj = __pick(favorite,['bookId','userId','collectPrice','time']);
-        db['bookInfo'].findBookById(obj.bookId, function(err, book){
-          if(book) {
-            var bookInfo = __pick(book,['aprice', 'bookName', 'cover','flag']);
-
-            res.end({data:{favorite:obj, bookInfo: bookInfo}});
-          } else {
-            res.statusCode= 404;
-            res.send({errorCode: 404001,message:'未找到相关书籍'});
-          }
+    db['favorite'].findItems(req, res, {userId: userId}, function(favorite){
+      const list = [];
+      var bookIdList = [];
+      if(favorite.length > 0) {
+        favorite.map(function(data) {
+          var favoriteData = {};
+          favoriteData.favorite =  __pick(data,['bookId','userId','collectPrice','time']);
+          list.push(favoriteData);
+          bookIdList.push(data.bookId);
         });
-
-      } else {
-        res.statusCode= 404;
-        res.send({errorCode: 404001,message:'未找到相关收藏'});
+        db['bookInfo'].where('_id').in(bookIdList).exec(function(error, bookList){
+          list.map(function(data){
+            var bookItem = __find(bookList, function(obj){
+              console.log('bookObj========', obj['_id'] == data.bookId);
+              return obj['_id'] == data.bookId;
+            })
+            console.log('bookItem', bookItem);
+            if(bookItem) {
+              data.bookInfo = __pick(bookItem, ['cover', 'bookName', 'aprice', 'flag']);
+            }else {
+              data.bookInfo = {};
+            }
+          });
+          res.send({data: list});
+        })
       }
     })
   } else {

@@ -51,7 +51,7 @@ export default class Header extends Component {
 					<ul className="Header-menu">
 						<li><a herf="javascript:;">我的订单</a></li>
 						<li><Link to='/shopCart'>购物车</Link></li>
-						<li><a herf="javascript:;">收藏夹</a></li>
+						<li><Link to='/favorite'>收藏夹</Link></li>
 					</ul>
 				</div>
 			</div>

@@ -14,10 +14,9 @@ export function addFavorite(params){
     });
   };
 }
-export function getFavorite(params){
+export function getFavorite(){
   return dispatch => {
       HttpRequest.get('/api/user/authorization/getFavorite')
-      .query(params)
       .end(function(err,resp){
         dispatch({
           type: GET_FAVORITE,

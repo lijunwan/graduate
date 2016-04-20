@@ -110,11 +110,12 @@ db.once('open', function (callback) {
 	favoriteSchema.statics.findFavoriteById = findItemById({errorCode:404407,message:"未找到相关的收藏夹"});
 	favoriteSchema.statics.createFavorite = createItem({errorCode:405401,message:"操作收藏夹失败"});
 	favoriteSchema.statics.hasRecords = dbHasRecords();
+	favoriteSchema.statics.findItems = findItems({errorCode:404600,message:'未找到相关收藏'});
 	// function useUpdate (errorObj) {
 	// 	this.findOne(userId,)
 	// }
 	function createItem(errorObj) {
-		return function(obj,callback) {
+		return function(req, res, obj,callback) {
 			this.create(obj, function(error, data){
 				if(error) return console.error(error);
 				if(data) {
@@ -126,9 +127,9 @@ db.once('open', function (callback) {
 			});
 		}
 	}
-	function findItemById(errorObj) {
-		return function(id, callback) {
-			this.findOne({'_id': id}, function(error, data){
+	function findItems(errorObj) {
+		return function(req, res, obj, callback) {
+			this.find(obj, function(error, data){
 				if(error) return console.error(error);
 				if(data) {
 					callback(data);
@@ -139,8 +140,22 @@ db.once('open', function (callback) {
 			});
 		}
 	}
+	function findItemById(errorObj) {
+		return function(req, res, id, callback) {
+			this.findOne({'_id': id}, function(error, data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(data);
+				} else {
+					console.log(res,'????')
+					res.statusCode="404";
+					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
+				}
+			});
+		}
+	}
 	function dbHasRecords() {//判断数据库里是否存在这条记录
-		return function(obj, callback) {
+		return function(req, res, obj, callback) {
 			this.findOne(obj, function(error, data){
 				if(error) return console.error(error);
 				if(data) {
