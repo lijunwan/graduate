@@ -28,7 +28,7 @@ export default class App extends Component{
                 </div>
             }
             {
-              this.props.routes[1]&&this.props.routes[1].name=="shopCart" ?
+              this.props.routes[1]&&this.props.routes[1].name=="shopCart" || this.props.routes[1]&&this.props.routes[1].name=="favorite" ?
               <div>
                   {React.cloneElement(this.props.children, this.props)}
               </div>

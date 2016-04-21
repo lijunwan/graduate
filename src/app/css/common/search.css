@@ -1,7 +1,7 @@
 .Search input{
   width: 400px;
   height: 40px;
-  border: 2px solid #007DC9;
+  border: 2px solid #ff2832;
   padding: 5px 10px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -12,7 +12,7 @@
 .Search a{
   display: inline-block;
   color: #fff;
-  background: #007DC9;
+  background: #ff2832;
   height: 40px;
   font-size: 20px;
   padding: 10px 21px;
