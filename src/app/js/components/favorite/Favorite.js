@@ -9,6 +9,7 @@ export default class  Favorite extends Component {
     console.log(this.props.favorite.toJS().favorite.data,'????');
     const favoriteData = this.props.favorite.toJS().favorite.data;
     const list =[];
+    console.log(favoriteData);
     if(favoriteData){
       favoriteData.map((data, index)=>{
         list.push(
@@ -26,7 +27,7 @@ export default class  Favorite extends Component {
       <div>
         <Row style={{margin: '30px auto 0',width: '1200px'}}>
           <Col span="8">
-            <img src={logoImg} alt=""/>
+            <a href="/"><img src={logoImg} alt=""/></a>
           </Col>
           <Col span="16" style={{marginTop: '10px'}}>
             <Search {...this.props}/>

@@ -29,4 +29,5 @@ app.get('/api/user/authorization/getShopCarts', ShopCart.getShopCartInfo);
 app.get('/api/user/authorization/updateShopCart', ShopCart.updateShopCart);
 app.get('/api/user/authorization/addFavorite', Favorite.addFavorite);
 app.get('/api/user/authorization/getFavorite', Favorite.getFavorite);
+app.get('/api/user/authorization/delFavorite', Favorite.delFavorite);
 module.exports = app;

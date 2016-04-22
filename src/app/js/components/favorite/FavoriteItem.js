@@ -11,7 +11,7 @@ export default class  FavoriteItem extends Component {
     this.props.history.pushState(null, '/book/'+ bookId)
   }
   delFavorite(bookId) {
-    this.props.favoriteBoundAC.delFavorite(bookId)
+    this.props.favoriteBoundAC.delFavorite({bookId: bookId})
   }
   render() {
     const data = this.props.data;

@@ -82,10 +82,10 @@ var options = {
   cert:fs.readFileSync(path.join(__dirname, 'ssh/key-cert.pem'),'utf8'),
 }
 var httpsServer = https.createServer(options, app);
-    httpsServer.listen(4000,function(){
-      console.log('Example app listening at https://%s:%s', 4000, 4000)
+    httpsServer.listen(5001,function(){
+      console.log('Example app listening at https://%s:%s', 5001, 5001)
     })
-var server = app.listen(3000,function(){
+var server = app.listen(5000,function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log(path.join(__dirname, '../dist'))

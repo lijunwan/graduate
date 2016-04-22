@@ -37,6 +37,7 @@ Favorite.addFavorite = function addFavorite (req, res) {
 }
 Favorite.getFavorite = function getFavorite(req, res) {
   var userId = req.cookies.bookstore.id;
+  console.log('????123=====');
   if(userId) {
     db['favorite'].findItems(req, res, {userId: userId}, function(favorite){
       const list = [];
@@ -47,10 +48,9 @@ Favorite.getFavorite = function getFavorite(req, res) {
           list.push(favoriteData);
           bookIdList.push(data.bookId);
         });
-
         db['bookInfo'].where('_id').in(bookIdList).exec(function(error, bookList){
           list.map(function(data){
-            var bookItem = GR_findItem(bookList,'_id','571835fd28a5643a1270e8c5');
+            var bookItem = GR_findItem(bookList,'_id',data.favorite.bookId);
             if(bookItem) {
               data.bookInfo = __pick(bookItem, ['cover', 'bookName', 'aprice', 'flag']);
             }else {
@@ -81,7 +81,7 @@ Favorite.delFavorite = function delFavorite(req, res) {
       db['favorite'].findOneAndRemove(obj, function(error, favorite){
         if(error) return console.error(error);
       if(favorite) {
-        db['users'].findUserById(obj.userId, function(user){
+        db['users'].findUserById(req,res,obj.userId, function(user){
            var newFav = __remove(user.favorite, function(bookId){
              return obj.bookId == bookId;
            });
@@ -93,7 +93,7 @@ Favorite.delFavorite = function delFavorite(req, res) {
           })
           book.favorite = newFav;
           book.save();
-          res.send({data: 'ok'});
+          Favorite.getFavorite(req, res)
         })
     });
     } else {
