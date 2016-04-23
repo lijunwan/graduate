@@ -83,7 +83,6 @@ export default class  Book extends Component{
         const favoriteText = this.state.isFavorite ? '已收藏' : '收藏商品';
         if(bookInfo.data) {
             const money = this.modifyMoney(bookInfo.data.price);
-            const salePrice = this.modifyMoney(bookInfo.data.price * (bookInfo.data.discount * 0.1));
             return(
                 <div>
                   <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
@@ -107,7 +106,7 @@ export default class  Book extends Component{
                             </p>
                             <div className="price-info">
                               <p><span className="price-key letter02">定价</span> <span><s>￥{money}</s></span></p>
-                              <p><span className="price-key letter01 marginRight">折扣价</span><span className="price-money">￥{salePrice}</span><span className="marginLeft">({bookInfo.data.discount}折)</span></p>
+                              <p><span className="price-key letter01 marginRight">折扣价</span><span className="price-money">￥{bookInfo.data.aprice}</span><span className="marginLeft">({bookInfo.data.discount}折)</span></p>
                             </div>
                             <div style={{paddingTop: '30px'}}>
                               <NumberBox maxNumber= {parseInt(100)}

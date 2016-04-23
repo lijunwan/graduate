@@ -106,13 +106,16 @@ export default class  ShopCart extends Component {
 	}
 	confirmPay() {
 		const list = [];
-		const data = this.props.client.toJS().shopCart.data
+		const data = this.props.client.toJS().shopCart.data;
+		const orderData = {}
 		this.state.checkboxChild.map((flag, index)=>{
 			if(flag) {
 				list.push(data[index]);
 			}
-		})
-	   localStorage.setItem('confirmOrder', JSON.stringify(list))
+		});
+		orderData.bookInfo = list;
+		orderData.sumMon = this.state.sumMon;
+	   localStorage.setItem('confirmOrder', JSON.stringify(orderData))
        this.props.history.push({pathname: '/payment/'})
 	}
 	render() {
