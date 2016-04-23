@@ -27,17 +27,6 @@ class OrderTable extends Component {
         var data = localStorage.getItem("confirmOrder");
         const list = [];
         if(data) {
-<<<<<<< HEAD
-            var orderInfo = JSON.parse(data);
-            console.log('-------',orderInfo)
-            orderInfo.map((item)=>{
-                <tr>
-                    <td></td>
-                    <td>单价</td>
-                    <td>数量</td>
-                    <td>小计</td>
-                </tr>
-=======
             var orderInfo = JSON.parse(data).bookInfo;
             orderInfo.map((item)=>{
                 list.push(
@@ -47,7 +36,6 @@ class OrderTable extends Component {
                         <td>{item.count}</td>
                     </tr>
                 )
->>>>>>> 28fba864881e09d1c0a269079cf3b0808056d107
             })
         }
         return list;
