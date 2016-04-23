@@ -24,7 +24,7 @@ ShopCart.addBook = function addBook (req, res) {
                         obj.aprice = book.aprice;
                         obj.discount = book.discount;
                         obj.bookName = book.bookName;
-												obj.cover = book.cover;
+						obj.cover = book.cover;
                     }
                     db['shopCart'].create(obj,function(err,shopCart){
                         if(err) return console.error(err);

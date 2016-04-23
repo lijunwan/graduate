@@ -50,7 +50,7 @@ Favorite.getFavorite = function getFavorite(req, res) {
 
         db['bookInfo'].where('_id').in(bookIdList).exec(function(error, bookList){
           list.map(function(data){
-            var bookItem = GR_findItem(bookList,'_id','571835fd28a5643a1270e8c5');
+            var bookItem = GR_findItem(bookList,'_id',  data.favorite.bookId);
             if(bookItem) {
               data.bookInfo = __pick(bookItem, ['cover', 'bookName', 'aprice', 'flag']);
             }else {
