@@ -1,0 +1,26 @@
+.payment {
+    margin-top: 40px;
+}
+.payment h2 {
+    line-height: 25px;
+    color: #333;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 5px 0 10px;
+}
+.addressCard {
+    background-image: url('../images/addressCardBg.png');
+    width: 237px;
+    height: 106px;
+    padding: 11px 15px
+}
+.OrderTable{
+
+}
+.OrderTable th, .OrderTable td{
+    width: 300px;
+    text-align: center;
+}
+.pay-img {
+    width: 40px;
+}
