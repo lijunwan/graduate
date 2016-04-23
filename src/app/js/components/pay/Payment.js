@@ -20,8 +20,14 @@ class OrderTable extends Component {
         const list = [];
         if(data) {
             var orderInfo = JSON.parse(data);
+            console.log('-------',orderInfo)
             orderInfo.map((item)=>{
-
+                <tr>
+                    <td></td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>小计</td>
+                </tr>
             })
         }
     }
