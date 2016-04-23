@@ -1,7 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import logoImg from '../../../images/logo.jpg';
 import '../../../css/payment.css';
+import __pick from 'lodash/pick'
 export default class payment extends Component {
+    createOrder() {
+        console.log(this.props, '----');
+        var data = localStorage.getItem("confirmOrder");
+        var bookInfo = JSON.parse(data).bookInfo;
+        const bookInfoList = [];
+        bookInfo.map((bookItem)=>{
+            var obj = __pick(bookItem,['bookId', 'count']);
+            bookInfoList.push(obj);
+        })
+        var obj = {
+            address: '重庆 重庆市 小红收',
+            bookInfo: JSON.stringify(bookInfoList),
+        }
+        console.log(bookInfo)
+        this.props.orderBoundAC.createOrder(obj);
+    }
     render() {
         var data = localStorage.getItem("confirmOrder");
         var sumMon = JSON.parse(data).sumMon
@@ -16,7 +33,7 @@ export default class payment extends Component {
                     <h2>确认订单信息</h2>
                     <OrderTable {...this.props}/>
                     <p>实付款<span>￥{sumMon}</span></p>
-                    <p><a>提交订单</a></p>
+                    <p><a onClick={this.createOrder.bind(this)}>提交订单</a></p>
                 </div>
             </div>
         )

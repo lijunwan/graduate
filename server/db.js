@@ -105,12 +105,22 @@ db.once('open', function (callback) {
 		//bookCover bookInfo 数据库
 		// flag 标志 bookInfo 降价 促销 缺货 正常
 	});
+	var orderSchema = new Schema({
+		time: Date,//订单成交时间
+		info: [Schema.Types.Mixed],//商品id aprice  数量
+		sumMon: Number, //实际金额
+		userId: String, //用户id
+	    address: String,//收货地址
+	    statues: String,//unpaied paided/unsend send/unrecive recive
+	})
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
+	bookInfoSchema.statics.findItemsByList = findItemsByList({errorCode:404406,message:"未找到相关的书籍"})
 	favoriteSchema.statics.findFavoriteById = findItemById({errorCode:404407,message:"未找到相关的收藏夹"});
 	favoriteSchema.statics.createFavorite = createItem({errorCode:405401,message:"操作收藏夹失败"});
 	favoriteSchema.statics.hasRecords = dbHasRecords();
 	favoriteSchema.statics.findItems = findItems({errorCode:404600,message:'未找到相关收藏'});
+	orderSchema.statics.createItem = createItem({errorCode:404700,message:'创建订单失败'})
 	// function useUpdate (errorObj) {
 	// 	this.findOne(userId,)
 	// }
@@ -166,6 +176,19 @@ db.once('open', function (callback) {
 			});
 		}
 	}
+	function findItemsByList() {
+		return function(req, res, list, callback) {
+			this.where('_id').in(list).exec(function(error,data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(data);
+				} else {
+					res.statusCode="404";
+					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
+				}
+			});
+		}
+	}
 	dataModel["users"] = db.model('users',userSchema,'users');
 	dataModel["baseInfo"] = db.model('baseInfo',baseInfoSchema,'baseInfo');
 	dataModel["logs"] = db.model('logs',logSchema);
@@ -175,6 +198,7 @@ db.once('open', function (callback) {
 	dataModel['bookNew'] = db.model('bookNew', bookNewSchema, 'bookNew');
 	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
 	dataModel['favorite'] = db.model('favorite', favoriteSchema, 'favorite');
+	dataModel['order'] = db.model('order', orderSchema, 'order');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
