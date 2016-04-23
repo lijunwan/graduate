@@ -121,6 +121,7 @@ db.once('open', function (callback) {
 	favoriteSchema.statics.hasRecords = dbHasRecords();
 	favoriteSchema.statics.findItems = findItems({errorCode:404600,message:'未找到相关收藏'});
 	orderSchema.statics.createItem = createItem({errorCode:404700,message:'创建订单失败'})
+	orderSchema.statics.findItems = findItems({errorCode:404700,message:'查找订单失败'})
 	// function useUpdate (errorObj) {
 	// 	this.findOne(userId,)
 	// }

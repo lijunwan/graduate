@@ -31,4 +31,6 @@ app.get('/api/user/authorization/updateShopCart', ShopCart.updateShopCart);
 app.get('/api/user/authorization/addFavorite', Favorite.addFavorite);
 app.get('/api/user/authorization/getFavorite', Favorite.getFavorite);
 app.get('/api/user/authorization/createOrder', Order.createOrder);
+app.get('/api/user/authorization/getOrderList', Order.getOrderList);
+
 module.exports = app;

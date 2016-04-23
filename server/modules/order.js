@@ -17,6 +17,8 @@ Order.createOrder = function createOrder(req, res) {
 			var obj = GR.findItem(bookInfoList, '_id', bookInfoItem.bookId);
 			if(obj) {
 				bookInfoItem.aprice = obj.aprice;
+				bookInfoItem.cover = obj.cover;
+				bookInfoItem.bookName = obj.bookName;
 				bookInfoItem.sumMon = (obj.aprice * bookInfoItem.count).toFixed(2);
 				orderObj.sumMon += bookInfoItem.sumMon;
 			} else {
@@ -30,6 +32,13 @@ Order.createOrder = function createOrder(req, res) {
 			res.send({data: data})
 		})
 	})
+}
+Order.getOrderList = function getOrderList(req, res) {
+	var userId = req.cookies.bookstore.id;
+	db['order'].findItems(req, res, {userId: userId}, function(data){
+		res.send({data: data});
+	})
+
 }
 function getKeyValueList(list,key) {
 	const result = [];
