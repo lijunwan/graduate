@@ -49,7 +49,7 @@ export default class Header extends Component {
 						}
 					</div>
 					<ul className="Header-menu">
-						<li><a herf="javascript:;">我的订单</a></li>
+						<li><Link to='/order'>我的订单</Link></li>
 						<li><Link to='/shopCart'>购物车</Link></li>
 						<li><Link to='/favorite'>收藏夹</Link></li>
 					</ul>
