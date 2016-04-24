@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import logoImg from '../../../images/logo.jpg';
 import '../../../css/payment.css';
-import __pick from 'lodash/pick'
+import __pick from 'lodash/pick';
+import SimpleStep from '../common/SimpleStep';
 export default class payment extends Component {
     createOrder() {
         console.log(this.props, '----');
@@ -18,13 +19,21 @@ export default class payment extends Component {
         }
         console.log(bookInfo)
         this.props.orderBoundAC.createOrder(obj);
+        this.props.history.pushState(null,'/pay');
+    }
+    componentWillReciveProps(nextProps){
+        if(nextProps.order.toJS().orderInfo.useId != undefined) {
+            this.props.history.pushState(null,'/pay');
+        }
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
         var sumMon = JSON.parse(data).sumMon
         return(
             <div className="payment">
-                <div><img src={logoImg} href="/"/></div>
+                <div><img src={logoImg} href="/"/>
+                <SimpleStep stepIndex={parseInt("1")} />
+                </div>
                 <div className="address">
                     <h2>选择收货地址</h2>
                     <AddressCard />

@@ -32,5 +32,5 @@ app.get('/api/user/authorization/addFavorite', Favorite.addFavorite);
 app.get('/api/user/authorization/getFavorite', Favorite.getFavorite);
 app.get('/api/user/authorization/createOrder', Order.createOrder);
 app.get('/api/user/authorization/getOrderList', Order.getOrderList);
-
+app.get('/api/user/authorization/payOrder', Order.payOrder);
 module.exports = app;

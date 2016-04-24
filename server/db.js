@@ -111,7 +111,15 @@ db.once('open', function (callback) {
 		sumMon: Number, //实际金额
 		userId: String, //用户id
 	    address: String,//收货地址
-	    statues: String,//unpaied paided/unsend send/unrecive recive
+	    orderStatus: String,//unpaied paided/unsend send/unrecive recive
+	});
+	var saleRecordsSchema = new Schema({
+		bookId: String,
+		userId: String,
+		count: Number,
+		orderId: String,
+		salePrice: Number,
+		sumMon: Number,
 	})
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
@@ -122,6 +130,9 @@ db.once('open', function (callback) {
 	favoriteSchema.statics.findItems = findItems({errorCode:404600,message:'未找到相关收藏'});
 	orderSchema.statics.createItem = createItem({errorCode:404700,message:'创建订单失败'})
 	orderSchema.statics.findItems = findItems({errorCode:404700,message:'查找订单失败'})
+	orderSchema.statics.findItemById = findItemById({errorCode:404701,message:'查找订单失败'})
+	
+	saleRecordsSchema.statics.createItem = createItem({errorCode:404702,message:'支付失败'})
 	// function useUpdate (errorObj) {
 	// 	this.findOne(userId,)
 	// }
@@ -200,6 +211,7 @@ db.once('open', function (callback) {
 	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
 	dataModel['favorite'] = db.model('favorite', favoriteSchema, 'favorite');
 	dataModel['order'] = db.model('order', orderSchema, 'order');
+	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 'saleRecords');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
@@ -251,10 +263,10 @@ db.once('open', function (callback) {
 // 			children:[
 // 				{
 // 					flag:'JG',
-// 					name:'高职高专教材'
+// 			   		name:'高职高专教材'
 // 				},
 // 				{
-// 					flag: 'JZ',
+// 		 			flag: 'JZ',
 // 					name: '中职教材'
 // 				}
 // 			]
