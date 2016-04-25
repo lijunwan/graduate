@@ -73,12 +73,12 @@ export default class  ShopCart extends Component {
 			data.map((item, index)=>{
 				list.push(
 					<ShopCartItem {...this.props}
-												data={item}
-												key= {index}
-												isChoiceAll={this.state.isChoiceAll}
-												index={index}
-												checkboxChild={this.state.checkboxChild}
-												setIsChecked={this.setIsChecked.bind(this)}/>
+					data={item}
+					key= {index}
+					isChoiceAll={this.state.isChoiceAll}
+					index={index}
+					checkboxChild={this.state.checkboxChild}
+					setIsChecked={this.setIsChecked.bind(this)}/>
 				)
 			});
 		}
@@ -102,6 +102,20 @@ export default class  ShopCart extends Component {
 			sumMon: sumMon.toFixed(2),
 			count: count,
 		});
+	}
+	confirmPay() {
+		const list = [];
+		const data = this.props.client.toJS().shopCart.data;
+		const orderData = {}
+		this.state.checkboxChild.map((flag, index)=>{
+			if(flag) {
+				list.push(data[index]);
+			}
+		});
+		orderData.bookInfo = list;
+		orderData.sumMon = this.state.sumMon;
+	   localStorage.setItem('confirmOrder', JSON.stringify(orderData))
+       this.props.history.push({pathname: '/payment/'})
 	}
 	render() {
 		if(this.props.client.toJS().shopCart.data) {
@@ -134,7 +148,7 @@ export default class  ShopCart extends Component {
 						<Col span="4" style={{height: '63px', lineHeight: '63px', textAlign: 'center',color:'#323232',fontWeight: 'bold'}}>合计</Col>
 						<Col span="8"  style={{height: '63px', lineHeight: '63px', textAlign: 'left'}}>已选择<span style={{color: '#ff2832'}}>{this.state.count}</span>件商品</Col>
 						<Col span="6"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}>总计<span style={{fontSize: '18px', color: '#ff2832'}}>￥{this.state.sumMon}</span></Col>
-						<Col span="4"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}><span className="ShopCart-button">结算</span></Col>
+						<Col span="4"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}><a className="ShopCart-button" onClick={this.confirmPay.bind(this)}>结算</a></Col>
 					</Row>
 					</div>
 				</div>

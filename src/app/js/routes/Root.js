@@ -9,6 +9,9 @@ import Book from '../components/book/Book';
 import SearchResult from '../components/SearchResult/SearchResult';
 import ShopCart from '../components/ShopCart/ShopCart';
 import Favorite from '../components/favorite/Favorite';
+import Payment from '../components/pay/Payment.js';
+import Order from '../components/order/Order';
+import Pay from '../components/pay/Pay';
 var Router = require('react-router');
 var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -24,6 +27,9 @@ var routes = (
       <Route name="searchResult" path='/SearchResult' component={SearchResult} />
       <Route name="shopCart" path='/shopCart' component={ShopCart} />
       <Route name="favorite" path='/favorite' component={Favorite} />
+      <Route name="payment" path='/payment/' component={Payment} />
+      <Route name="order" path='/order' component={Order} />
+      <Route name="pay" path='/pay' component={Pay} />
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}

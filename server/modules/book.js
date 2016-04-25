@@ -28,7 +28,7 @@ Books.searchBook = function searchBook(req, res) {
 		console.log('================',data)
 		var list = [];
 		data.map((item)=>{
-			var obj = __pick(item, ['bookName', 'author', 'pubHouse', 'pubDate', 'price', 'discount', 'cover', 'introduce']);
+			var obj = __pick(item, ['bookName', 'aprice','author', 'pubHouse', 'pubDate', 'price', 'discount', 'cover', 'introduce']);
 			obj.id = item['_id'];
 			list.push(obj);
 			console.log(obj);

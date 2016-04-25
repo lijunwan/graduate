@@ -1,0 +1,47 @@
+.Order img {
+    margin: 20px 0 10px;
+}
+.Order h2 {
+    color: #097AB4;
+    margin: 20px 0;
+}
+.Order h2 i {
+    margin-right: 5px;
+}
+.Order span {
+    font-family: 'Microsoft YaHei';
+    font-weight: normal;
+}
+.OrderTable tr {
+    width: 200px;
+    color: #404040;
+    font-size: 12px;
+}
+.OrderSearch {
+    
+}
+.OrderSearch input{
+  width: 220px;
+  height: 35px;
+  border: 2px solid #C1C1C1;
+  padding: 5px 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.OrderSearch input:focus{
+  outline: none;
+}
+.OrderSearch a{
+  display: inline-block;
+  color: #fff;
+  background: #C1C1C1;
+  height: 35px;
+  font-size: 20px;
+  padding: 7.5px 21px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  vertical-align: middle;
+  margin-top: -1px;
+  margin-right: -1px;
+  width: 60px;
+}
