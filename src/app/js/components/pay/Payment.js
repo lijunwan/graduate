@@ -7,12 +7,11 @@ import SimpleStep from '../common/SimpleStep';
 import {Row, Col} from 'antd';
 export default class payment extends Component {
     createOrder() {
-        console.log(this.props, '----');
         var data = localStorage.getItem("confirmOrder");
         var bookInfo = JSON.parse(data).bookInfo;
         const bookInfoList = [];
         bookInfo.map((bookItem)=>{
-            var obj = __pick(bookItem,['bookId', 'count']);
+            var obj = __pick(bookItem.shopCartInfo,['bookId', 'count']);
             bookInfoList.push(obj);
         })
         var obj = {
@@ -21,12 +20,12 @@ export default class payment extends Component {
         }
         console.log(bookInfo)
         this.props.orderBoundAC.createOrder(obj);
-        this.props.history.pushState(null,'/pay');
     }
-    componentWillReciveProps(nextProps){
-      const orderInfo = nextProps.order.toJS().orderInfo
-        if(orderInfo.useId != undefined) {
-            this.props.history.pushState(null,'/pay');
+    componentWillReceiveProps(nextProps){
+      const orderInfo = nextProps.order.toJS().orderInfo.data;
+        if(orderInfo['_id'] != undefined) {
+            localStorage.setItem('orderInfo', JSON.stringify(orderInfo))
+            this.props.history.pushState(null,'/pay/'+ orderInfo['_id']);
         }
     }
     render() {

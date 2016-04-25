@@ -29,7 +29,7 @@ var routes = (
       <Route name="favorite" path='/favorite' component={Favorite} />
       <Route name="payment" path='/payment/' component={Payment} />
       <Route name="order" path='/order' component={Order} />
-      <Route name="pay" path='/pay:orderId' component={Pay} />
+      <Route name="pay" path='/pay/:orderId' component={Pay} />
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}

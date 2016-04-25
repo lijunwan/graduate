@@ -7,12 +7,12 @@ export default class Pay extends Component {
 	}
 	payOrder() {
 		const orderInfoData = this.props.order.toJS().orderInfo.data;
-		console.log(orderInfoData['_id'], '?????');
 		if(orderInfoData) {
 			this.props.orderBoundAC.payOrder({orderId: orderInfoData['_id']});
 		}
 	}
 	render() {
+		const orderInfo = JSON.parse(localStorage.getItem('orderInfo'));
 		return(
 			<div>
 				<Row style={{margin: '50px 0'}}>
@@ -23,6 +23,7 @@ export default class Pay extends Component {
 							<SimpleStep stepIndex={parseInt("2")} />
 					</Col>
 				</Row>
+				<p>{orderInfo.sumMon}</p>
 				<a onClick={this.payOrder.bind(this)}>支付</a>
 			</div>
 		)
