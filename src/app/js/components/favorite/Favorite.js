@@ -5,6 +5,15 @@ import Search from '../common/Search';
 import FavoriteItem from './FavoriteItem';
 import '../../../css/favorite.css'
 export default class  Favorite extends Component {
+  constructor(props) {
+    super(props);
+    this.setState = {
+      curentData: [],
+      showPage: 1,
+      size: 48,
+      totalPage: 0,
+    }
+  }
   createFavorite() {
     console.log(this.props.favorite.toJS().favorite.data,'????');
     const favoriteData = this.props.favorite.toJS().favorite.data;
@@ -18,6 +27,18 @@ export default class  Favorite extends Component {
       })
     }
     return list;
+  }
+  componentWillReciveProps(nextProps) {
+    const favoriteData = nextProps.favorite.toJS().favorite.data;
+    const start = (this.state.showPage-1) * this.state.size;
+    const end = (this.state.showPage-1) * this.state.size + this.state.size;
+    const totalPage = favoriteData % this.state.size == 0 ? favoriteData / this.state.size : favoriteData / this.state.size + 1;
+    if(favoriteData) {
+      const favoriteList = favoriteData.split(start, end);
+      this.setState({
+        totalPage: totalPage,
+      })
+    }
   }
   componentDidMount() {
     this.props.favoriteBoundAC.getFavorite();
@@ -42,7 +63,7 @@ export default class  Favorite extends Component {
             仅显示 降价 <Checkbox/> 促销 <Checkbox/> 缺货 <Checkbox/>
           </Col>
           <Col span="3">
-            <Pagination simple defaultCurrent={2} total={50} />
+            <Pagination simple defaultCurrent={1} total={50} />
           </Col>
         </Row>
         <Row style={{margin: '30px auto 0',width: '1200px'}}>

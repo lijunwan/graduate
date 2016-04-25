@@ -34,7 +34,7 @@ export default class  ShopCartItem extends Component {
   }
   componentWillMount() {
     this.setState({
-      count: this.props.data.count,
+      count: this.props.data.shopCartInfo.count,
     })
   }
   componentWillReceiveProps(nextProps) {
@@ -52,17 +52,17 @@ export default class  ShopCartItem extends Component {
   }
   render() {
     const data = this.props.data;
-    const sumMon = (data.aprice * this.state.count).toFixed(2);
+    const sumMon = (data.bookInfo.aprice * this.state.count).toFixed(2);
     return(
       <Row>
         <Col span="4">
-          <Checkbox style={{position: 'absolute',left: '0'}} checked={this.props.checkboxChild[this.props.index]} onChange={this.choiceBook.bind(this)}/><img className="ShopCartItem-img" src= {data.cover} />
+          <Checkbox style={{position: 'absolute',left: '0'}} checked={this.props.checkboxChild[this.props.index]} onChange={this.choiceBook.bind(this)}/><img className="ShopCartItem-img" src= {data.bookInfo.cover} />
         </Col>
         <Col span="4">
-          <p>{data.bookName}</p>
+          <p>{data.bookInfo.bookName}</p>
         </Col>
         <Col span="4">
-          <p>{data.aprice}</p>
+          <p>{data.bookInfo.aprice}</p>
         </Col>
         <Col span="4">
           <NumberBox addNumber={this.addNumber.bind(this)} subNumber={this.subNumber.bind(this)} count={this.state.count}/>

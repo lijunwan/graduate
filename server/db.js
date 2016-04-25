@@ -21,12 +21,12 @@ db.once('open', function (callback) {
 	});
 	var shopCartSchema = new Schema({
 		bookId: String,//书的id
-		aprice: Number,//售价
-		sumMon: Number, //金额
 		count: Number,//数量
-		bookName: String,
 		userId: String, //用户ID
-		cover: String,
+	//	aprice: Number,//售价
+	//	sumMon: Number, //金额
+	//	bookName: String,
+	//	cover: String,
 	})
 	//暂时不用
 	var logSchema = new Schema({
@@ -107,6 +107,9 @@ db.once('open', function (callback) {
 	});
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
+	bookInfoSchema.statics.findByIdList = findByIdList({errorCode:404602,message:"未找到相关的书籍信息"})
+	shopCartSchema.statics.findByIdList = findByIdList({errorCode:404601,message:"未找到该用户购物车的信息"})
+
 	favoriteSchema.statics.findFavoriteById = findItemById({errorCode:404407,message:"未找到相关的收藏夹"});
 	favoriteSchema.statics.createFavorite = createItem({errorCode:405401,message:"操作收藏夹失败"});
 	favoriteSchema.statics.hasRecords = dbHasRecords();
@@ -164,6 +167,20 @@ db.once('open', function (callback) {
 					callback(false);
 				}
 			});
+		}
+	}
+	function findByIdList(errorObj) {
+		return function(req,res,list,callback) {
+			this.where('_id').in(list).exec(function(error, data){
+				if(error) return console.error(error);
+				if(data) {
+					callback(data);
+				} else {
+					console.log(res,'????')
+					res.statusCode="404";
+					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
+				}
+			})
 		}
 	}
 	dataModel["users"] = db.model('users',userSchema,'users');

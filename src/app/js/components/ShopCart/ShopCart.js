@@ -21,7 +21,6 @@ export default class  ShopCart extends Component {
 		const data  = nextProps.client.toJS().shopCart.data;
 		const list = [];
 		if(data) {
-			console.log(this.state.checkboxChild,'123');
 		if(this.state.checkboxChild.length<1) {
 			data.map((item, index)=>{
 					list[index] = false;
@@ -36,8 +35,8 @@ export default class  ShopCart extends Component {
 		let count = 0;
 		checkboxChild.map((flag,i)=>{
 			if(flag) {
-				sumMon += Math.round(data[i].aprice * data[i].count * 100)/100;
-				count += data[i].count;
+				sumMon += Math.round(data[i].bookInfo.aprice * data[i].shopCartInfo.count * 100)/100;
+				count += data[i].shopCartInfo.count;
 			}
 		})
 		this.setState({
@@ -56,7 +55,7 @@ export default class  ShopCart extends Component {
 			if(flagAarr[i] === false) {
 				flag = false;
 			}else {
-				sumMon += Math.round(data[i].aprice * data[i].count * 100)/100;
+				sumMon += Math.round(data[i].bookInfo.aprice * data[i].shopCartInfo.count * 100)/100;
 				count += data[i].count;
 			}
 		}
