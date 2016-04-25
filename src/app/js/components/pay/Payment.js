@@ -24,7 +24,8 @@ export default class payment extends Component {
         this.props.history.pushState(null,'/pay');
     }
     componentWillReciveProps(nextProps){
-        if(nextProps.order.toJS().orderInfo.useId != undefined) {
+      const orderInfo = nextProps.order.toJS().orderInfo
+        if(orderInfo.useId != undefined) {
             this.props.history.pushState(null,'/pay');
         }
     }
