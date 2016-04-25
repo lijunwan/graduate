@@ -4,35 +4,29 @@ const Step = Steps.Step;
 export default class SimpleStep extends Component {
 	constructor(props) {
     	super(props);
-    	this.state = {
-    		stepStatus:['wait','wait', 'wait', 'wait'],
-    	}
   	}
-  	componentWillMount() {
-  		var statusList = this.state.stepStatus.slice(0);
-  		const stepIndex = this.props.stepIndex;
-
-  		statusList.map((item, index)=>{
-  			if(index < stepIndex) {
-  				statusList[index] = 'finish';
-  			} else if(index > stepIndex) {
-  				statusList[index] = 'wait';
-  			} else {
-  				statusList[index] = 'process';
-  			}
-  		});
-  		console.log(statusList, '=====')
-  		this.setState({
-  			stepStatus: statusList,
-  		})
-  	}
+	createSteps() {
+		let steps = [{
+			title: '我的购物车',
+		},{
+			title: '填写订单',
+		},{
+			title: "支付",
+		},{
+			title: "完成订单",
+		}];
+		const list = [];
+		steps.map((step, index)=>{
+			list.push(
+				<Step key={index} title={step.title} />
+			)
+		});
+		return list;
+	}
 	render() {
 		return(
-			<Steps>
-				<Step status= {this.state.stepStatus[0]} title="我的购物车" />
-				<Step status={this.state.stepStatus[1]} title="填写订单" />
-				<Step status={this.state.stepStatus[2]} title="支付"/>
-				<Step status={this.state.stepStatus[3]} title="完成订单"/>
+			<Steps current={this.props.stepIndex}>
+				{this.createSteps()}
 			</Steps>
 		)
 	}

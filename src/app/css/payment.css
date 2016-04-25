@@ -6,7 +6,7 @@
     color: #333;
     font-weight: 700;
     font-size: 14px;
-    margin: 5px 0 10px;
+    margin: 40px 0 10px;
 }
 .addressCard {
     background-image: url('../images/addressCardBg.png');
@@ -17,10 +17,68 @@
 .OrderTable{
 
 }
+.OrderTable th {
+  height: 45px;
+  line-height: 45px;
+  color: #999;
+}
+.OrderTable-row td{
+  background: #b2d1ff !important;
+  height: 2px;
+  border-right: 5px solid #fff;
+  padding: 0 !important;
+}
 .OrderTable th, .OrderTable td{
     width: 300px;
     text-align: center;
 }
+.OrderTable td{
+  padding: 10px 0;
+  background: #fbfcff;
+}
 .pay-img {
-    width: 40px;
+    width: 50px;
+    vertical-align: middle;
+    border: 1px solid #e9e9e9;
+    margin-right: 5px;
+}
+.pay-money{
+  color: #999;
+  text-align: right;
+}
+.pay-sumMon {
+  color: #c00;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: tahoma;
+}
+.submitButtonWrap {
+  text-align: right;
+  margin: 40px 0;
+}
+.submitButton {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 182px;
+  height: 37px;
+  line-height: 37px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  background: #ff2832;
+  color: #fff;
+  margin: 5px 0;
+}
+.linkToShop a{
+  color: #C97;
+  margin-right: 30px;
+}
+.adminAdressLink {
+    margin-top: 10px;
+}
+.adminAdressLink a{
+  color: #C97;
+  margin-right: 15px;
 }

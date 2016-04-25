@@ -56,7 +56,7 @@ export default class  ShopCart extends Component {
 				flag = false;
 			}else {
 				sumMon += Math.round(data[i].bookInfo.aprice * data[i].shopCartInfo.count * 100)/100;
-				count += data[i].count;
+				count += data[i].shopCartInfo.count;
 			}
 		}
 		this.setState({
@@ -92,8 +92,8 @@ export default class  ShopCart extends Component {
 		for(let i=0; i < flagAarr.length; i++) {
 			flagAarr[i] = !this.state.isChoiceAll;
 			if(!this.state.isChoiceAll) {
-				sumMon += Math.round(data[i].aprice * data[i].count * 100)/100;
-				count += data[i].count;
+				sumMon += Math.round(data[i].bookInfo.aprice * data[i].bookInfo.count * 100)/100;
+				count += data[i].shopCartInfo.count;
 			}
 		}
 		this.setState({

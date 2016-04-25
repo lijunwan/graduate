@@ -123,8 +123,8 @@ db.once('open', function (callback) {
 	})
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
-	bookInfoSchema.statics.findByIdList = findByIdList({errorCode:404602,message:"未找到相关的书籍信息"})
-	shopCartSchema.statics.findByIdList = findByIdList({errorCode:404601,message:"未找到该用户购物车的信息"})
+	bookInfoSchema.statics.findByIdList = findItemsByList({errorCode:404602,message:"未找到相关的书籍信息"})
+	shopCartSchema.statics.findByIdList = findItemsByList({errorCode:404601,message:"未找到该用户购物车的信息"})
 	bookInfoSchema.statics.findItemsByList = findItemsByList({errorCode:404406,message:"未找到相关的书籍"})
 	favoriteSchema.statics.findFavoriteById = findItemById({errorCode:404407,message:"未找到相关的收藏夹"});
 	favoriteSchema.statics.createFavorite = createItem({errorCode:405401,message:"操作收藏夹失败"});
@@ -197,10 +197,11 @@ db.once('open', function (callback) {
 				if(data) {
 					callback(data);
 				} else {
+					console.log(res,'????')
 					res.statusCode="404";
 					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
 				}
-			});
+			})
 		}
 	}
 	dataModel["users"] = db.model('users',userSchema,'users');
