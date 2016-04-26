@@ -24,7 +24,7 @@ export default class BookItem extends Component {
                         <img src={data.cover} />
                     </div>
                     <div className="text-wrap">
-                        <p className="bookName"><a onClick = {this.redirectBookPage.bind(this, data.detail)}>{data.bookName}</a></p>
+                        <p className="bookName"><a onClick = {this.redirectBookPage.bind(this, data.id)}>{data.bookName}</a></p>
                         <p className='price'>
                             <span className="priceDis">￥{salePrice}</span>
                             <span><s>￥{data.price}</s></span>

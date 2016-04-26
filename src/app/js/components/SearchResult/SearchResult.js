@@ -39,7 +39,7 @@ export default class SearchResult extends Component {
   createItem() {
       const list = [];
       this.state.currentData.map((data, index)=>{
-         list.push( <BookItem data={data}  key = {index}/>);
+         list.push( <BookItem {...this.props} data={data}  key = {index}/>);
      });
      return list;
   }

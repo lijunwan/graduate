@@ -82,3 +82,37 @@
   color: #C97;
   margin-right: 15px;
 }
+.Pay-content{
+  width: 800px;
+  margin: auto;
+  border: 1px solid #F9F9F9;
+  min-height: 200px;
+  box-shadow: 0 0 2px #ccc;
+  background: #F9F9F9;
+  padding: 30px 20px 0;
+  position: relative;;
+}
+.Pays-money {
+  color: #ff8208;
+  font-weight: 700;
+  font-size: 22px;
+  margin-right: 5px
+}
+.Pay-button {
+  color: #fff;
+  border: 1px solid #0ae;
+  background-color: #0ae;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 0 20px;
+  background-image: none;
+  bottom: 30px;
+  position: absolute;
+}
