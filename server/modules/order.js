@@ -46,31 +46,13 @@ Order.payOrder = function payOrder(req, res) {
 	var orderId = req.query.orderId;
 	var sumMon = req.query.sumMon;
 	const orderIdList = JSON.parse(req.query.orderId);
-	const newOrderList = [];
-	orderIdList.map(function(orderId){
-		db['order'].findOneAndUpdate({_id:orderId},{orderStatus: 'UNSEND'},{new: true},function(error, data){
-			if(error) return console.error(error);
-			console.log(data, '-----s')
-			if(data) {
-				newOrderList.push(data);
-			}
-			res.send({data: newOrderList});
-			// if(data) {
-			// 	data.info.map(function(bookInfo){
-			// 		var obj = {}
-			// 		obj.userId = userId;
-			// 		obj.orderId = orderId;
-			// 		obj.bookId = bookInfo.bookId;
-			// 		obj.count = bookInfo.count;
-			// 		obj.sumMon = bookInfo.sumMon;
-			// 		obj.salePrice = bookInfo.aprice;
-			// 		obj.time = data.time;
-			// 		db['saleRecords'].createItem(obj, function(data) {
-			// 			res.send({data:'支付成功'});
-			// 		})
-			// 	})
-			// }
-		})
+	db['order'].where('_id').in(orderIdList).update({},{orderStatus:'UNSEND'},{multi: true},function(error,data){
+		if(data) {
+			db['order'].where('_id').in(orderIdList).exec(function(error, order){
+				console.log(order)
+				res.send({data: order})
+			})
+		}
 	})
 }
 function getKeyValueList(list,key) {

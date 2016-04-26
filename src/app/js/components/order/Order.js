@@ -42,27 +42,17 @@ class OrderTable extends Component {
 		const list = [];
 		if(data) {
 			data.map((item)=>{
-				const info = [];
-				item.info.map((infoItem, index)=>{
-					info.push(
-						<div key={index} className="Order-item-content">
-							<Row>
-								<Col span="4"><img src={infoItem.cover} style={{width: '80px'}}/></Col>
-								<Col span="4"><div>{item.sumMon}</div></Col>
-								<Col span="4">{item.time}</Col>
-								<Col span="4">{payStatus[item.orderStatus]}</Col>
-							</Row>
-							<hr></hr>
-						</div>
-					)
-				})
 				list.push(
 					<div className="Order-item">
 						<Row>
 							<div className="Order-item-head">	订单号:{item['_id']}</div>
 						</Row>
 						<Row>
-							{info}
+							<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
+							<Col span="4"><div>{item.sumMon}</div></Col>
+							<Col span="4">{item.time}</Col>
+							<Col span="4">{payStatus[item.orderStatus]}</Col>
+
 						</Row>
 					</div>
 				)

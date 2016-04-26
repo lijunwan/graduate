@@ -77,6 +77,23 @@ export default class  Book extends Component{
       })
     }
   }
+  confirmPay() {
+    const list = [];
+    const data = this.props.bookInfo.toJS().bookInfo.data;
+    const orderData = {}
+    var obj = {
+      bookInfo: data,
+      shopCartInfo: {
+        count: 1,
+        bookId: data['_id']
+      }
+    }
+    list.push(obj);
+    orderData.bookInfo = list;
+    orderData.sumMon = this.state.count * data.aprice;
+    localStorage.setItem('confirmOrder', JSON.stringify(orderData))
+    this.props.history.push({pathname: '/payment/'})
+  }
     render() {
         const bookInfo = this.props.bookInfo.toJS().bookInfo;
         const favoriteStarClass = this.state.isFavorite ? 'anticon anticon-star Book-start-active' : 'anticon anticon-star Book-start';
@@ -115,7 +132,7 @@ export default class  Book extends Component{
                                          subNumber={this.subNumber.bind(this)}/>
                             </div>
                             <a className="Book-button shop-button" onClick = {this.addBookIntoCars.bind(this)}>加入购物车</a>
-                            <a className="Book-button buy-button">一建购买</a>
+                            <a className="Book-button buy-button" onClick={this.confirmPay.bind(this)}>立即购买</a>
                             <p style={{marginTop: '20px'}}>
                               <a className={favoriteStarClass} style={{marginRight: '5px'}} type="star-o" onClick={this.addFavorite.bind(this)}/>
                               <span className="star-text">{favoriteText}(人气{this.state.favoriteLen})</span>
