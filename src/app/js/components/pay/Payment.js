@@ -23,9 +23,10 @@ export default class payment extends Component {
     }
     componentWillReceiveProps(nextProps){
       const orderInfo = nextProps.order.toJS().orderInfo.data;
-        if(orderInfo['_id'] != undefined) {
+      console.log('===',orderInfo);
+        if(orderInfo && orderInfo.length > 0) {
             localStorage.setItem('orderInfo', JSON.stringify(orderInfo))
-            this.props.history.pushState(null,'/pay/'+ orderInfo['_id']);
+            this.props.history.pushState(null,'/pay');
         }
     }
     render() {

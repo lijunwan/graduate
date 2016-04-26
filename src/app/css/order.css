@@ -18,7 +18,7 @@
     font-size: 12px;
 }
 .OrderSearch {
-    
+
 }
 .OrderSearch input{
   width: 220px;
@@ -44,4 +44,26 @@
   margin-top: -1px;
   margin-right: -1px;
   width: 60px;
+}
+.Order-item-head {
+  background-color: #eaf8ff;
+  padding: 4px;
+  padding: 10px 20px;
+}
+.Order-item-head a {
+  color: #1a66b3;
+  letter-spacing: .5;
+}
+.Order-item{
+  border: 1px solid #daf3ff;
+  margin-bottom: 10px;
+}
+.Order-item-content {
+  padding: 0 10px;
+}
+.Order-item-content hr {
+  border: none;
+  border-top: 1px solid #daf3ff;
+  width: 95%;
+  margin: auto;
 }

@@ -113,6 +113,8 @@
   border-radius: 2px;
   padding: 0 20px;
   background-image: none;
-  bottom: 30px;
-  position: absolute;
+  margin: 20px 0;
+}
+.Pay .row {
+  line-height: 34px;
 }

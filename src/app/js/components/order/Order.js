@@ -35,21 +35,36 @@ export default class Order extends Component {
 class OrderTable extends Component {
 	createItem() {
 		const data = this.props.order.toJS().orderList.data;
+		const payStatus = {
+			'UNPAI': '未支付',
+			'UNSEND': '买家已支付等待卖家发货'
+		}
 		const list = [];
 		if(data) {
 			data.map((item)=>{
 				const info = [];
 				item.info.map((infoItem, index)=>{
 					info.push(
-						<img key={index} src={infoItem.cover} style={{width: '80px'}}/>
+						<div key={index} className="Order-item-content">
+							<Row>
+								<Col span="4"><img src={infoItem.cover} style={{width: '80px'}}/></Col>
+								<Col span="4"><div>{item.sumMon}</div></Col>
+								<Col span="4">{item.time}</Col>
+								<Col span="4">{payStatus[item.orderStatus]}</Col>
+							</Row>
+							<hr></hr>
+						</div>
 					)
 				})
 				list.push(
-					<tr>
-						<td>{info}</td>
-						<td>{item.sumMon}</td>
-						<td>{item.time}</td>
-					</tr>
+					<div className="Order-item">
+						<Row>
+							<div className="Order-item-head">	订单号:{item['_id']}</div>
+						</Row>
+						<Row>
+							{info}
+						</Row>
+					</div>
 				)
 			})
 		}
@@ -57,18 +72,16 @@ class OrderTable extends Component {
 	}
 	render() {
 		return(
-			<table className="OrderTable">
-				<thead>
-					<tr>
-						<th>商品信息</th>
-						<th>实付款</th>
-						<th>创建时间</th>
-						<th>状态</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>{this.createItem()}</tbody>
-			</table>
+			<div className="OrderTable">
+				<Row style={{height: '34px', lineHeight: '34px', textAlign: 'center'}}>
+						<Col span="4">商品信息</Col>
+						<Col span="4">实付款</Col>
+						<Col span="4">创建时间</Col>
+						<Col span="4">状态</Col>
+						<Col span="4">操作</Col>
+				</Row>
+				<div>{this.createItem()}</div>
+			</div>
 		)
 	}
 }

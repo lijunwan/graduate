@@ -5,25 +5,41 @@ import {Row, Col} from 'antd'
 export default class Pay extends Component {
 	componentWillReciveProps(nextProps) {
 	}
-	payOrder() {
-		const orderInfoData = this.props.order.toJS().orderInfo.data;
-		if(orderInfoData) {
-			this.props.orderBoundAC.payOrder({orderId: orderInfoData['_id']});
+	payOrder(data, sumMon) {
+		var orderIdList = [];
+		data.map((item) => {
+			orderIdList.push(item['_id']);
+		});
+
+		if(orderIdList.length > 0) {
+			this.props.orderBoundAC.payOrder({orderId: JSON.stringify(orderIdList), sumMon: sumMon});
 		}
 	}
-	createBookItem(data) {
+	createContent(data) {
 		const list = [];
-		data.info.map((item,index)=>{
+		data.map((item, index)=>{
 			list.push(
-				<span style={{letterSpacing: '0.5', marginRight: '20px'}}>{item.bookName}</span>
-			)
-		})
+				<Row key={index}>
+					<Col span="6">{item['_id']}</Col>
+					<Col span="8">{item.bookName}</Col>
+					<Col span="4">{item.time.split('T')[0]}</Col>
+				</Row>
+			);
+		});
 		return list;
+	}
+	countMoney(data) {
+		let sumMon = 0;
+		data.map((item, index)=>{
+			sumMon += item.sumMon
+		});
+		return sumMon.toFixed(2);
 	}
 	render() {
 		const orderInfo = JSON.parse(localStorage.getItem('orderInfo'));
+		const sumMon = this.countMoney(orderInfo);
 		return(
-			<div>
+			<div className="Pay">
 				<Row style={{margin: '50px 0'}}>
 					<Col span="8">
 						<a href="/"><img src={logoImg}/></a>
@@ -34,14 +50,13 @@ export default class Pay extends Component {
 				</Row>
 				<div className="Pay-content">
 					<Row>
-						<Col span="20"><p style={{letterSpacing: '0.5em'}}>订单号:<span style={{letterSpacing: '0.1'}}>{orderInfo['_id']}</span></p></Col>
-						<Col span="4"><span className="Pays-money">{(orderInfo.sumMon).toFixed(2)}</span>元</Col>
+						<Col span="6">订单号</Col>
+						<Col span="8">商品信息</Col>
+						<Col span="4">订单创建时间</Col>
 					</Row>
-					<Row>
-						<Col span="2"><p>商品信息：</p></Col>
-						<Col span="20">{this.createBookItem(orderInfo)}</Col>
-					</Row>
-					<a onClick={this.payOrder.bind(this)} className="Pay-button">支付</a>
+					{this.createContent(orderInfo)}
+					<p style={{marginTop: '10px'}}><span className="Pays-money">{sumMon}</span>元</p>
+					<a onClick={this.payOrder.bind(this, orderInfo , sumMon)} className="Pay-button">支付</a>
 				</div>
 			</div>
 		)

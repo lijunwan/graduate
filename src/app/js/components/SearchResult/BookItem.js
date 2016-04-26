@@ -17,7 +17,6 @@ export default class BookItem extends Component {
     render() {
         const data = this.props.data;
         const salePrice = data.discount/10 * data.price;
-        console.log(data, '////////book')
         return (
                 <div className="BookItem clearfix">
                     <div style={{float:'left'}}>

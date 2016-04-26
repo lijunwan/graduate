@@ -107,11 +107,13 @@ db.once('open', function (callback) {
 	});
 	var orderSchema = new Schema({
 		time: Date,//订单成交时间
-		info: [Schema.Types.Mixed],//商品id aprice  数量
+	  aprice: Number,
+		cover: String,
+		bookName: String,
 		sumMon: Number, //实际金额
 		userId: String, //用户id
-	    address: String,//收货地址
-	    orderStatus: String,//unpaied paided/unsend send/unrecive recive
+	  address: String,//收货地址
+	  orderStatus: String,//unpaied paided/unsend send/unrecive recive
 	});
 	var saleRecordsSchema = new Schema({
 		bookId: String,
