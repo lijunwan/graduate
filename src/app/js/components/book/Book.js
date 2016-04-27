@@ -4,7 +4,7 @@ import NumberBox from './NumberBox'
 import ImgShow from './ImgShow';
 import BookTab from './BookTab';
 import BookDetail from './BookDetail'
-import {Icon, Row, Col} from 'antd';
+import {Icon, Row, Col,message} from 'antd';
 import logoImg from '../../../images/logo.jpg';
 import Search from '../common/Search'
 export default class  Book extends Component{
@@ -48,11 +48,12 @@ export default class  Book extends Component{
       return Math.round(value).toFixed(2);
     }
     addBookIntoCars() {
-        var obj = {
-            bookId: this.props.params.bookId,
-            count: this.state.count,
-        }
-        this.props.clientBoundAC.addBookIntoCars(obj);
+      var obj = {
+          bookId: this.props.params.bookId,
+          count: this.state.count,
+      }
+      this.props.clientBoundAC.addBookIntoCars(obj);
+      message.success('您已成功添加到购物车，请前往购物车查看');
     }
    addNumber() {
     this.setState({

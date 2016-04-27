@@ -7,13 +7,15 @@ export default class SimpleStep extends Component {
   	}
 	createSteps() {
 		let steps = [{
-			title: '我的购物车',
+			title: '拍下商品',
 		},{
-			title: '填写订单',
+			title: '支付',
 		},{
-			title: "支付",
+			title: "卖家发货",
 		},{
-			title: "完成订单",
+			title: "确认收货",
+		},{
+			title: "评价",
 		}];
 		const list = [];
 		steps.map((step, index)=>{

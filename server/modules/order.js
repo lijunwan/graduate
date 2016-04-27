@@ -41,6 +41,13 @@ Order.getOrderList = function getOrderList(req, res) {
 	})
 
 }
+Order.getOrderInfo = function getOrderInfo(req, res) {
+	var orderId = req.query.orderId;
+	console.log(orderId, 'orderId--------------')
+	db['order'].findItemById(req, res, orderId, function(data){
+		res.send({data: data});
+	})
+}
 Order.payOrder = function payOrder(req, res) {
 	var userId = req.cookies.bookstore.id;
 	var orderId = req.query.orderId;

@@ -114,6 +114,8 @@ db.once('open', function (callback) {
 		userId: String, //用户id
 	  address: String,//收货地址
 	  orderStatus: String,//unpaied paided/unsend send/unrecive recive
+		bookId: String,
+		count: Number,
 	});
 	var saleRecordsSchema = new Schema({
 		bookId: String,
@@ -247,9 +249,9 @@ db.once('open', function (callback) {
 		cover:"book/cover.jpg",
 		detail: '5709b6499180abb00defee0a'
 	}
-	dataModel['bookInfo'].create(obj,function(err,data){
-		if(err) return console.error(err);
-	})
+	// dataModel['bookInfo'].create(obj,function(err,data){
+	// 	if(err) return console.error(err);
+	// })
 	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
 	// 	if(err) return console.error(err);
 	// 	console.log(data);

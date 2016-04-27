@@ -33,10 +33,36 @@ export default class Order extends Component {
 	}
 }
 class OrderTable extends Component {
+	payOrder(item) {
+		console.log(item, '???')
+		const orderInfo = [];
+		orderInfo.push(item);
+		localStorage.setItem('orderInfo', JSON.stringify(orderInfo))
+		this.props.history.pushState(null,'/pay');
+	}
+	showOrder(orderId) {
+		this.props.history.pushState(null, '/orderDetail/'+ orderId )
+	}
+	createOperation(status, item) {
+		switch (status) {
+			case 'UNPAY':
+				return(
+				<Col span="4">
+				  <p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+					<p style={{lineHeight: '1.5'}}><a onClick={this.payOrder.bind(this, item)}>支付</a></p>
+				</Col>)
+			default:
+				return (
+					<Col span="4">
+						<p><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+					</Col>
+				)
+		}
+	}
 	createItem() {
 		const data = this.props.order.toJS().orderList.data;
 		const payStatus = {
-			'UNPAI': '未支付',
+			'UNPAY': '未支付',
 			'UNSEND': '买家已支付等待卖家发货'
 		}
 		const list = [];
@@ -47,12 +73,12 @@ class OrderTable extends Component {
 						<Row>
 							<div className="Order-item-head">	订单号:{item['_id']}</div>
 						</Row>
-						<Row>
+						<Row style={{lineHeight: '110px', textAlign: 'center'}}>
 							<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
 							<Col span="4"><div>{item.sumMon}</div></Col>
 							<Col span="4">{item.time}</Col>
 							<Col span="4">{payStatus[item.orderStatus]}</Col>
-
+							{this.createOperation(item.orderStatus, item)}
 						</Row>
 					</div>
 				)

@@ -37,7 +37,6 @@ export function checkLogin(params) {
 }
 export function getLog(){
   return dispatch => {
-    console.log("????")
     HttpRequest.get('/api/log')
       .end(function(err,resp){
        //let info=loginCode(err, resp);
@@ -111,7 +110,7 @@ export function addBookIntoCars(params){
           type: ADD_BOOK,
           data: resp.body
         });
-      window.location='/shopCart';
+    //  window.location='/shopCart';
     });
   };
 }

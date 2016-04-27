@@ -67,3 +67,41 @@
   width: 95%;
   margin: auto;
 }
+.OrderDetail-bookInfo img {
+  width: 50px;
+}
+.OrderDetail-bookInfo th, .OrderDetail-bookInfo td{
+  width: 300px;
+}
+.OrderDetail h2{
+  font-size: 12px;
+  color: #333;
+  line-height: 29px;
+  background-color: #F3F3F3;
+  border: 1px solid #DDD;
+  padding-left: 20px;
+  margin: 20px 0;
+}
+.OrderDetail .row {
+  padding-left: 20px;
+  padding-bottom: 10px;
+  margin: 10px 8px 0 0;
+}
+.OrderDetail-bookInfo td {
+  padding: 10px 0;
+}
+.OrderDetail-bookInfo tr{
+  color: #949494;
+  font-size: 12px;
+  border: 1px solid #DDD;
+  line-height: 28px;
+}
+.OrderDetail-bookInfo td a{
+  color: #999;
+}
+.OrderDetail-bookInfo td img {
+  border: 1px solid #E9E9E9;
+  vertical-align: middle;
+  margin-left: 20px;
+  margin-right: 10px;
+}

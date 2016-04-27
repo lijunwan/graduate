@@ -425,6 +425,9 @@ td,
 th {
   padding: 0;
 }
+a:hover {
+  color: #000;
+}
 .clearfix:before,.clearfix:after{
     content:"";
     display:table;
@@ -447,4 +450,13 @@ th {
   border: 1px solid #007DC9;
   color: #007DC9;
   background-color: rgba(99, 195, 255, 0.19);
+}
+.button03 {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  color: #fff;
+}
+.button03:hover{
+  color: #fff;
+  cursor: default;
 }

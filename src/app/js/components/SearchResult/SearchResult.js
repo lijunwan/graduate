@@ -27,13 +27,13 @@ export default class SearchResult extends Component {
      console.log(nextProps.bookInfo.toJS().bookList.data);
      const data = nextProps.bookInfo.toJS().bookList.data
      this.setState({
-         currentData: this.getCurentData(data,1,this.state.pageSize),
-         bookList: data ,
+       currentData: this.getCurentData(data,1,this.state.pageSize),
+       bookList: data ,
      })
   }
   changePage(page) {
      this.setState({
-         currentData: this.getCurentData(this.state.bookList,page,this.state.pageSize)
+      currentData: this.getCurentData(this.state.bookList,page,this.state.pageSize)
      })
   }
   createItem() {

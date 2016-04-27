@@ -1,4 +1,5 @@
 var db = require('../db');
+var _pick = require('lodash/pick');
 function Users (user) {
 	this.phone = user.phone;
 	this.password = user.password;
@@ -21,14 +22,14 @@ Users.checkLogin = function checkLogin(req,res){
 				var obj = {
 					'phone':user.phone,
 					'id':user["_id"],
-					'lastTime':Date().toString()
+					'lastTime':Date().toString(),
 				}
 				res.cookie("bookstore",obj,{maxAge:6000000})
 			    saveOne(obj,"logs",function(err,item){
 			    	console.log(item,"123")
 			    });
 			    res.statusCode=200;
-				res.send({phone:user.phone,id:user["_id"]});
+				res.send({phone:user.phone,id:user["_id"],data:{'favorite': user.favorite}});
 			}else{
 				 res.statusCode=404;
 				 res.send({errorCode:400403,message:"密码错误"})
@@ -43,7 +44,10 @@ Users.checkLogin = function checkLogin(req,res){
 Users.isLogin = function isLogin(req,res){
 	res.setHeader('Content-Type','application/json');
 	if(req.cookies.bookstore){
-		res.send({'phone':req.cookies.bookstore.phone,'id':req.cookies.bookstore.id})
+		db['users'].findUserById(req, res, req.cookies.bookstore.id, function(userInfo){
+			var obj = _pick(userInfo,['favorite']);
+			res.send({'phone':req.cookies.bookstore.phone,'id':req.cookies.bookstore.id,data: obj})
+		})
 	}else{
 		res.statusCode=401;
 		res.send({errorCode:401400,message:"未登录"})
