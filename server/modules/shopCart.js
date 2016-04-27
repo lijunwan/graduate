@@ -78,10 +78,7 @@ ShopCart.updateShopCart = function updateShopCart(req, res) {
 						shopCart.count = parseInt(obj.count);
 						shopCart.save();
 				}
-				db.shopCart.find({'userId':obj.userId}, function(err,data) {
-						if(err) return console.error(err);
-						res.send({data: data});
-				})
+				ShopCart.getShopCartInfo(req, res)
 		});
 	}
 }
