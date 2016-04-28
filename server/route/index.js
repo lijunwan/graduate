@@ -11,6 +11,7 @@ app.get('/api/log',User.isLogin);
 app.get('/api/user/phone',User.checkPhone);
 app.post('/api/user/register',User.createUser);
 app.del('/api/user/logout',User.logout);
+app.post('/api/user/authorization/headImages', User.UploadImg)
 app.get('/api/book/autoComplete', Books.autoComplete);
 app.get('/api/book/bookOnSale', Books.getOnSaleBooks);
 app.get('/api/book/bookNew', Books.getNewBooks);

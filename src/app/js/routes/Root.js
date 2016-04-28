@@ -12,7 +12,8 @@ import Favorite from '../components/favorite/Favorite';
 import Payment from '../components/pay/Payment.js';
 import Order from '../components/order/Order';
 import Pay from '../components/pay/Pay';
-import OrderDetail from '../components/order/OrderDetail'
+import OrderDetail from '../components/order/OrderDetail';
+import User from '../components/user/User'
 var Router = require('react-router');
 var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -32,6 +33,7 @@ var routes = (
       <Route name="order" path='/order' component={Order} />
       <Route name="pay" path='/pay' component={Pay} />
       <Route name="orderDetail" path='/orderDetail/:orderId' component={OrderDetail}/>
+      <Route name="user" path='/user' component={User}/>
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}

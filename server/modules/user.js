@@ -1,5 +1,8 @@
 var db = require('../db');
 var _pick = require('lodash/pick');
+var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
 function Users (user) {
 	this.phone = user.phone;
 	this.password = user.password;
@@ -140,6 +143,21 @@ Users.logout = function(req,res){
 	res.clearCookie('bookstore');
 	res.end();
 }
+Users.UploadImg = function(req, res) {
+	const dir = path.join(__dirname, '../images/user');
+	var form = new formidable.IncomingForm();   //创建上传表单
+    form.encoding = 'utf-8';		//设置编辑
+    form.uploadDir = dir;	 //设置上传目录
+    form.keepExtensions = true;	 //保留后缀
+    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+		form.parse(req, function(err, fields, files) {
+			const type = files.file.name.split('.')[1];
+			var newPath = dir +'/'+ req.cookies.bookstore.id +'.' +type;
+		 fs.renameSync(files.file.path, newPath);
+		 res.send({data: 'ok'})
+		})
+}
+
 function findOne(obj,dataBase,callback) {
   db[dataBase].findOne(obj,function(err,item){
 		if(err) return console.error(err);

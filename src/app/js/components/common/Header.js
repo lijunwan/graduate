@@ -37,7 +37,7 @@ export default class Header extends Component {
 								<i className="fa fa-angle-down"></i>
 								<ul className={userClass}>
 									<div className="Header-triangle"></div>
-									<li><a>账号管理</a></li>
+									<li><Link to="/user">个人中心</Link></li>
 									<li><a href="javascript:;" onClick={this.logOut.bind(this)}>退&nbsp;&nbsp;出</a></li>
 								</ul>
 							</ul>
