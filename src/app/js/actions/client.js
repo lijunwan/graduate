@@ -5,6 +5,7 @@ export const ADD_BOOK = 'ADD_BOOK';
 export const GET_SHOPCARTS = 'GET_SHOPCARTS';
 export const UPDATE_USERINFO = 'UPDATE_USERINFO';
 export const GET_USERINFO = 'GET_USERINFO';
+export const UPDATE_PASS = 'UPDATE_PASS'
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -158,6 +159,18 @@ export function updateShopCart(params) {
       .end(function(err,resp){
         dispatch({
           type: GET_SHOPCARTS,
+          data: resp.body
+        });
+    });
+  };
+}
+export function updatePassWord(params) {
+  return dispatch => {
+      HttpRequest.post('/api/user/authorization/updatePassWord')
+      .send(params)
+      .end(function(err,resp){
+        dispatch({
+          type: UPDATE_PASS,
           data: resp.body
         });
     });
