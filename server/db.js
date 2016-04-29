@@ -13,11 +13,14 @@ db.once('open', function (callback) {
 		phone:String,//电话
 		password:String,//密码
 		userName:String,//用户名
-		baseInfoId:String,//基础信息 保存id
 		shopCart:[],//购物车 数组保存id
 		payOrder:[],//账单
-		favorite:[]//收藏夹
-
+		favorite:[],//收藏夹
+		sex:String,//性别 1 男 2 女 0 其他
+		birthday:String,//生日
+		headImg:String,//头像 保存图片的地址
+		name: String,//真实姓名
+		ShippingAddress:[],//收货地址s
 	});
 	var shopCartSchema = new Schema({
 		bookId: String,//书的id
@@ -39,12 +42,7 @@ db.once('open', function (callback) {
 		sex:Number,//性别 1 男 2 女 0 其他
 		birthday:String,//生日
 		headImg:String,//头像 保存图片的地址
-		identity:String,//身份 在校学生 教师 上班族 自由职业 填写的其他省份
-		address:String,//居住地址
-		addressStatus:String,//居住状态 独居 和伴侣 和室友 和父母 和孩子 和宠物
-		interests:String,//兴趣爱好
-		lovePerson:String,//喜欢或欣赏的人
-		introduce:String,//自我介绍
+		name: String,//真实姓名
 		ShippingAddress:[],//收货地址
 	});
 	var bookInfoSchema = new Schema({

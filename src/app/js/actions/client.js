@@ -2,7 +2,9 @@ export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const CHECK_PHONE = 'CHECK_PHONE';
 export const CREATE_USER = 'CREATE_USER';
 export const ADD_BOOK = 'ADD_BOOK';
-export const GET_SHOPCARTS = 'GET_SHOPCARTS'
+export const GET_SHOPCARTS = 'GET_SHOPCARTS';
+export const UPDATE_USERINFO = 'UPDATE_USERINFO';
+export const GET_USERINFO = 'GET_USERINFO';
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -98,6 +100,30 @@ export function logOut() {
     HttpRequest.del('/api/user/logout')
       .end(function(err,resp){
         window.location="/"
+    });
+  };
+}
+export function updateUserInfo(params) {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/undateUserInfo')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: UPDATE_USERINFO,
+          data: resp.body
+        });
+        window.location.reload();
+    });
+  };
+}
+export function getUserInfo() {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/getUserInfo')
+      .end(function(err,resp){
+        dispatch({
+          type: GET_USERINFO,
+          data: resp.body
+        });
     });
   };
 }

@@ -27,19 +27,19 @@ export default class Login extends Component {
 				isSubmit:false,
 	    }
     }
-    	componentWillReceiveProps(nextProps){
-    		if(nextProps && nextProps.client){
-	    		if(nextProps && nextProps.client.toJS().info.id != undefined){
-						this.props.history.pushState('null','/index');
-	    		}
-				else if(__.has(nextProps.client.toJS().info,"errorCode")){
-					if(nextProps.client.toJS().info.errorCode!="401400")
-	  			var message=["","用户名或密码错误"]
-					this.setState({
-						message:__.assign({},this.state.message,message),
-						isSubmit:false,
-					})
-				}
+  	componentWillReceiveProps(nextProps){
+  		if(nextProps && nextProps.client){
+    		if(nextProps && nextProps.client.toJS().info.id != undefined){
+					this.props.history.pushState('null','/index');
+    		}
+			else if(__.has(nextProps.client.toJS().info,"errorCode")){
+				if(nextProps.client.toJS().info.errorCode!="401400")
+  			var message=["","用户名或密码错误"]
+				this.setState({
+					message:__.assign({},this.state.message,message),
+					isSubmit:false,
+				})
+			}
 		}
     	}
     	loginIn(e){

@@ -33,8 +33,10 @@ export default class Header extends Component {
 						{ info && info.id != undefined
 						?<div>
 							<ul className="Header-user-wrap" onMouseEnter={this.showMenu.bind(this)} onMouseLeave={this.hideMenu.bind(this)}>
-								{info.phone}
-								<i className="fa fa-angle-down"></i>
+								<div className="Header-user-headImg">
+									<img src={info.data.headImg} alt={info.userName} />
+								</div>
+								{/*<i className="fa fa-angle-down"></i>*/}
 								<ul className={userClass}>
 									<div className="Header-triangle"></div>
 									<li><Link to="/user">个人中心</Link></li>

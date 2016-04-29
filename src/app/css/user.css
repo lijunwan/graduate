@@ -14,6 +14,10 @@
   background-color: #fff;
   margin-bottom: 10px;
 }
+.User-head img{
+  width: 80px;
+  height: 80px;
+}
 .User-menu h2{
   font-size: 16px;
   font-weight: 700;
@@ -39,6 +43,7 @@
 }
 .BaseInfo-headImg {
   width: 80px;
+  height: 80px;
   border: 3px solid #e6e6e6;
   margin-right: 10px;
 }
@@ -58,11 +63,24 @@
   margin-bottom: 10px;
   margin-top: 10px;
 }
-.ant-upload-select-picture-card i {
+.Upload-card i :hover {
+  cursor: pointer;
+}
+.Upload-card i {
   font-size: 28px;
   color: #999;
+  position: absolute;
+  left: 50%;
+  top: 15px;
+  margin-left: -14px;
 }
-
+.Upload-card p {
+  color: #999;
+  position: absolute;
+  bottom: 10px;
+  width: 80px;
+  color: #666;
+}
 .ant-upload-select-picture-card .ant-upload-text {
   margin-top: 8px;
   font-size: 12px;
@@ -71,4 +89,43 @@
 .ant-upload.ant-upload-select-picture-card {
   width: 80px;
   height: 80px;
+}
+.Upload-card {
+  border: 1px dashed #d9d9d9;
+  width: 80px;
+  height: 80px;
+  padding: 24px 0;
+  border-radius: 6px;
+  background-color: #fbfbfb;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: border-color .3s ease;
+  transition: border-color .3s ease;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.Upload-card input {
+  height: 46px;
+  width: 80px;
+  opacity: 0;
+}
+.Upload-card input:hover{
+  cursor: pointer;
+}
+.BaseInfo-save {
+  background-position: 100% -320px;
+  border: 0 none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  line-height: 22px;
+  padding: 0 11px;
+  background-color: #EA1616;
+  width: 50px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 20px;
 }

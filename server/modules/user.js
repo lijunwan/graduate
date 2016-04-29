@@ -32,7 +32,7 @@ Users.checkLogin = function checkLogin(req,res){
 			    	console.log(item,"123")
 			    });
 			    res.statusCode=200;
-				res.send({phone:user.phone,id:user["_id"],data:{'favorite': user.favorite}});
+				res.send({phone:user.phone,id:user["_id"],data:{'favorite': user.favorite,'headImg': user.headImg}});
 			}else{
 				 res.statusCode=404;
 				 res.send({errorCode:400403,message:"密码错误"})
@@ -48,7 +48,7 @@ Users.isLogin = function isLogin(req,res){
 	res.setHeader('Content-Type','application/json');
 	if(req.cookies.bookstore){
 		db['users'].findUserById(req, res, req.cookies.bookstore.id, function(userInfo){
-			var obj = _pick(userInfo,['favorite']);
+			var obj = _pick(userInfo,['favorite', 'headImg']);
 			res.send({'phone':req.cookies.bookstore.phone,'id':req.cookies.bookstore.id,data: obj})
 		})
 	}else{
@@ -95,36 +95,14 @@ Users.createUser = function createUser(req,res) {
 		if(password != req.body.twicePass){
 				message+="两次密码不一致 ";
 		}
-		console.log(message,"!!!!!!!!!!!!!!!!1")
 		if(message!=""){
 			res.statusCode=404;
 			res.send({errorCode:404501,message:"提交的表单信息不合法"})
 		}else{
-			var baseInfo = {
-				sex:0,
-				birthday:"",
-				headImg:"",
-				identity:"",
-				address:"",
-				addressStatus:"",
-				interests:"",
-				lovePerson:"",
-				introduce:"",
-				ShippingAddress:[],
-			}
-			var baseInfoId = "123";
-			saveOne(baseInfo,'baseInfo',function(err,item){
-				if(item){
-					console.log(baseInfoId,".............")
-					console.log(item,item["_id"]);
-					baseInfoId = item["_id"];
-					console.log(baseInfoId,"======")
-				}
 				var obj = {
 					phone:phone,
 					password:password,
 					userName:userName,
-					baseInfoId:baseInfoId,
 				}
 				saveOne(obj,'users',function(err,item){
 					if(item){
@@ -135,7 +113,6 @@ Users.createUser = function createUser(req,res) {
 						res.send({errorCode:404502,message:"注册用户失败"})
 					}
 				})
-			})
 		}
 	});
 }
@@ -146,18 +123,47 @@ Users.logout = function(req,res){
 Users.UploadImg = function(req, res) {
 	const dir = path.join(__dirname, '../images/user');
 	var form = new formidable.IncomingForm();   //创建上传表单
-    form.encoding = 'utf-8';		//设置编辑
+    // form.encoding = 'utf-8';		//设置编辑
     form.uploadDir = dir;	 //设置上传目录
     form.keepExtensions = true;	 //保留后缀
     form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 		form.parse(req, function(err, fields, files) {
+			console.log(err, '====');
 			const type = files.file.name.split('.')[1];
 			var newPath = dir +'/'+ req.cookies.bookstore.id +'.' +type;
 		 fs.renameSync(files.file.path, newPath);
-		 res.send({data: 'ok'})
-		})
+		 var headImgUrl = '/user/'+ req.cookies.bookstore.id +'.' +type;
+		 db['users'].findByIdAndUpdate(req.cookies.bookstore.id, {headImg: headImgUrl},{new:true},function(error, data) {
+	 		if(error) console.error(error);
+	 		if(data) {
+	 			res.send({data: 'ok'});
+	 		}
+	 	})
+	})
 }
-
+Users.modifyBaseInfo = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	console.log(req.query)
+	var fileds = ['birthday','name','sex','userName','phone','headImg'];
+	db['users'].findByIdAndUpdate(id, req.query,{new:true},function(error, data) {
+		if(error) console.error(error);
+		if(data) {
+			var obj = _pick(data, fileds);
+			res.send({data: obj});
+		}
+	})
+}
+Users.getUserInfo = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	var fileds = ['birthday','name','sex','userName','phone','headImg'];
+	db['users'].findById(id, function(error, data){
+		if(error) console.error(error);
+		if(data) {
+			var obj = _pick(data, fileds);
+			res.send({data: obj});
+		}
+	})
+}
 function findOne(obj,dataBase,callback) {
   db[dataBase].findOne(obj,function(err,item){
 		if(err) return console.error(err);
