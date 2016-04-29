@@ -164,6 +164,22 @@ Users.getUserInfo = function(req, res) {
 		}
 	})
 }
+Users.updatePassWord = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	db['users'].findById(id, function(error, user){
+		if(error) console.error(error);
+		if(user) {
+			if(user.password == req.body.prePass){
+				user.password = req.body.newPass;
+				user.save();
+				res.send({data: 'ok'})
+			} else {
+				res.statusCode = 404;
+				res.send({errorCode: 404602, message: '原始密码输入错误'})
+			}
+		}
+	})
+}
 function findOne(obj,dataBase,callback) {
   db[dataBase].findOne(obj,function(err,item){
 		if(err) return console.error(err);
