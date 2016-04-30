@@ -115,7 +115,7 @@
 .Upload-card input:hover{
   cursor: pointer;
 }
-.BaseInfo-save,.Account-save{
+.BaseInfo-save,.Account-save, .Address-save{
   background-position: 100% -320px;
   border: 0 none;
   color: #fff;
@@ -142,4 +142,7 @@
 }
 .Account-save{
   margin-left: 45px;
+}
+.Address .row {
+    margin-bottom: 10px;
 }
