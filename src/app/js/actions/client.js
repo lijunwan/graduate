@@ -5,7 +5,8 @@ export const ADD_BOOK = 'ADD_BOOK';
 export const GET_SHOPCARTS = 'GET_SHOPCARTS';
 export const UPDATE_USERINFO = 'UPDATE_USERINFO';
 export const GET_USERINFO = 'GET_USERINFO';
-export const UPDATE_PASS = 'UPDATE_PASS'
+export const UPDATE_PASS = 'UPDATE_PASS';
+export const ADD_ADDRESS = 'ADD_ADDRESS';
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -171,6 +172,18 @@ export function updatePassWord(params) {
       .end(function(err,resp){
         dispatch({
           type: UPDATE_PASS,
+          data: resp.body
+        });
+    });
+  };
+}
+export function addAddress(params) {
+  return dispatch => {
+      HttpRequest.post('/api/user/authorization/addAddress')
+      .send(params)
+      .end(function(err,resp){
+        dispatch({
+          type: ADD_ADDRESS,
           data: resp.body
         });
     });
