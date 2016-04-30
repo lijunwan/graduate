@@ -81,6 +81,7 @@ export default class  Address extends Component {
     return(
       <div className="Address">
         <h2>收货地址管理</h2>
+        <h3>添加新地址</h3>
         <Row>
             <Col span="2" style={{textAlign: 'right', marginRight: '10px'}}>选择收货地区</Col>
             <Col span="20">
@@ -129,6 +130,18 @@ export default class  Address extends Component {
                value="保存" 
                type="button"
                onClick={this.saveAdress.bind(this)} />
+        <h3>我的地址</h3>
+        <table className="ant-table　Adress-table">
+            <thead>
+                <tr>
+                    <th>收货人</th>
+                    <th>所在地区</th>
+                    <th>详细地址</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+        </table>
       </div>
     )
   }

@@ -3,6 +3,9 @@ var _pick = require('lodash/pick');
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
+var mongoose = require('mongoose');
+var __assign = require('lodash/assign');
+var __remove = require('lodash/remove');
 function Users (user) {
 	this.phone = user.phone;
 	this.password = user.password;
@@ -164,6 +167,7 @@ Users.getUserInfo = function(req, res) {
 		}
 	})
 }
+
 Users.updatePassWord = function(req, res) {
 	var id = req.cookies.bookstore.id;
 	db['users'].findById(id, function(error, user){
@@ -177,6 +181,44 @@ Users.updatePassWord = function(req, res) {
 				res.statusCode = 404;
 				res.send({errorCode: 404602, message: '原始密码输入错误'})
 			}
+		}
+	})
+}
+Users.addAddress = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	console.log(req.query);
+	var obj = __assign({},req.query);
+	obj.id = 
+	db['users'].findById(id, function(error,data){
+		if(data) {
+			req.query['_id'] = new mongoose.Types.ObjectId
+			data.ShippingAddress.push(req.query);
+			data.save();
+			res.send({data: data.ShippingAddress})
+		}
+	})
+}
+Users.getAddress = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	db['users'].findById(id, function(error,data){
+		if(data) {
+			res.send({data: data.ShippingAddress})
+		}
+	})
+}
+Users.delAdress = function(req, res) {
+	var id = req.cookies.bookstore.id;
+	var addressId = req.query.addressId;
+	db['users'].findById(id, function(error,data){
+		if(data) {
+			var newAddress = __remove(data.ShippingAddress, function(obj) {
+				if(obj['_id'] == addressId) {
+					return true;
+				}
+			})
+			data.ShippingAddress = newAddress;
+			data.save();
+			res.send({data: data.ShippingAddress})
 		}
 	})
 }

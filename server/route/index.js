@@ -14,6 +14,7 @@ app.del('/api/user/logout',User.logout);
 app.post('/api/user/authorization/headImages', User.UploadImg);
 app.get('/api/user/authorization/undateUserInfo', User.modifyBaseInfo);
 app.get('/api/user/authorization/getUserInfo', User.getUserInfo);
+app.get('/api/user/authorization/addAddress', User.addAddress);
 app.post('/api/user/authorization/updatePassWord', User.updatePassWord);
 app.get('/api/book/autoComplete', Books.autoComplete);
 app.get('/api/book/bookOnSale', Books.getOnSaleBooks);

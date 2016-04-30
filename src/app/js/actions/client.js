@@ -179,8 +179,8 @@ export function updatePassWord(params) {
 }
 export function addAddress(params) {
   return dispatch => {
-      HttpRequest.post('/api/user/authorization/addAddress')
-      .send(params)
+      HttpRequest.get('/api/user/authorization/addAddress')
+      .query(params)
       .end(function(err,resp){
         dispatch({
           type: ADD_ADDRESS,
