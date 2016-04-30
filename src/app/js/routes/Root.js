@@ -29,7 +29,7 @@ var routes = (
       <Route name="searchResult" path='/SearchResult' component={SearchResult} />
       <Route name="shopCart" path='/shopCart' component={ShopCart} />
       <Route name="favorite" path='/favorite' component={Favorite} />
-      <Route name="payment" path='/payment/' component={Payment} />
+      <Route name="payment" path='/payment' component={Payment} />
       <Route name="order" path='/order' component={Order} />
       <Route name="pay" path='/pay' component={Pay} />
       <Route name="orderDetail" path='/orderDetail/:orderId' component={OrderDetail}/>

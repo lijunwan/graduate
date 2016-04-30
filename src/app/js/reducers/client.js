@@ -6,10 +6,12 @@ import {CHECK_LOGIN,
         UPDATE_USERINFO,
         GET_USERINFO,
         UPDATE_PASS,
-        ADD_ADDRESS} from '../actions/client';
+        ADD_ADDRESS,
+        GET_ADDRESS,
+        DEL_ADDRESS} from '../actions/client';
 import Immutable from 'immutable';
 
-export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registerInfo:{}, addBookMess:{},shopCart:{}, userInfo: {}, updatePass:{}, address:{}}), action) {
+export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registerInfo:{}, addBookMess:{},shopCart:{}, userInfo: {}, updatePass:{}, address:{},addressList:{}}), action) {
   switch (action.type) {
   case CHECK_LOGIN:
     return state.set("info", action.data);
@@ -26,7 +28,11 @@ export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registe
   case UPDATE_PASS:
     return state.set("updatePass",action.data);
   case ADD_ADDRESS:
-     return state.set("address",action.data);
+     return state.set("addressList",action.data);
+ case GET_ADDRESS:
+    return state.set("addressList",action.data);
+case DEL_ADDRESS:
+   return state.set("addressList",action.data);
   default:
     return state;
   }

@@ -7,6 +7,8 @@ export const UPDATE_USERINFO = 'UPDATE_USERINFO';
 export const GET_USERINFO = 'GET_USERINFO';
 export const UPDATE_PASS = 'UPDATE_PASS';
 export const ADD_ADDRESS = 'ADD_ADDRESS';
+export const GET_ADDRESS = 'GET_ADDRESS';
+export const DEL_ADDRESS = 'DEL_ADDRESS';
 import HttpRequest from 'superagent';
 //import { interceptorAction } from './interceptorAction';
 //import { loginCode } from './loginCode';
@@ -184,6 +186,29 @@ export function addAddress(params) {
       .end(function(err,resp){
         dispatch({
           type: ADD_ADDRESS,
+          data: resp.body
+        });
+    });
+  };
+}
+export function getAddress() {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/getAddress')
+      .end(function(err,resp){
+        dispatch({
+          type: GET_ADDRESS,
+          data: resp.body
+        });
+    });
+  };
+}
+export function delAddress(params) {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/delAddress')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: DEL_ADDRESS,
           data: resp.body
         });
     });

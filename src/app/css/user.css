@@ -143,9 +143,26 @@
 .Account-save{
   margin-left: 45px;
 }
+.Address h3 {
+    color: #666;
+    font-weight: 700;
+    padding: 5px 10px 4px;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
 .Address .row {
     margin-bottom: 10px;
 }
+.Address-save {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
 .Address-table {
   width: 380px;
+}
+.Address .ant-table {
+    margin-left: 10px;
+}
+.Address .ant-table td,.Address .ant-table th {
+    width: 150px;
 }

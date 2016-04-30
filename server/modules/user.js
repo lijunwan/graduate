@@ -6,6 +6,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var __assign = require('lodash/assign');
 var __remove = require('lodash/remove');
+var __findIndex = require('lodash/findIndex');
 function Users (user) {
 	this.phone = user.phone;
 	this.password = user.password;
@@ -186,17 +187,38 @@ Users.updatePassWord = function(req, res) {
 }
 Users.addAddress = function(req, res) {
 	var id = req.cookies.bookstore.id;
-	console.log(req.query);
 	var obj = __assign({},req.query);
-	obj.id = 
-	db['users'].findById(id, function(error,data){
-		if(data) {
-			req.query['_id'] = new mongoose.Types.ObjectId
-			data.ShippingAddress.push(req.query);
-			data.save();
-			res.send({data: data.ShippingAddress})
-		}
-	})
+	if(obj.id) {
+		db['users'].findById(id, function(error,data){
+			if(data) {
+				//console.log('----',data)
+				var index = __findIndex(data.ShippingAddress, function(item) {
+					console.log('----',item.id)
+					if(item.id == obj.id) {
+						return true;
+					}
+					return false;
+				})
+				console.log('----',index);
+				if(index>=0) {
+					data.ShippingAddress[index] = obj;
+					data.save();
+					res.send({data: data.ShippingAddress})
+				} else {
+					res.send({errorCode:'404401', message: '地址信息操作失败'})
+				}
+			}
+		});
+	} else {
+		db['users'].findById(id, function(error,data){
+			if(data) {
+				obj['id'] = new mongoose.Types.ObjectId
+				data.ShippingAddress.push(obj);
+				data.save();
+				res.send({data: data.ShippingAddress})
+			}
+		})
+	}
 }
 Users.getAddress = function(req, res) {
 	var id = req.cookies.bookstore.id;
@@ -206,13 +228,13 @@ Users.getAddress = function(req, res) {
 		}
 	})
 }
-Users.delAdress = function(req, res) {
+Users.delAddress = function(req, res) {
 	var id = req.cookies.bookstore.id;
 	var addressId = req.query.addressId;
 	db['users'].findById(id, function(error,data){
 		if(data) {
 			var newAddress = __remove(data.ShippingAddress, function(obj) {
-				if(obj['_id'] == addressId) {
+				if(obj['id'] == addressId) {
 					return true;
 				}
 			})
