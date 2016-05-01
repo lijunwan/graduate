@@ -89,7 +89,7 @@ Books.searchByType = function(req, res) {
 						db['bookMenuConfig'].findOne({type: typeList[0]+typeList[1]}, function(err, menuLevel) {
 							typeName.push(menuLevel);
 							if(typeList[2]) {
-								db['bookMenuConfig'].find({type: typeList[0]+typeList[1]+typeList[2]}, function(err, menuLevel2) {
+								db['bookMenuConfig'].findOne({type: typeList[0]+typeList[1]+typeList[2]}, function(err, menuLevel2) {
 									typeName.push(menuLevel2);
 									res.send({data: data, type: typeName})
 								})

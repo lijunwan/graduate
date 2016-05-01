@@ -14,10 +14,33 @@ export default class SearchTypeBook extends Component {
     creatTypeMenu() {
         const type = this.props.bookInfo.toJS().bookListType.type;
         const list = [];
-        if(type) {
+        if(type && type.length>0) {
             type.map((item)=>{
                 list.push(
                     <a onClick={this.searchByType.bind(this,item.type)}>{item.name}/</a>
+                )
+            })
+        }
+        return list;
+    }
+    redirectBookPage(bookId) {
+        this.props.pushState(null, 'book/'+bookId);
+    }
+    createBookItem() {
+        const data = this.props.bookInfo.toJS().bookListType.data;
+        const list = [];
+        if(data && data.length>0) {
+            data.map((item)=>{
+                list.push(
+                    <Col span="4">
+                    <img style={{width:'100px'}} src={item.cover} />
+                    <p className="ContentSlider-bookName"><a onClick = {this.redirectBookPage.bind(this, item.detail)}>{item.bookName}</a></p>
+                    <p className="ContentSlider-Item-author">{item.author}</p>
+                    <p className='ContentSlider-Item-price'>
+                        <span className="ContentSlider-Item-priceDis">￥{item.aprice}</span>
+                        <span><s>￥{item.price}</s></span>
+                    </p>
+                    </Col>
                 )
             })
         }
@@ -32,7 +55,8 @@ export default class SearchTypeBook extends Component {
                         <BookMenu {...this.props} />
                     </Col>
                     <Col span="4" style={{width: '1000px', marginLeft: '10px'}}>
-                        {this.creatTypeMenu()}
+                        <div>{this.creatTypeMenu()}</div>
+                        {this.createBookItem()}
                     </Col>
                 </Row>
             </div>
