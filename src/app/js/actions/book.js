@@ -3,6 +3,8 @@ export const GET_BOOK_ON_SALE = 'GET_BOOK_ON_SALE';
 export const GET_BOOK_NEW = 'GET_BOOK_NEW';
 export const GET_BOOK_INFO = 'GET_BOOK_INFO';
 export const SEARCH_BOOK = 'SEARCH_BOOK';
+export const GET_BOOKMENU = 'GET_BOOKMENU';
+export const SEARCH_BOOK_BYTYPE = 'SEARCH_BOOK_BYTYPE';
 import HttpRequest from 'superagent';
 export function searchBooks(params){
   return dispatch => {
@@ -70,4 +72,27 @@ export function getBookInfo(params){
         });
     });
   };
+}
+export function getBookMenu() {
+    return dispatch => {
+        HttpRequest.get('/api/book/bookMenu')
+        .end(function(err,resp){
+          dispatch({
+            type: GET_BOOKMENU,
+            data: resp.body
+          });
+      });
+    };
+}
+export function searchByType(params) {
+    return dispatch => {
+        HttpRequest.get('/api/book/searchByType')
+        .query(params)
+        .end(function(err,resp){
+          dispatch({
+            type: SEARCH_BOOK_BYTYPE,
+            data: resp.body
+          });
+      });
+    };
 }

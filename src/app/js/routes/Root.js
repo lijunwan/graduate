@@ -13,7 +13,8 @@ import Payment from '../components/pay/Payment.js';
 import Order from '../components/order/Order';
 import Pay from '../components/pay/Pay';
 import OrderDetail from '../components/order/OrderDetail';
-import User from '../components/user/User'
+import User from '../components/user/User';
+import SearchTypeBook from '../components/SearchTypeBook/SearchTypeBook'
 var Router = require('react-router');
 var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -34,6 +35,7 @@ var routes = (
       <Route name="pay" path='/pay' component={Pay} />
       <Route name="orderDetail" path='/orderDetail/:orderId' component={OrderDetail}/>
       <Route name="user" path='/user' component={User}/>
+       <Route name="searchTypeBook" path='/searchTypeBook/:type' component={SearchTypeBook}/>
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}

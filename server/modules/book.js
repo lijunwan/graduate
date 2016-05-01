@@ -67,6 +67,44 @@ Books.getBookInfo = function getBookInfo (req, res) {
 		}
 	})
 }
+Books.getBookMenu = function(req, res) {
+	db['bookMenu'].find({},function(error, data){
+		if(data){
+			res.send({data: data})
+		}
+	})
+}
+Books.searchByType = function(req, res) {
+	var type = req.query.type;
+	var reg = new RegExp('^'+type,'i');
+	db['bookInfo'].find({type: reg},function(err, data){
+		if(data) {
+			const typeList = req.query.type.split('');
+			console.log('---',typeList)
+			const typeName = [];
+			db['bookMenuConfig'].findOne({type: typeList[0]}, function(err, menu){
+				if(menu) {
+					typeName.push(menu);
+					if(typeList[1]) {
+						db['bookMenuConfig'].findOne({type: typeList[0]+typeList[1]}, function(err, menuLevel) {
+							typeName.push(menuLevel);
+							if(typeList[2]) {
+								db['bookMenuConfig'].find({type: typeList[0]+typeList[1]+typeList[2]}, function(err, menuLevel2) {
+									typeName.push(menuLevel2);
+									res.send({data: data, type: typeName})
+								})
+							} else {
+								res.send({data: data, type: typeName})
+							}
+						})
+					} else {
+						res.send({data: data, type: typeName})
+					}
+				}
+			})
+		}
+	})
+}
 function getBookDetailInfor (dataBase,id,callback) {
 	db[dataBase].findOne({_id:id}).exec(function(err, data){
   	  callback(err, data);

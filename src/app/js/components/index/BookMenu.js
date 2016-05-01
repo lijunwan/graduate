@@ -11,39 +11,29 @@ export default class BookMenu extends Component {
 	createMenu(data) {
 		var list = []
 		data.map((menu)=>{
-			var items = [];
-			const hideMenu = [];
-			menu.children.map((menuChild)=>{
-				items.push(<li><a className="BookMenu-level2">{menuChild.name}</a></li>)
-			})
-			menu.children.map((menuChild)=>{
-				const hideMenuLevel = [];
-				menuChild.children.map((data)=>{
-					hideMenuLevel.push(
-						<li><a>{data.name}</a></li>
-					)
-				});
-				hideMenu.push(
-					<ul>
-						<p className="HideMenu-title">{menuChild.name}</p>
-						{hideMenuLevel}
-					</ul>
-				)
-			})
 			list.push(
-				<LevelMenu  data = {menu}/>
-			
+				<LevelMenu  data = {menu} {...this.props}/>
+
 			)
 		})
 		return list;
 	}
+	componentDidMount() {
+		this.props.bookeBoundAC.getBookMenu();
+	}
 	render() {
-		console.log(config.bookMenu,"BookMenu")
+		console.log(this.props.bookInfo.toJS().bookMenu.data,"BookMenu")
+		const bookMenu = this.props.bookInfo.toJS().bookMenu.data;
+		if(bookMenu) {
+			return(
+				<div className="BookMenu">
+					<h3 className="BookMenu-title">图书分类</h3>
+					<div className="BookMenu-body">{this.createMenu(bookMenu)}</div>
+				</div>
+			)
+		}
 		return(
-			<div className="BookMenu">
-				<h3 className="BookMenu-title">图书分类</h3>
-				<div className="BookMenu-body">{this.createMenu(config.bookMenu)}</div>
-			</div>
+			<div>...</div>
 		)
 	}
 }
@@ -64,11 +54,19 @@ class LevelMenu extends Component {
 			isShowMenu: false,
 		})
 	}
+	searchByType(type) {
+		this.props.history.pushState(null, '/searchTypeBook/'+ type);
+		console.log(this.props.routes, '????')
+		const routes = this.props.routes;
+		if(routes[1] && routes[1].name == 'searchTypeBook') {
+			this.props.bookeBoundAC.searchByType({type:type});
+		}
+	}
 	createItems () {
 		const list = [];
 		const menu = this.props.data;
 		menu.children.map((menuChild)=>{
-			list.push(<li><a className="BookMenu-level2">{menuChild.name}</a></li>)
+			list.push(<li><a className="BookMenu-level2" onClick={this.searchByType.bind(this, menuChild.flag)}>{menuChild.name}</a></li>)
 		})
 		return list;
 	}
@@ -79,7 +77,7 @@ class LevelMenu extends Component {
 			const hideMenuLevel = [];
 			menuChild.children.map((data)=>{
 				hideMenuLevel.push(
-					<li><a>{data.name}</a></li>
+					<li><a onClick={this.searchByType.bind(this,data.flag)}>{data.name}</a></li>
 				)
 			});
 			hideMenu.push(
@@ -95,8 +93,8 @@ class LevelMenu extends Component {
 		const bookMenuUlWrapCss = this.state.isShowMenu ? 'BookMenu-ul-wrap BookMenu-ul-wrap-hover': 'BookMenu-ul-wrap';
 		const bookMenuUlCss = this.state.isShowMenu ? 'BookMenu-ul BookMenu-ul-hover' : 'BookMenu-ul';
 		return (
-			<div className="BookMenu-level" 
-				 onMouseEnter = {this.showHideMenu.bind(this)} 
+			<div className="BookMenu-level"
+				 onMouseEnter = {this.showHideMenu.bind(this)}
 				 onMouseLeave = {this.hideMenu.bind(this)}>
 				<div className={bookMenuUlWrapCss}>
 					<ul className={bookMenuUlCss}>
@@ -105,7 +103,7 @@ class LevelMenu extends Component {
 					</ul>
 				</div>
 				{
-					this.state.isShowMenu ? 
+					this.state.isShowMenu ?
 					<div className="HideMenu">
 						{this.createHideMenu()}
 					</div>

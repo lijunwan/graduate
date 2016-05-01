@@ -122,6 +122,15 @@ db.once('open', function (callback) {
 		orderId: String,
 		salePrice: Number,
 		sumMon: Number,
+	});
+	var bookMenuSchema = new Schema({
+		flag: String,
+		name: String,
+		children: [],
+	});
+	var bookMenuConfigSchema = new Schema({
+		type: String,
+		name: String,
 	})
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
@@ -216,7 +225,9 @@ db.once('open', function (callback) {
 	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
 	dataModel['favorite'] = db.model('favorite', favoriteSchema, 'favorite');
 	dataModel['order'] = db.model('order', orderSchema, 'order');
-	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 'saleRecords');
+	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 's;aleRecords');
+	dataModel['bookMenu'] = db.model('bookMen', bookMenuSchema, 'bookMen');
+	dataModel['bookMenuConfig'] = db.model('bookMenuConfig', bookMenuConfigSchema, 'bookMenuConfig');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
@@ -231,7 +242,7 @@ db.once('open', function (callback) {
 		editions:"1",
 		pages:348,
 		words:514000,
-		type:"图书-计算机/网络-程序设计-其他",
+		type:"AAB",
 		authorIntro:["真名田永强，文艺型码农，就职于阿里巴巴数据平台，资深工程师，Node.js布道者，写了多篇文章介绍Node.js的细节。活跃于CNode社区，是线下会议NodeParty的组织者和JSConfChina（沪JS和京JS）的组织者之一。热爱开源，多个Node.js模块的作者。叩首问路，码梦为生。"],
 		stocks:1000,
 		saleNumber:0,
@@ -247,9 +258,229 @@ db.once('open', function (callback) {
 		cover:"book/cover.jpg",
 		detail: '5709b6499180abb00defee0a'
 	}
-	// dataModel['bookInfo'].create(obj,function(err,data){
-	// 	if(err) return console.error(err);
+	var bookMenu = {
+		flag:'A',
+		name:'教育',
+		children:[
+			{
+				flag:'AA',
+				name:'教材',
+				children:[
+					{
+						flag:'AAA',
+						name:'研究生/本科'
+					},
+					{
+						flag:'AAB',
+						name:'高职高专教材'
+					},
+					{
+						flag: 'AAC',
+						name: '中职教材'
+					},
+					{
+						flag: 'AAD',
+						name: '成人教育教材'
+					},
+					{
+						flag: 'AAE',
+						name: '职业技术培训'
+					},
+					{
+						flag: 'AAF',
+						name: '公共课'
+					},
+					{
+						flag: 'AAG',
+						name: '经济管理类'
+					},
+					{
+						flag: 'AAH',
+						name: '工学类'
+					},
+					{
+						flag: 'AAI',
+						name: '文法类'
+					},
+					{
+						flag: 'AAJ',
+						name: '医学类'
+					},
+					{
+						flag: 'AAK',
+						name: '理学类'
+					},
+					{
+						flag: 'AAI',
+						name: '农学'
+					},
+
+				]
+			},
+			{
+				flag:'AB',
+				name:'外语',
+				children:[
+					{
+						flag:'ABA',
+						name:'英语专项训练'
+					},
+					{
+						flag:'ABB',
+						name:'英语读物'
+					},
+					{
+						flag:'ABC',
+						name:'英语考试'
+					},
+					{
+						flag:'ABD',
+						name:'小语种'
+					},
+					{
+						flag:'ABE',
+						name:'日语'
+					},
+					{
+						flag:'ABF',
+						name:'法语'
+					},
+					{
+						flag:'ABF',
+						name:'韩语'
+					},
+				]
+			},
+			{
+				flag: 'AC',
+				name: '考试',
+				children:[
+					{
+						flag: 'ACA',
+						name: '学历考试',
+					},
+					{
+						flag: 'ACB',
+						name: '公务员',
+					},
+					{
+						flag: 'ACC',
+						name: '财税外贸保险',
+					},
+					{
+						flag: 'ACD',
+						name: '计算机',
+					},
+					{
+						flag: 'ACE',
+						name: '建筑工程',
+					},
+					{
+						flag: 'ACF',
+						name: '医药卫生',
+					},
+					{
+						flag: 'ACG',
+						name: '艺术/体育',
+					},
+					{
+						flag: 'ACH',
+						name: '考研',
+					},
+					{
+						flag: 'ACI',
+						name: 'MBA/MPA/MPAc',
+					},
+					{
+						flag: 'ACJ',
+						name: '会计',
+					},
+					{
+						flag: 'ACK',
+						name: '建造师',
+					},
+					{
+						flag: 'ACL',
+						name: '医师资格',
+					},
+					{
+						flag: 'ACM',
+						name: '人力资源管理',
+					},
+				]
+			},
+			{
+				flag: 'AD',
+				name: '中小学教辅',
+				children: [
+					{
+						flag: 'ADA' ,
+						name: '小学' ,
+					},
+					{
+						flag: 'ADB' ,
+						name: '初中' ,
+					},
+					{
+						flag: 'ADC' ,
+						name: '高中' ,
+					},
+					{
+						flag: 'ADD' ,
+						name: '中小学阅读' ,
+					},
+					{
+						flag: 'ADE' ,
+						name: '英语专项' ,
+					},
+					{
+						flag: 'ADF' ,
+						name: '语文作文' ,
+					},
+					{
+						flag: 'ADG' ,
+						name: '工具书' ,
+					},
+					{
+						flag: 'ADH' ,
+						name: '写字/字帖' ,
+					},
+					{
+						flag: 'ADI' ,
+						name: '学习方法' ,
+					},
+					{
+						flag: 'ADJ' ,
+						name: '教育理论' ,
+					},
+				]
+			}
+		]
+	}
+	// dataModel['bookMenu'].create(bookMenu, function(err,data){
+	// 	console.log(data);
 	// })
+	dataModel['bookInfo'].create(obj,function(err,data){
+		if(err) return console.error(err);
+	})
+	var bookMenuConfigObj = [
+		{
+			type: 'A',
+			name: '教育',
+		},
+		{
+			type: 'AA',
+			name: '教材',
+		},
+		{
+			type: 'AAA',
+			name: '研究生/本科生',
+		}
+	]
+	// dataModel['bookMenuConfig'].create(bookMenuConfigObj,function(err,data){
+	// 		if(err) return console.error(err);
+	// 		console.log(data,'--');
+	// 	})
 	// dataModel['bookOnSale'].create(objOnSale,function(err,data){
 	// 	if(err) return console.error(err);
 	// 	console.log(data);

@@ -22,7 +22,9 @@ app.get('/api/book/autoComplete', Books.autoComplete);
 app.get('/api/book/bookOnSale', Books.getOnSaleBooks);
 app.get('/api/book/bookNew', Books.getNewBooks);
 app.get('/api/book/bookInfo', Books.getBookInfo);
+app.get('/api/book/bookMenu', Books.getBookMenu);
 app.get('/api/book/searchBook', Books.searchBook);
+app.get('/api/book/searchByType', Books.searchByType);
 app.use('/api/user/authorization/*', function(req, res, next){
     if(req.cookies.bookstore && req.cookies.bookstore.id) {
         next('route')
