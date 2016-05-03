@@ -50,14 +50,32 @@ Order.getOrderInfo = function getOrderInfo(req, res) {
 }
 Order.payOrder = function payOrder(req, res) {
 	var userId = req.cookies.bookstore.id;
-	var orderId = req.query.orderId;
 	var sumMon = req.query.sumMon;
-	const orderIdList = JSON.parse(req.query.orderId);
-	db['order'].where('_id').in(orderIdList).update({},{orderStatus:'UNSEND'},{multi: true},function(error,data){
-		if(data) {
-			db['order'].where('_id').in(orderIdList).exec(function(error, order){
-				console.log(order)
-				res.send({data: order})
+	const orderInfo = JSON.parse(req.query.orderInfo);
+	const orderIdList = GR.getKeyValueList(orderInfo,'_id');
+	const bookList = GR.getKeyValueList(orderInfo,'bookId');
+	console.log('---',bookList)
+	db['order'].findById(orderIdList[0], function(error, firstOrder){
+		if(firstOrder.orderStatus == 'UNSEND') {
+			res.statusCode = "404"
+			res.send({errorCode: '404501', message: '已支付'})
+		}else {
+			db['order'].where('_id').in(orderIdList).update({},{orderStatus:'UNSEND'},{multi: true},function(error,data){
+				if(data) {
+					db['bookInfo'].where('_id').in(bookList).exec(function(error, books){
+						orderInfo.map(function(orderItem){
+							var obj = GR.findItem(books, '_id', orderItem.bookId);
+
+							if(obj) {
+								obj.saleNumber += orderItem.count;
+								obj.save();
+							}
+						})
+						db['order'].where('_id').in(orderIdList).exec(function(error, order){
+							res.send({data: order})
+						})
+					})
+				}
 			})
 		}
 	})

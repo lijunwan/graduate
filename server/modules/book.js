@@ -25,11 +25,13 @@ Books.autoComplete = function autoComplete(req, res) {
 Books.searchBook = function searchBook(req, res) {
 	var reg = new RegExp(req.query.searchKey,'i');
 	searchBookMongo(reg, 'bookInfo', function(err, data){
-		console.log('================',data)
 		var list = [];
 		data.map((item)=>{
-			var obj = __pick(item, ['bookName', 'aprice','author', 'pubHouse', 'pubDate', 'price', 'discount', 'cover', 'introduce']);
+			var obj = __pick(item, ['bookName', 'aprice','author', 'pubHouse', 'pubDate', 'price', 'discount', 'cover', 'introduce', 'saleNumber', 'scores']);
+
 			obj.id = item['_id'];
+			console.log('===', item.evaluation)
+			// obj.scores = calculatedAverage(item.evaluation,'scores');
 			list.push(obj);
 			console.log(obj);
 		});
@@ -106,19 +108,38 @@ Books.searchByType = function(req, res) {
 }
 Books.evaluationBook = function(req, res) {
 	var userId = req.cookies.bookstore.id;
-	var evaluation = __pick(req.query, ['bookId', 'scores', 'evaText'])
+	var evaluation = __pick(req.query, ['scores', 'evaText'])
 	var bookId = req.query.bookId;
 	var orderId = req.query.orderId;
-	db['bookInfo'].findById(bookId, function(error, data){
-		data.evaluation.push(evaluation);
-		data.save();
-		db['order'].findById(orderId, function(error, order){
-			order.orderStatus = 'evaluationed';
-			order.save();
-			data.send({data: order});
-		});
+	evaluation.userId = userId;
+	db['users'].findById(userId, function(error, user){
+	  evaluation.headImg = user.headImg;
+		evaluation.userName = user.userName;
+		evaluation.date = new Date();
+		db['bookInfo'].findById(bookId, function(error, data){
+			data.evaluation.push(evaluation);
+			data.scores = calculatedAverage(data.evaluation, scores);
+			data.save();
+			db['order'].findById(orderId, function(error, order){
+				order.orderStatus = 'EVALUATIONED';
+				order.save();
+				res.send({data: order});
+			});
+		})
 	})
 }
+function calculatedAverage(list, key) {
+	const sum = 0;
+	if(list.length <1) {
+		return sum;
+	}
+	list.map(function(item){
+		sum += itme[key];
+		console.log(itme[key], '----')
+	})
+	return sum/list.length;
+}
+
 function getBookDetailInfor (dataBase,id,callback) {
 	db[dataBase].findOne({_id:id}).exec(function(err, data){
   	  callback(err, data);

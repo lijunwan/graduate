@@ -8,8 +8,25 @@
 .BookItem img {
     width: 200px;
 }
+.sort-menu {
+  line-height: 30px;
+  border: solid 1px #efefef;
+  background-color: #f5f5f5;
+  margin: 10px 0;
+  height: 30px;
+}
 .sort-menu li{
     float: left;
+}
+
+.sort-menu li a {
+  display: inline-block;
+  text-align: center;
+  padding: 0 10px 0;
+  line-height: 15px;
+  color: #555;
+  border-right: 1px dashed #ccc;
+  margin-top: 7.5px;
 }
 .text-wrap {
     float: left;
@@ -62,4 +79,7 @@
 .SearchResult-recomendContent{
     height: 800px;
     border: 1px solid #ccc;
+}
+.sortKey-active {
+  color: orange;
 }

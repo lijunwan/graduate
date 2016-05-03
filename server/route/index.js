@@ -18,7 +18,7 @@ app.get('/api/user/authorization/addAddress', User.addAddress);
 app.get('/api/user/authorization/getAddress', User.getAddress);
 app.get('/api/user/authorization/delAddress', User.delAddress);
 app.post('/api/user/authorization/updatePassWord', User.updatePassWord);
-app.post('/api/book/authorization/evaluation', User.evaluationBook);
+app.get('/api/user/authorization/evaluation', Books.evaluationBook);
 app.get('/api/book/autoComplete', Books.autoComplete);
 app.get('/api/book/bookOnSale', Books.getOnSaleBooks);
 app.get('/api/book/bookNew', Books.getNewBooks);

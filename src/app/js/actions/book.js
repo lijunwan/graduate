@@ -5,6 +5,7 @@ export const GET_BOOK_INFO = 'GET_BOOK_INFO';
 export const SEARCH_BOOK = 'SEARCH_BOOK';
 export const GET_BOOKMENU = 'GET_BOOKMENU';
 export const SEARCH_BOOK_BYTYPE = 'SEARCH_BOOK_BYTYPE';
+export const EVALUATION_BOOK = 'EVALUATION_BOOK';
 import HttpRequest from 'superagent';
 export function searchBooks(params){
   return dispatch => {
@@ -95,4 +96,16 @@ export function searchByType(params) {
           });
       });
     };
+}
+export function evaluationBook(params) {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/evaluation')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: EVALUATION_BOOK,
+          data: resp.body
+        });
+    });
+  };
 }

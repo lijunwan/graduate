@@ -6,7 +6,8 @@ import BookTab from './BookTab';
 import BookDetail from './BookDetail'
 import {Icon, Row, Col,message} from 'antd';
 import logoImg from '../../../images/logo.jpg';
-import Search from '../common/Search'
+import Search from '../common/Search';
+import moment from 'moment';
 export default class  Book extends Component{
     constructor(props) {
       super(props);
@@ -95,6 +96,43 @@ export default class  Book extends Component{
     localStorage.setItem('confirmOrder', JSON.stringify(orderData))
     this.props.history.push({pathname: '/payment/'})
   }
+  createStars(index) {
+    const list = [];
+		for(let i=0;i<5;i++) {
+			if(i <= index){
+				list.push(
+					<i className="anticon anticon-star evaluation-star" style={{marginRight: '5px'}}></i>
+				)
+			} else{
+				list.push(
+					<i className="anticon anticon-star-o" style={{marginRight: '5px'}}></i>
+				)
+			}
+		}
+		return list;
+  }
+  createEvaluation() {
+    const data = this.props.bookInfo.toJS().bookInfo.data;
+    const list = [];
+    if(data) {
+      data.evaluation.map((evaItem)=>{
+        list.push(
+          <Row style={{borderBottom: '1px solid #ccc', paddingBottom: '10px'}}>
+            <Col span="2">
+              <img className="Book-evaHeadimg" src={evaItem.headImg}/>
+              <p className="evaluation-userName">{evaItem.userName}</p>
+            </Col>
+            <Col span="22">
+              <p>{this.createStars(evaItem.scores-1)}</p>
+              <p style={{margin:'10px 0'}}>{evaItem.evaText}</p>
+              <p style={{textAlign: 'right'}}>{moment(evaItem.date).format("YYYY-MM-DD hh:mm:ss")}</p>
+            </Col>
+          </Row>
+        )
+      })
+    }
+    return list;
+  }
     render() {
         const bookInfo = this.props.bookInfo.toJS().bookInfo;
         const favoriteStarClass = this.state.isFavorite ? 'anticon anticon-star Book-start-active' : 'anticon anticon-star Book-start';
@@ -150,6 +188,7 @@ export default class  Book extends Component{
                         </div>
                         <h3  className="BookDetai-blockName" style={{marginTop: '20px'}}>商品评价</h3>
                         <div className="detail-content clearfix">
+                          {this.createEvaluation()}
                         </div>
                       </div>
                     </div>

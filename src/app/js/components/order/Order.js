@@ -46,6 +46,9 @@ class OrderTable extends Component {
 	confirmReceipt(orderId) {
 		this.props.orderBoundAC.confirmReceipt({orderId: orderId})
 	}
+	evaluationBook(item) {
+		this.props.history.pushState(null, '/evaluation', {orderId:item['_id'],bookId:item.bookId});
+	}
 	createOperation(status, item) {
 		switch (status) {
 			case 'UNPAY':
@@ -54,6 +57,13 @@ class OrderTable extends Component {
 				  <p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
 					<p style={{lineHeight: '1.5'}}><a onClick={this.payOrder.bind(this, item)}>支付</a></p>
 				</Col>)
+			case 'UNEVALUATION':
+				return(
+					<Col span="4">
+						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.evaluationBook.bind(this, item)}>评价</a></p>
+					</Col>
+				)
 			default:
 				return (
 					<Col span="4">
@@ -67,7 +77,9 @@ class OrderTable extends Component {
 		const data = this.props.order.toJS().orderList.data;
 		const payStatus = {
 			'UNPAY': '未支付',
-			'UNSEND': '买家已支付等待卖家发货'
+			'UNSEND':'买家已支付等待卖家发货',
+			'UNEVALUATION': '已收货',
+			'EVALUATIONED': '已评价,交易完成',
 		}
 		const list = [];
 		if(data) {

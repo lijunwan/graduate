@@ -6,13 +6,8 @@ export default class Pay extends Component {
 	componentWillReciveProps(nextProps) {
 	}
 	payOrder(data, sumMon) {
-		var orderIdList = [];
-		data.map((item) => {
-			orderIdList.push(item['_id']);
-		});
-
-		if(orderIdList.length > 0) {
-			this.props.orderBoundAC.payOrder({orderId: JSON.stringify(orderIdList), sumMon: sumMon});
+		if(data.length > 0) {
+			this.props.orderBoundAC.payOrder({orderInfo: JSON.stringify(data), sumMon: sumMon});
 		}
 	}
 	createContent(data) {

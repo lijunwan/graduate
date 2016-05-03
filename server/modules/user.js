@@ -107,6 +107,7 @@ Users.createUser = function createUser(req,res) {
 					phone:phone,
 					password:password,
 					userName:userName,
+					headImg: '/user/userDefaultHeadImg.png',
 				}
 				saveOne(obj,'users',function(err,item){
 					if(item){

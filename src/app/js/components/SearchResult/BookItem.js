@@ -66,6 +66,12 @@ export default class BookItem extends Component {
         })
       }
     }
+    countEvalu(evaluation) {
+      var scores = 0;
+      evaluation.map((data)=>{
+        scores += data.scores
+      })
+    }
     render() {
         const data = this.props.data;
         const salePrice = data.discount/10 * data.price;
@@ -84,6 +90,15 @@ export default class BookItem extends Component {
                         <p className="author">{data.author}著/{data.pubHouse}/{data.pubDate}</p>
                         <div className="BookItem-introduce">
                         {this.createIntorduce(data.introduce)}
+                        </div>
+                        <div>
+                          已销售：{data.saleNumber}
+                        </div>
+                        <div>
+                          {
+                            data.scores <1 ?<p>0人评价</p>
+                            :<p>评分：{data.scores}</p>
+                          }
                         </div>
                         <div>
                             <a className="button button01" onClick={this.addShopCarts.bind(this, data.id)}>加入购物车</a>

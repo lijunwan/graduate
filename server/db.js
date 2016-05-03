@@ -63,6 +63,7 @@ db.once('open', function (callback) {
 		authorIntro:[],//作者简介
 		stocks:Number,//库存
 		saleNumber:Number,//销售量，
+		prestocks: Number,//进货量,
 		introduce:[],//简介，
 		scores:String,//评分
 		flag: String,//书籍的状态
@@ -183,7 +184,7 @@ db.once('open', function (callback) {
 				if(data) {
 					callback(data);
 				} else {
-					console.log(res,'????')
+					// console.log(res,'????')
 					res.statusCode="404";
 					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
 				}
@@ -209,7 +210,7 @@ db.once('open', function (callback) {
 				if(data) {
 					callback(data);
 				} else {
-					console.log(res,'????')
+					// console.log(res,'????')
 					res.statusCode="404";
 					res.send({errorCode:errorObj.errorCode,message: errorObj.message})
 				}

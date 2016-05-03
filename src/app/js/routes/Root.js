@@ -24,6 +24,7 @@ var DefaultRoute = Router.DefaultRoute;
 var IndexRoute  = Router.IndexRoute;
 var routes = (
     <Route name="main"  path="/" component={App}>
+      <IndexRoute component={Index} />
       <Route name="index" path='/index' component={Index}/>
       <Route name="login" path='/login' component={Login} />
       <Route name="register" path='/register' component={Register} />
@@ -38,7 +39,6 @@ var routes = (
       <Route name="user" path='/user' component={User}/>
        <Route name="searchTypeBook" path='/searchTypeBook/:type' component={SearchTypeBook}/>
       <Route name="evaluation" path="/evaluation" component={Evaluation} />
-      <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}
     </Route>
