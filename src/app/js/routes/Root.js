@@ -15,6 +15,7 @@ import Pay from '../components/pay/Pay';
 import OrderDetail from '../components/order/OrderDetail';
 import User from '../components/user/User';
 import SearchTypeBook from '../components/SearchTypeBook/SearchTypeBook'
+import Evaluation  from '../components/evaluation/Evaluation';
 var Router = require('react-router');
 var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -36,6 +37,7 @@ var routes = (
       <Route name="orderDetail" path='/orderDetail/:orderId' component={OrderDetail}/>
       <Route name="user" path='/user' component={User}/>
        <Route name="searchTypeBook" path='/searchTypeBook/:type' component={SearchTypeBook}/>
+      <Route name="evaluation" path="/evaluation" component={Evaluation} />
       <IndexRoute component={Index} />
       <Redirect from="/" to="index" />
       {/*<NotFoundRoute handler={RouteNotFound} />*/}

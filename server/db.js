@@ -67,6 +67,7 @@ db.once('open', function (callback) {
 		scores:String,//评分
 		flag: String,//书籍的状态
 		favorite: [],
+		evaluation:[],//评介　
 	});
 	//折扣书籍
 	var bookOnSaleSchema = new Schema ({

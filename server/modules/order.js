@@ -62,6 +62,21 @@ Order.payOrder = function payOrder(req, res) {
 		}
 	})
 }
+Order.confirmReceipt = function(req, res) {
+	var userId = req.cookies.bookstore.id;
+	var orderId = req.query.orderId;
+	console.log('confirmReceipt')
+	db['order'].findById(orderId, function(error, data){
+		if(error) console.error(error)
+		if(data) {
+ 			data.orderStatus = 'UNEVALUATION';
+ 			data.save();
+ 			db['order'].findItems(req, res, {userId: userId}, function(data){
+				res.send({data: data});
+			})
+		}
+	})
+}
 function getKeyValueList(list,key) {
 	const result = [];
 	list.map(function(item){

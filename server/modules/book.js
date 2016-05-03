@@ -57,7 +57,6 @@ Books.getNewBooks = function getOnSaleBook (req, res) {
 	})
 }
 Books.getBookInfo = function getBookInfo (req, res) {
-	console.log('=============')
 	getBookDetailInfor('bookInfo',req.query.bookId ,function(err, data){
 		if(data){
 			res.send({data:data})
@@ -103,6 +102,21 @@ Books.searchByType = function(req, res) {
 				}
 			})
 		}
+	})
+}
+Books.evaluationBook = function(req, res) {
+	var userId = req.cookies.bookstore.id;
+	var evaluation = __pick(req.query, ['bookId', 'scores', 'evaText'])
+	var bookId = req.query.bookId;
+	var orderId = req.query.orderId;
+	db['bookInfo'].findById(bookId, function(error, data){
+		data.evaluation.push(evaluation);
+		data.save();
+		db['order'].findById(orderId, function(error, order){
+			order.orderStatus = 'evaluationed';
+			order.save();
+			data.send({data: order});
+		});
 	})
 }
 function getBookDetailInfor (dataBase,id,callback) {

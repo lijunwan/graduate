@@ -43,6 +43,9 @@ class OrderTable extends Component {
 	showOrder(orderId) {
 		this.props.history.pushState(null, '/orderDetail/'+ orderId )
 	}
+	confirmReceipt(orderId) {
+		this.props.orderBoundAC.confirmReceipt({orderId: orderId})
+	}
 	createOperation(status, item) {
 		switch (status) {
 			case 'UNPAY':
@@ -54,7 +57,8 @@ class OrderTable extends Component {
 			default:
 				return (
 					<Col span="4">
-						<p><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.confirmReceipt.bind(this, item['_id'])}>确认收货</a></p>
 					</Col>
 				)
 		}

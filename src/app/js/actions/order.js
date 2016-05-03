@@ -2,6 +2,7 @@ export const CREATE_ORDER = 'CREATE_ORDER';
 export const GET_ORDER = 'GET_ORDER';
 export const PAY_ORDER = 'PAY_ORDER';
 export const GET_ORDER_INFO = 'GET_ORDER_INFO';
+export const CONFIRM_ORDER = 'CONFIRM_ORDER';
 import HttpRequest from 'superagent';
 export function createOrder(params){
   return dispatch => {
@@ -45,6 +46,18 @@ export function payOrder(params){
       .end(function(err,resp){
         dispatch({
           type: PAY_ORDER,
+          data: resp.body
+        });
+    });
+  };
+}
+export function confirmReceipt(params) {
+   return dispatch => {
+      HttpRequest.get('/api/user/authorization/confirmReceipt')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: CONFIRM_ORDER,
           data: resp.body
         });
     });
