@@ -118,7 +118,8 @@ Books.evaluationBook = function(req, res) {
 		evaluation.date = new Date();
 		db['bookInfo'].findById(bookId, function(error, data){
 			data.evaluation.push(evaluation);
-			data.scores = calculatedAverage(data.evaluation, scores);
+			data.scores = calculatedAverage(data.evaluation, 'scores');
+			console.log(data.evaluation,'????')
 			data.save();
 			db['order'].findById(orderId, function(error, order){
 				order.orderStatus = 'EVALUATIONED';
@@ -129,14 +130,15 @@ Books.evaluationBook = function(req, res) {
 	})
 }
 function calculatedAverage(list, key) {
-	const sum = 0;
+	var sum = 0;
 	if(list.length <1) {
 		return sum;
 	}
 	list.map(function(item){
-		sum += itme[key];
-		console.log(itme[key], '----')
+		sum += parseInt(item[key]);
+		console.log(item[key], '----')
 	})
+	console.log(sum, '----')
 	return sum/list.length;
 }
 

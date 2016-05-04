@@ -65,7 +65,7 @@ db.once('open', function (callback) {
 		saleNumber:Number,//销售量，
 		prestocks: Number,//进货量,
 		introduce:[],//简介，
-		scores:String,//评分
+		scores:Number,//评分
 		flag: String,//书籍的状态
 		favorite: [],
 		evaluation:[],//评介　
@@ -462,9 +462,9 @@ db.once('open', function (callback) {
 	// dataModel['bookMenu'].create(bookMenu, function(err,data){
 	// 	console.log(data);
 	// })
-	dataModel['bookInfo'].create(obj,function(err,data){
-		if(err) return console.error(err);
-	})
+	// dataModel['bookInfo'].create(obj,function(err,data){
+	// 	if(err) return console.error(err);
+	// })
 	var bookMenuConfigObj = [
 		{
 			type: 'A',

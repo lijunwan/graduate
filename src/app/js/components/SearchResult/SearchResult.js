@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Pagination } from 'antd';
 import __slice from 'lodash/slice';
 import __keys from 'lodash/keys';
-import __sortBy from 'lodash/sortBy'
+// import __sortByOrder from 'lodash/sortByOrder'
 import BookItem from './BookItem';
 import '../../../css/searchResult/searchResult.css';
 import SearchBar from '../common/SearchBar';
@@ -49,14 +49,29 @@ export default class SearchResult extends Component {
      return list;
   }
   changeSort(sortKey) {
+    console.log('sortKey')
     this.setState({
       sortKey: sortKey,
     });
     if(sortKey == 'default') {
-
+      this.setState({
+        currentData: this.getCurentData(this.props.bookInfo.toJS().bookList.data, 1, this.state.pageSize)
+      })
     }else {
-      var newData = __sortBy(this.state.bookList, sortKey)
+      var newData = this.sortItem(this.state.bookList, sortKey)
+      console.log(newData,'???');
+      this.setState({
+        currentData: this.getCurentData(newData, 1, this.state.pageSize)
+      })
     }
+  }
+  sortItem(list, key) {
+    let result = list.sort(function(a, b){
+        console.log(a[key],b[key], '???')
+        return  b[key] - a[key];
+    });
+    console.log('list', result);
+    return list;
   }
   createSortItem() {
     var sortKeyConfig = {
@@ -74,6 +89,7 @@ export default class SearchResult extends Component {
         <li><a className={keyClass} onClick={this.changeSort.bind(this, sortKey)}>{sortKeyConfig[sortKey]}</a></li>
       )
     })
+    return list;
   }
   render() {
       console.log('======!!!',this.state.currentData)
@@ -84,11 +100,7 @@ export default class SearchResult extends Component {
                 <SearchBar {...this.props}/>
                 <div>
                     <ul className="sort-menu clearfix">
-                        <li><a>默认排序</a></li>
-                        <li><a>销量</a></li>
-                        <li><a>评分</a></li>
-                        <li><a>出版时间</a></li>
-                        <li><a>价格</a></li>
+                        {this.createSortItem()}
                     </ul>
                 </div>
                 <div className="clearfix">

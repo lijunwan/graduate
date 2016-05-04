@@ -83,7 +83,7 @@ export default class BookItem extends Component {
                     <div className="text-wrap">
                         <p className="bookName"><a onClick = {this.redirectBookPage.bind(this, data.id)}>{data.bookName}</a></p>
                         <p className='price'>
-                            <span className="priceDis">￥{salePrice}</span>
+                            <span className="priceDis">￥{data.aprice}</span>
                             <span><s>￥{data.price}</s></span>
                             <span>({data.discount}折)</span>
                         </p>
