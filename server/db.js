@@ -146,7 +146,7 @@ db.once('open', function (callback) {
 	orderSchema.statics.createItem = createItem({errorCode:404700,message:'创建订单失败'})
 	orderSchema.statics.findItems = findItems({errorCode:404700,message:'查找订单失败'})
 	orderSchema.statics.findItemById = findItemById({errorCode:404701,message:'查找订单失败'})
-
+	orderSchema.statics.findItemsByList = findItemsByList({errorCode: 404101, message:'订单查找失败'})
 	saleRecordsSchema.statics.createItem = createItem({errorCode:404702,message:'支付失败'})
 	// function useUpdate (errorObj) {
 	// 	this.findOne(userId,)
@@ -227,7 +227,7 @@ db.once('open', function (callback) {
 	dataModel['shopCart'] = db.model('shopCart', shopCartSchema, 'shopCart');
 	dataModel['favorite'] = db.model('favorite', favoriteSchema, 'favorite');
 	dataModel['order'] = db.model('order', orderSchema, 'order');
-	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 's;aleRecords');
+	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 'saleRecords');
 	dataModel['bookMenu'] = db.model('bookMen', bookMenuSchema, 'bookMen');
 	dataModel['bookMenuConfig'] = db.model('bookMenuConfig', bookMenuConfigSchema, 'bookMenuConfig');
 	var obj = {

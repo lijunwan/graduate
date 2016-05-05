@@ -1,8 +1,9 @@
-import {CREATE_ORDER, 
-        GET_ORDER, 
-        PAY_ORDER, 
+import {CREATE_ORDER,
+        GET_ORDER,
+        PAY_ORDER,
         GET_ORDER_INFO,
-        CONFIRM_ORDER} from '../actions/order';
+        CONFIRM_ORDER,
+        DEL_ORDER} from '../actions/order';
 import Immutable from 'immutable';
 
 export default function (state = Immutable.fromJS({orderInfo:{},orderList:[], payOrder:{}, singleOrder:{}}), action) {
@@ -17,6 +18,8 @@ export default function (state = Immutable.fromJS({orderInfo:{},orderList:[], pa
     return state.set("singleOrder", action.data);
   case CONFIRM_ORDER:
     return state.set("orderList", action.data);
+  case DEL_ORDER:
+    return state.set('orderList', action.data);
   default:
     return state;
   }

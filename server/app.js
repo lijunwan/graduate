@@ -1,12 +1,13 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
-
+var schedule = require('node-schedule');
 //var favicon = require('serve-favicon');
 var logger = require('morgan');
 var https = require('https');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Order = require('./modules/order');
 
 //var MongoStore = require('connect-mongo');
 var routes = require('./route/index');
@@ -52,7 +53,17 @@ app.get("/*",function(req,res){
           }
      })
 })
-
+    //每分钟扫描订单
+    var rule = new schedule.RecurrenceRule();
+    var times = [];
+    for(var i=1;i<60;i++) {
+    	times.push(i);
+    }
+    rule.minute = times;
+    var c = 0;
+    schedule.scheduleJob(rule, function(){
+        Order.filterOrder();
+    })
 // 404错误处理
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

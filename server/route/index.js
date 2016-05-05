@@ -46,4 +46,5 @@ app.get('/api/user/authorization/getOrderInfo', Order.getOrderInfo);
 app.get('/api/user/authorization/getOrderList', Order.getOrderList);
 app.get('/api/user/authorization/payOrder', Order.payOrder);
 app.get('/api/user/authorization/confirmReceipt', Order.confirmReceipt);
+app.get('/api/user/authorization/delOrder', Order.delOrder);
 module.exports = app;

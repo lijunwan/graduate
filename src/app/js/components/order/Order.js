@@ -31,11 +31,11 @@ export default class Order extends Component {
 		this.props.orderBoundAC.getOrder();
 	}
 	getCurentData(data, current, pageSize) {
-			const start = (current-1) * pageSize;
-			const end = start + pageSize;
-			const dataCuren = __slice(data,start, end);
-			console.log('dataCuren', data, start, end)
-			return dataCuren;
+		const start = (current-1) * pageSize;
+		const end = start + pageSize;
+		const dataCuren = __slice(data,start, end);
+		console.log('dataCuren', data, start, end)
+		return dataCuren;
 	}
 	changePage(page) {
     console.log('????',page)
@@ -67,7 +67,7 @@ export default class Order extends Component {
     		   currentPage: 1,
      		   actData: list,
      		   currentData: this.getCurentData(this.state.originalData,1, this.state.pageSize)
-    		})	
+    		})
 		}
 
 	}
@@ -86,6 +86,7 @@ export default class Order extends Component {
 						<Option value="UNSEND">待发货</Option>
 						<Option value="UNCONFIRM">未确认收货</Option>
 						<Option value="UNEVALUATION">未评价</Option>
+						<Option value="CLOSED">已关闭</Option>
 						</Select>
 					</Col>
 				</Row>
@@ -115,6 +116,9 @@ class OrderTable extends Component {
 	evaluationBook(item) {
 		this.props.history.pushState(null, '/evaluation', {orderId:item['_id'],bookId:item.bookId});
 	}
+	delOrder(orderId){
+		this.props.orderBoundAC.delOrder({orderId: orderId});
+	}
 	createOperation(status, item) {
 		switch (status) {
 			case 'UNPAY':
@@ -128,6 +132,13 @@ class OrderTable extends Component {
 					<Col span="4">
 						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
 						<p style={{lineHeight: '1.5'}}><a onClick={this.evaluationBook.bind(this, item)}>评价</a></p>
+					</Col>
+				)
+			case 'CLOSED':
+				return(
+					<Col span="4">
+						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.delOrder.bind(this, item['_id'])}>删除订单</a></p>
 					</Col>
 				)
 			default:
@@ -147,6 +158,7 @@ class OrderTable extends Component {
 			'UNSEND':'买家已支付等待卖家发货',
 			'UNEVALUATION': '已收货',
 			'EVALUATIONED': '已评价,交易完成',
+			'CLOSED': '交易已关闭',
 		}
 		const list = [];
 		if(data) {

@@ -3,6 +3,7 @@ export const GET_ORDER = 'GET_ORDER';
 export const PAY_ORDER = 'PAY_ORDER';
 export const GET_ORDER_INFO = 'GET_ORDER_INFO';
 export const CONFIRM_ORDER = 'CONFIRM_ORDER';
+export const DEL_ORDER = 'DEL_ORDER';
 import HttpRequest from 'superagent';
 export function createOrder(params){
   return dispatch => {
@@ -58,6 +59,18 @@ export function confirmReceipt(params) {
       .end(function(err,resp){
         dispatch({
           type: CONFIRM_ORDER,
+          data: resp.body
+        });
+    });
+  };
+}
+export function delOrder(params) {
+   return dispatch => {
+      HttpRequest.get('/api/user/authorization/delOrder')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: DEL_ORDER,
           data: resp.body
         });
     });

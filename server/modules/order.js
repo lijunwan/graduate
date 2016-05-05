@@ -1,5 +1,8 @@
 var db = require('../db');
 var GR = require('../helper');
+var schedule = require('node-schedule');
+var moment = require('moment');
+var __remove = require('lodash/remove')
 function Order(order) {
 
 }
@@ -10,8 +13,9 @@ Order.createOrder = function createOrder(req, res) {
 	//	orderObj.sumMon = 0;
 	// orderObj.time = new Date();
 	// orderObj.address = req.query.address;
+	var userId = req.cookies.bookstore.id;
 	var bookInfo = JSON.parse(req.query.bookInfo);
-	var bookIdList = getKeyValueList(bookInfo, 'bookId');
+	var bookIdList = GR.getKeyValueList(bookInfo, 'bookId');
 	db['bookInfo'].findItemsByList(req, res, bookIdList, function(bookInfoList){
 		bookInfo.map(function(bookInfoItem){
 			var obj = GR.findItem(bookInfoList, '_id', bookInfoItem.bookId);
@@ -24,22 +28,38 @@ Order.createOrder = function createOrder(req, res) {
 				bookInfoItem.address = req.query.address;
 				bookInfoItem.userId = req.cookies.bookstore.id;
 				bookInfoItem.orderStatus = "UNPAY";
+				if(obj.stocks > bookInfoItem.count) {
+					obj.stocks -= bookInfoItem.count;
+					obj.save();
+				}
 			} else {
 				res.statusCode = 404;
         		res.send({errorCode: 404501, message: '创建订单失败'});
 			}
 		});
 		db['order'].createItem(req, res, bookInfo, function(data){
-			res.send({data: data})
+			db['users'].d(userId, function(error, user){
+				if(user){
+					data.map(function(item){
+						user.payOrder.push(item['_id'])
+					})
+					user.save();
+				}
+				res.send({data: data})
+			})
 		})
 	})
 }
 Order.getOrderList = function getOrderList(req, res) {
 	var userId = req.cookies.bookstore.id;
-	db['order'].findItems(req, res, {userId: userId}, function(data){
-		res.send({data: data});
-	})
+	db['users'].findById(userId, function(error, user){
+		if(user){
+			db['order'].findItemsByList(req, res, user.payOrder, function(data){
 
+				res.send({data: data});
+			})
+		}
+	})
 }
 Order.getOrderInfo = function getOrderInfo(req, res) {
 	var orderId = req.query.orderId;
@@ -55,7 +75,7 @@ Order.payOrder = function payOrder(req, res) {
 	const orderIdList = GR.getKeyValueList(orderInfo,'_id');
 	const bookList = GR.getKeyValueList(orderInfo,'bookId');
 	console.log('---',bookList)
-	db['order'].findById(orderIdList[0], function(error, firstOrder){
+	db['order'].d(orderIdList[0], function(error, firstOrder){
 		if(firstOrder.orderStatus == 'UNSEND') {
 			res.statusCode = "404"
 			res.send({errorCode: '404501', message: '已支付'})
@@ -80,6 +100,22 @@ Order.payOrder = function payOrder(req, res) {
 		}
 	})
 }
+Order.delOrder = function(req, res) {
+	var userId = req.cookies.bookstore.id;
+	var orderId = req.query.orderId;
+	db['users'].findById(userId, function(error, user){
+		var newOrder = __remove(user.payOrder, function(item) {
+			return item == orderId;
+		});
+		user.payOrder = newOrder;
+		user.save();
+		db['order'].findItemsByList(req, res, newOrder,function(orderList){
+			res.send({
+				data: orderList,
+			})
+		})
+	})
+}
 Order.confirmReceipt = function(req, res) {
 	var userId = req.cookies.bookstore.id;
 	var orderId = req.query.orderId;
@@ -94,6 +130,26 @@ Order.confirmReceipt = function(req, res) {
 			})
 		}
 	})
+}
+//用于定时任务
+Order.filterOrder = function() {
+	var date = Date.parse(new Date());
+	db['order'].find({orderStatus: 'UNPAY'},function(err, data){
+		console.log(data)
+		data.map(function(item){
+			if(date - Date.parse(item.time) > 300000){
+				item.orderStatus = 'CLOSED';
+			}
+			item.save();
+			db['bookInfo'].findById(item.bookId, function(err, book){
+				console.log(item.bookId,'book------')
+				book.stocks += item.count;
+				book.save();
+			})
+		})
+		//data.save();
+	})
+	//console.log('new',new Date(Date.parse(date)+300000));
 }
 function getKeyValueList(list,key) {
 	const result = [];
