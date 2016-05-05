@@ -16,6 +16,7 @@ export default class Order extends Component {
 			pageSize: 5,
 			currentPage: 1,
 			originalData: [],
+			actData:[],
 		}
 	}
 	componentWillReceiveProps(nextProps) {
@@ -23,6 +24,7 @@ export default class Order extends Component {
 		this.setState({
 			currentData: this.getCurentData(data,1,this.state.pageSize),
 			originalData: data ,
+			actData: data,
 		})
 	}
 	componentWillMount() {
@@ -38,7 +40,7 @@ export default class Order extends Component {
 	changePage(page) {
     console.log('????',page)
      this.setState({
-      currentData: this.getCurentData(this.state.originalData,page,this.state.pageSize),
+      currentData: this.getCurentData(this.state.actData,page,this.state.pageSize),
       currentPage: page,
      })
   }
@@ -46,6 +48,28 @@ export default class Order extends Component {
 		this.setState({
 			orderStatus: value,
 		})
+		var list = [];
+		if(value != 'ALL'){
+			this.state.originalData.map((item)=>{
+				console.log(item, value)
+				if(item.orderStatus == value) {
+					list.push(item)
+				}
+			})
+			this.setState({
+				currentPage: 1,
+				actData: list,
+				currentData: this.getCurentData(list,1, this.state.pageSize)
+
+			})
+		} else {
+			this.setState({
+    		   currentPage: 1,
+     		   actData: list,
+     		   currentData: this.getCurentData(this.state.originalData,1, this.state.pageSize)
+    		})	
+		}
+
 	}
 	render() {
 		console.log('this.state.currentData',this.state.currentData)
@@ -66,7 +90,10 @@ export default class Order extends Component {
 					</Col>
 				</Row>
 				<OrderTable {...this.props} statusKey={this.state.orderStatus} currentData={this.state.currentData}/>
-				<Pagination total = {this.state.originalData.length} current={this.state.currentPage} pageSize = {this.state.pageSize}  onChange = {this.changePage.bind(this)}/>
+				{
+					this.state.actData.length <= this.state.pageSize ? '' :
+					<Pagination total = {this.state.actData.length} current={this.state.currentPage} pageSize = {this.state.pageSize}  onChange = {this.changePage.bind(this)}/>
+				}
 			</div>
 		)
 	}
@@ -124,40 +151,20 @@ class OrderTable extends Component {
 		const list = [];
 		if(data) {
 			data.map((item)=>{
-				if(statusKey == 'ALL') {
-					list.push(
-						<div className="Order-item">
-							<Row>
-								<div className="Order-item-head">	订单号:{item['_id']}</div>
-							</Row>
-							<Row style={{lineHeight: '110px', textAlign: 'center'}}>
-								<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
-								<Col span="4"><div>{item.sumMon}</div></Col>
-								<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
-								<Col span="4">{payStatus[item.orderStatus]}</Col>
-								{this.createOperation(item.orderStatus, item)}
-							</Row>
-						</div>
-					)
-				} else {
-					console.log(item.orderStatus===statusKey , '===')
-					if(item.orderStatus == statusKey) {
-						list.push(
-							<div className="Order-item">
-								<Row>
-									<div className="Order-item-head">	订单号:{item['_id']}</div>
-								</Row>
-								<Row style={{lineHeight: '110px', textAlign: 'center'}}>
-									<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
-									<Col span="4"><div>{item.sumMon}</div></Col>
-									<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
-									<Col span="4">{payStatus[item.orderStatus]}</Col>
-									{this.createOperation(item.orderStatus, item)}
-								</Row>
-							</div>
-						)
-					}
-				}
+				list.push(
+					<div className="Order-item">
+						<Row>
+							<div className="Order-item-head">	订单号:{item['_id']}</div>
+						</Row>
+						<Row style={{lineHeight: '110px', textAlign: 'center'}}>
+							<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
+							<Col span="4"><div>{item.sumMon}</div></Col>
+							<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
+							<Col span="4">{payStatus[item.orderStatus]}</Col>
+							{this.createOperation(item.orderStatus, item)}
+						</Row>
+					</div>
+				)
 			})
 		}
 		if(list.length<1) {
