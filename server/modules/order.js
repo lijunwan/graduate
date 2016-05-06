@@ -38,7 +38,7 @@ Order.createOrder = function createOrder(req, res) {
 			}
 		});
 		db['order'].createItem(req, res, bookInfo, function(data){
-			db['users'].d(userId, function(error, user){
+			db['users'].findById(userId, function(error, user){
 				if(user){
 					data.map(function(item){
 						user.payOrder.push(item['_id'])
@@ -75,7 +75,7 @@ Order.payOrder = function payOrder(req, res) {
 	const orderIdList = GR.getKeyValueList(orderInfo,'_id');
 	const bookList = GR.getKeyValueList(orderInfo,'bookId');
 	console.log('---',bookList)
-	db['order'].d(orderIdList[0], function(error, firstOrder){
+	db['order'].findById(orderIdList[0], function(error, firstOrder){
 		if(firstOrder.orderStatus == 'UNSEND') {
 			res.statusCode = "404"
 			res.send({errorCode: '404501', message: '已支付'})
@@ -105,8 +105,10 @@ Order.delOrder = function(req, res) {
 	var orderId = req.query.orderId;
 	db['users'].findById(userId, function(error, user){
 		var newOrder = __remove(user.payOrder, function(item) {
-			return item == orderId;
+			console.log('---', item, orderId);
+			return item != orderId;
 		});
+		console.log('---',newOrder)
 		user.payOrder = newOrder;
 		user.save();
 		db['order'].findItemsByList(req, res, newOrder,function(orderList){
@@ -125,8 +127,10 @@ Order.confirmReceipt = function(req, res) {
 		if(data) {
  			data.orderStatus = 'UNEVALUATION';
  			data.save();
- 			db['order'].findItems(req, res, {userId: userId}, function(data){
-				res.send({data: data});
+			db['userId'].findById(userId, function(error, user){
+				db['order'].findItemsByList(req, res,user.payOrder, function(order){
+					res.send({data: order});
+				})
 			})
 		}
 	})

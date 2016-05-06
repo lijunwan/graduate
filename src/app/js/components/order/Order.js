@@ -4,7 +4,7 @@ import '../../../css/order.css';
 import __slice from 'lodash/slice';
 import __keys from 'lodash/keys';
 import logoImg from '../../../images/logo.jpg';
-import {Select, Row, Col, Pagination} from 'antd';
+import {Select, Row, Col, Pagination,Modal} from 'antd';
 import moment from 'moment';
 const Option = Select.Option;
 export default class Order extends Component {
@@ -100,6 +100,12 @@ export default class Order extends Component {
 	}
 }
 class OrderTable extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			delInfoModal: false,
+		}
+	}
 	payOrder(item) {
 		console.log(item, '???')
 		const orderInfo = [];
@@ -116,6 +122,11 @@ class OrderTable extends Component {
 	evaluationBook(item) {
 		this.props.history.pushState(null, '/evaluation', {orderId:item['_id'],bookId:item.bookId});
 	}
+	showDelMess() {
+		this.setState({
+			delInfoModal: true,
+		})
+	}
 	delOrder(orderId){
 		this.props.orderBoundAC.delOrder({orderId: orderId});
 	}
@@ -126,19 +137,21 @@ class OrderTable extends Component {
 				<Col span="4">
 				  <p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
 					<p style={{lineHeight: '1.5'}}><a onClick={this.payOrder.bind(this, item)}>支付</a></p>
+					<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 				</Col>)
 			case 'UNEVALUATION':
 				return(
 					<Col span="4">
 						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
 						<p style={{lineHeight: '1.5'}}><a onClick={this.evaluationBook.bind(this, item)}>评价</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 					</Col>
 				)
 			case 'CLOSED':
 				return(
 					<Col span="4">
 						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
-						<p style={{lineHeight: '1.5'}}><a onClick={this.delOrder.bind(this, item['_id'])}>删除订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 					</Col>
 				)
 			default:
@@ -146,8 +159,17 @@ class OrderTable extends Component {
 					<Col span="4">
 						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
 						<p style={{lineHeight: '1.5'}}><a onClick={this.confirmReceipt.bind(this, item['_id'])}>确认收货</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 					</Col>
 				)
+		}
+	}
+	handleOk(orderId){
+		this.delOrder(orderId);
+	}
+	handleCancel(){
+		this.setState = {
+			delInfoModal: false,
 		}
 	}
 	createItem() {
@@ -175,6 +197,10 @@ class OrderTable extends Component {
 							<Col span="4">{payStatus[item.orderStatus]}</Col>
 							{this.createOperation(item.orderStatus, item)}
 						</Row>
+						<Modal title="信息提示框" visible={this.state.delInfoModal}
+				          onOk={this.handleOk.bind(this,item['_id'])} onCancel={this.handleCancel}>
+				          <p>是否删除该订单</p>
+				        </Modal>
 					</div>
 				)
 			})
