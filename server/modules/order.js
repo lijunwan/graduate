@@ -127,7 +127,7 @@ Order.confirmReceipt = function(req, res) {
 		if(data) {
  			data.orderStatus = 'UNEVALUATION';
  			data.save();
-			db['userId'].findById(userId, function(error, user){
+			db['users'].findById(userId, function(error, user){
 				db['order'].findItemsByList(req, res,user.payOrder, function(order){
 					res.send({data: order});
 				})

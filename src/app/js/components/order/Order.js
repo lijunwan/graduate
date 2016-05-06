@@ -43,7 +43,8 @@ export default class Order extends Component {
       currentData: this.getCurentData(this.state.actData,page,this.state.pageSize),
       currentPage: page,
      })
-  }
+  	}
+
 	changeStatus(value) {
 		this.setState({
 			orderStatus: value,
@@ -101,10 +102,76 @@ export default class Order extends Component {
 }
 class OrderTable extends Component {
 	constructor(props){
-		super(props)
+		super(props);
+	}
+	createItem() {
+		const data = this.props.currentData;
+		const statusKey = this.props.statusKey;
+		const list = [];
+		if(data) {
+			data.map((item,index)=>{
+				list.push(
+					<TableRow key={index} status={this.props.statusKey} {...this.props} item={item}/>
+				)
+			})
+		}
+		if(list.length<1) {
+			return (<p className="Order-mess">暂无相关订单</p>)
+		}
+		return list;
+	}
+	render() {
+		return(
+			<div className="OrderTable">
+				<Row style={{height: '34px', lineHeight: '34px', textAlign: 'center'}}>
+						<Col span="4">商品信息</Col>
+						<Col span="4">实付款</Col>
+						<Col span="4">创建时间</Col>
+						<Col span="4">状态</Col>
+						<Col span="4">操作</Col>
+				</Row>
+				<div>{this.createItem()}</div>
+			</div>
+		)
+	}
+}
+class TableRow extends Component {
+	constructor(props){
+		super(props);
 		this.state = {
 			delInfoModal: false,
+			confiremModal: false,
 		}
+	}
+	confirmReceipt(orderId) {
+		this.setState({
+			confiremModal: true,
+		})
+	}
+	delOrder(orderId){
+		this.props.orderBoundAC.delOrder({orderId: orderId});
+	}
+	confirmhandleOk(orderId){
+		this.props.orderBoundAC.confirmReceipt({orderId: orderId})
+		this.setState({
+			confiremModal: false,
+		})
+	}
+	confirmhandleCancel() {
+		this.setState({
+			confiremModal: false,
+		})
+	}
+	handleCancel(){
+		this.setState({
+			delInfoModal: false,
+		})
+	}
+	handleOk(orderId){
+		this.delOrder(orderId);
+		this.setState({
+			delInfoModal: false,
+		})
 	}
 	payOrder(item) {
 		console.log(item, '???')
@@ -116,9 +183,6 @@ class OrderTable extends Component {
 	showOrder(orderId) {
 		this.props.history.pushState(null, '/orderDetail/'+ orderId )
 	}
-	confirmReceipt(orderId) {
-		this.props.orderBoundAC.confirmReceipt({orderId: orderId})
-	}
 	evaluationBook(item) {
 		this.props.history.pushState(null, '/evaluation', {orderId:item['_id'],bookId:item.bookId});
 	}
@@ -126,9 +190,6 @@ class OrderTable extends Component {
 		this.setState({
 			delInfoModal: true,
 		})
-	}
-	delOrder(orderId){
-		this.props.orderBoundAC.delOrder({orderId: orderId});
 	}
 	createOperation(status, item) {
 		switch (status) {
@@ -164,17 +225,7 @@ class OrderTable extends Component {
 				)
 		}
 	}
-	handleOk(orderId){
-		this.delOrder(orderId);
-	}
-	handleCancel(){
-		this.setState = {
-			delInfoModal: false,
-		}
-	}
-	createItem() {
-		const data = this.props.currentData;
-		const statusKey = this.props.statusKey;
+	render() {
 		const payStatus = {
 			'UNPAY': '未支付',
 			'UNSEND':'买家已支付等待卖家发货',
@@ -182,46 +233,30 @@ class OrderTable extends Component {
 			'EVALUATIONED': '已评价,交易完成',
 			'CLOSED': '交易已关闭',
 		}
-		const list = [];
-		if(data) {
-			data.map((item)=>{
-				list.push(
-					<div className="Order-item">
-						<Row>
-							<div className="Order-item-head">	订单号:{item['_id']}</div>
-						</Row>
-						<Row style={{lineHeight: '110px', textAlign: 'center'}}>
-							<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
-							<Col span="4"><div>{item.sumMon}</div></Col>
-							<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
-							<Col span="4">{payStatus[item.orderStatus]}</Col>
-							{this.createOperation(item.orderStatus, item)}
-						</Row>
-						<Modal title="信息提示框" visible={this.state.delInfoModal}
-				          onOk={this.handleOk.bind(this,item['_id'])} onCancel={this.handleCancel}>
-				          <p>是否删除该订单</p>
-				        </Modal>
-					</div>
-				)
-			})
-		}
-		if(list.length<1) {
-			return (<p className="Order-mess">暂无相关订单</p>)
-		}
-		return list;
-	}
-	render() {
+		const item = this.props.item;
+		console.log(this.state.delInfoModal)
 		return(
-			<div className="OrderTable">
-				<Row style={{height: '34px', lineHeight: '34px', textAlign: 'center'}}>
-						<Col span="4">商品信息</Col>
-						<Col span="4">实付款</Col>
-						<Col span="4">创建时间</Col>
-						<Col span="4">状态</Col>
-						<Col span="4">操作</Col>
+			<div className="Order-item">
+				<Row>
+					<div className="Order-item-head">	订单号:{item['_id']}</div>
 				</Row>
-				<div>{this.createItem()}</div>
+				<Row style={{lineHeight: '110px', textAlign: 'center'}}>
+					<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
+					<Col span="4"><div>{item.sumMon}</div></Col>
+					<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
+					<Col span="4">{payStatus[item.orderStatus]}</Col>
+					{this.createOperation(item.orderStatus, item)}
+				</Row>
+				<Modal title="信息提示框" visible={this.state.delInfoModal}
+				  onOk={this.handleOk.bind(this,item['_id'])} onCancel={this.handleCancel.bind(this)}>
+				  <p>是否删除该订单</p>
+				</Modal>
+				<Modal title="信息提示框" visible={this.state.confiremModal}
+				  onOk={this.confirmhandleOk.bind(this,item['_id'])} onCancel={this.confirmhandleCancel.bind(this)}>
+				  <p>请务必在收到宝贝后在进行确认收货</p>
+				</Modal>
 			</div>
+
 		)
 	}
 }
