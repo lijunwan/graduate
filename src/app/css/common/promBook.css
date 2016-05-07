@@ -1,0 +1,22 @@
+.item{
+	padding: 12px 10px 5px 10px;
+}
+.item-img{
+	width: 200px;
+	height: 200px;
+	border: 1px solid #ccc;
+}
+.title {
+	height: 36px;
+    color: #333;
+    background: #f5f5f5;
+    font: normal 16px/36px 'Microsoft Yahei';
+    padding-left: 14px;
+}
+.bookName a{
+	color: #333;
+}
+.bookName a:hover{
+	color: #fa5000;
+    text-decoration: underline;
+}

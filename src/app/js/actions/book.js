@@ -7,6 +7,7 @@ export const GET_BOOKMENU = 'GET_BOOKMENU';
 export const SEARCH_BOOK_BYTYPE = 'SEARCH_BOOK_BYTYPE';
 export const EVALUATION_BOOK = 'EVALUATION_BOOK';
 export const GET_SALENUMER_MAX ='GET_SALENUMER_MAX';
+export const GET_PROM_BOOK = 'GET_PROM_BOOK';
 import HttpRequest from 'superagent';
 export function searchBooks(params){
   return dispatch => {
@@ -116,6 +117,17 @@ export function getSalenumberMax() {
       .end(function(err,resp){
         dispatch({
           type: GET_SALENUMER_MAX,
+          data: resp.body
+        });
+    });
+  };
+}
+export function getPromBook() {
+  return dispatch => {
+      HttpRequest.get('/api/book/promBook')
+      .end(function(err,resp){
+        dispatch({
+          type: GET_PROM_BOOK,
           data: resp.body
         });
     });

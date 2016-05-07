@@ -20,6 +20,9 @@ export default class  Index extends Component{
 		this.props.bookeBoundAC.getBooksNew();
 		this.props.bookeBoundAC.getSalenumberMax();
 	}
+	showBookDetail(bookId) {
+		this.props.history.pushState(null, '/book/'+bookId);
+	}
 	createBookItem(bookList){
 		const list =[];
 		if(bookList.data) {
@@ -34,7 +37,7 @@ export default class  Index extends Component{
 								<img src={item.cover} />
 							</Col>
 							<Col span="10">
-								<p className="sale-bookName">{item.bookName}</p>
+								<p className="sale-bookName"><a onClick={this.showBookDetail.bind(this, item['_id'])}>{item.bookName}</a></p>
 								<p　className="sale-aprice">￥{item.aprice}</p>
 								<p><s>￥{item.price}</s></p>
 								<p>总销售量：{item.saleNumber}</p>

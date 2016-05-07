@@ -6,7 +6,8 @@ import __keys from 'lodash/keys';
 import BookItem from './BookItem';
 import '../../../css/searchResult/searchResult.css';
 import SearchBar from '../common/SearchBar';
-import {Row} from 'antd'
+import {Row} from 'antd';
+import PromBook from '../common/PromBook';
 export default class SearchResult extends Component {
     constructor(props) {
         super(props);
@@ -108,7 +109,9 @@ export default class SearchResult extends Component {
                         {this.createItem()}
                     </div>
                     <div className="SearchResult-recomend">
-                        <div className="SearchResult-recomendContent">推荐区</div>
+                        <div className="SearchResult-recomendContent">
+                        <PromBook {...this.props} />
+                        </div>
                     </div>
                 </div>
                 <Pagination total = {bookList.length} current={this.state.currentPage} pageSize = {this.state.pageSize}  onChange = {this.changePage.bind(this)}/>

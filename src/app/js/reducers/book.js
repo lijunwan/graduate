@@ -6,11 +6,12 @@ import {AUTO_COMPLETE,
         GET_BOOKMENU,
         SEARCH_BOOK_BYTYPE,
         EVALUATION_BOOK,
-        GET_SALENUMER_MAX
+        GET_SALENUMER_MAX,
+        GET_PROM_BOOK
     } from '../actions/book';
 import Immutable from 'immutable';
 
-export default function (state = Immutable.fromJS({autoComplete:{},bookOnSale:{}, bookNew:{}, bookInfo: {}, bookList:{}, bookMenu:[],bookListType:{},evalMess: {}, saleNumberBook:{}}), action) {
+export default function (state = Immutable.fromJS({autoComplete:{},bookOnSale:{}, bookNew:{}, bookInfo: {}, bookList:{}, bookMenu:[],bookListType:{},evalMess: {}, saleNumberBook:{},promoBook:{}}), action) {
   switch (action.type) {
   case AUTO_COMPLETE:
     return state.set("autoComplete", action.data);
@@ -30,6 +31,8 @@ export default function (state = Immutable.fromJS({autoComplete:{},bookOnSale:{}
      return state.set("evalMess", action.data);
   case GET_SALENUMER_MAX:
      return state.set("saleNumberBook", action.data);
+  case GET_PROM_BOOK:
+    return state.set('promoBook',action.data)
   default:
     return state;
   }
