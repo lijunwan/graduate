@@ -52,7 +52,7 @@ Users.isLogin = function isLogin(req,res){
 	res.setHeader('Content-Type','application/json');
 	if(req.cookies.bookstore){
 		db['users'].findUserById(req, res, req.cookies.bookstore.id, function(userInfo){
-			var obj = _pick(userInfo,['favorite', 'headImg']);
+			var obj = _pick(userInfo,['favorite', 'headImg','ShippingAddress']);
 			res.send({'phone':req.cookies.bookstore.phone,'id':req.cookies.bookstore.id,data: obj})
 		})
 	}else{

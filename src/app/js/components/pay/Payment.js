@@ -6,16 +6,23 @@ import __pick from 'lodash/pick';
 import SimpleStep from '../common/SimpleStep';
 import {Row, Col} from 'antd';
 export default class payment extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            addressCard: 0,
+        }
+    }
     createOrder() {
         var data = localStorage.getItem("confirmOrder");
         var bookInfo = JSON.parse(data).bookInfo;
+        const userInfo = this.props.client.toJS().info.data;
         const bookInfoList = [];
         bookInfo.map((bookItem)=>{
             var obj = __pick(bookItem.shopCartInfo,['bookId', 'count']);
             bookInfoList.push(obj);
         })
         var obj = {
-            address: '重庆 重庆市 小红收',
+            address: JSON.stringify(userInfo.ShippingAddress[this.state.addressCard]),
             bookInfo: JSON.stringify(bookInfoList),
         }
         console.log(bookInfo)
@@ -28,6 +35,29 @@ export default class payment extends Component {
             localStorage.setItem('orderInfo', JSON.stringify(orderInfo))
             this.props.history.pushState(null,'/pay');
         }
+    }
+    choiceAddress(index) {
+        this.setState({
+            addressCard: index,
+        })
+    }
+    createAddressCard() {
+        const userInfo = this.props.client.toJS().info.data;
+        const list = [];
+        if(userInfo){
+            userInfo.ShippingAddress.map((address,index)=>{
+                let isActive = this.state.addressCard == index ? true : false;
+                 list.push(
+                    <Col span="5">
+                        <div onClick={this.choiceAddress.bind(this, index)}>
+                        <AddressCard data={address} 
+                                    isActive={isActive}/>
+                        </div>
+                    </Col>
+                )
+            })
+        }
+        return list;
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
@@ -44,7 +74,7 @@ export default class payment extends Component {
                 </Row>
                 <div className="address">
                     <h2>选择收货地址</h2>
-                    <AddressCard />
+                    <Row>{this.createAddressCard()}</Row>
                     <div className="adminAdressLink">
                       <a>使用新的地址</a>
                       <a>管理收货地址</a>
@@ -57,6 +87,7 @@ export default class payment extends Component {
                       <a className="submitButton" onClick={this.createOrder.bind(this)}>提交订单</a>
                     </p>
                 </div>
+                
             </div>
         )
     }
@@ -106,14 +137,16 @@ class OrderTable extends Component {
 }
 class AddressCard extends Component {
     render() {
+        const data = this.props.data;
+        const cardClass = this.props.isActive ? 'addressCard active' : 'addressCard'
         return(
-            <div className="addressCard">
+            <div className={cardClass}>
                 <p>
-                    <span>重庆/重庆</span>
-                    <span>（小红 收）</span>
+                    <span>{data.postion}</span>
+                    <span>（{data.name} 收）</span>
                 </p>
                 <p>
-                    渝北龙溪红金路51号岭秀锦园3-1518983359954
+                    {data.address}-{data.phone}
                 </p>
                 <a>修改</a>
             </div>

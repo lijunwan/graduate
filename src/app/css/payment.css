@@ -9,10 +9,16 @@
     margin: 40px 0 10px;
 }
 .addressCard {
-    background-image: url('../images/addressCardBg.png');
+    background-image: url('../images/addressCardBg1.png');
     width: 237px;
     height: 106px;
     padding: 11px 15px
+}
+.addressCard:hover{
+  background-image: url('../images/addressCardBg.png');
+}
+.active{
+  background-image: url('../images/addressCardBg.png');
 }
 .OrderTable{
 
