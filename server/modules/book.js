@@ -130,7 +130,7 @@ Books.evaluationBook = function(req, res) {
 	})
 }
 Books.sortBySaleNum = function(req, res) {
-	db['bookInfo'].find({}).sort({saleNumber: -1}).exec(function(error,data){
+	db['bookInfo'].find({}).sort({saleNumber: -1}).limit(10).exec(function(error,data){
 		res.send({data:data});
 	})
 }

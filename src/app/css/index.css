@@ -32,8 +32,41 @@
     width: 720px;
 }
 .Index-right{
-    float: left;;
-    height: 800px;
+    float: left;
     width: 270px;
-    border: 1px solid #ccc;
+}
+.Index-sale {
+  padding: 0 15px;
+}
+.Index-sale .title{
+  height: 40px;
+  line-height: 40px;
+  padding-left: 34px;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  background: url(../images/sprite.png) 5px 4px no-repeat;
+  font-family: "Microsoft Yahei";
+  position: relative;
+  overflow: hidden;
+}
+.Index-sale-item {
+  border-bottom: 1px dotted #d8d8d8;
+  margin-bottom: 10px;
+}
+.Index-sale-item img{
+ width: 120px;
+ height: 120px;
+}
+.sale-bookName {
+  color: #000;
+  margin-top: 10px;
+}
+.sale-aprice {
+  color: #c30;
+  font-weight: bold;
+}
+.sale-num {
+  font-size: 16px;
+  color: #000;
 }

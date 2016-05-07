@@ -4,7 +4,7 @@ import '../../../css/index.css';
 import Search from '../common/Search';
 import BookMenu from './BookMenu';
 import ContentSlider from './ContentSlider';
-import { Carousel } from 'antd';
+import { Carousel,Col,Row } from 'antd';
 import sliderImg1 from '../../../images/slider1.jpg';
 import sliderImg2 from '../../../images/slider2.jpg';
 import sliderImg3 from '../../../images/slider3.jpg';
@@ -18,6 +18,33 @@ export default class  Index extends Component{
 	componentWillMount() {
 		this.props.bookeBoundAC.getBooksOnSale();
 		this.props.bookeBoundAC.getBooksNew();
+		this.props.bookeBoundAC.getSalenumberMax();
+	}
+	createBookItem(bookList){
+		const list =[];
+		if(bookList.data) {
+			bookList.data.map((item, index)=> {
+				list.push(
+					<div className="Index-sale-item">
+						<Row>
+							<Col span="2">
+							  <p className="sale-num">{index+1}</p>
+							</Col>
+							<Col span="1" style={{width: '120px'}}>
+								<img src={item.cover} />
+							</Col>
+							<Col span="10">
+								<p className="sale-bookName">{item.bookName}</p>
+								<p　className="sale-aprice">￥{item.aprice}</p>
+								<p><s>￥{item.price}</s></p>
+								<p>总销售量：{item.saleNumber}</p>
+							</Col>
+						</Row>
+					</div>
+				)
+			})
+		}
+		return list;
 	}
 	render(){
 		console.log(this.props.bookInfo.toJS())
@@ -56,8 +83,9 @@ export default class  Index extends Component{
 											{...this.props}/>
 						</div>
 					</div>
-					<div className="Index-right">
-
+					<div className="Index-right Index-sale">
+						<div className="title">销售排行</div>
+						{this.createBookItem(this.props.bookInfo.toJS().saleNumberBook)}
 					</div>
 			  </div>
 			</div>
