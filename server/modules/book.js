@@ -129,6 +129,11 @@ Books.evaluationBook = function(req, res) {
 		})
 	})
 }
+Books.sortBySaleNum = function(req, res) {
+	db['bookInfo'].find({}).sort({saleNumber: -1}).exec(function(error,data){
+		res.send({data:data});
+	})
+}
 function calculatedAverage(list, key) {
 	var sum = 0;
 	if(list.length <1) {

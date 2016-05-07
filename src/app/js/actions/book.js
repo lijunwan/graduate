@@ -6,6 +6,7 @@ export const SEARCH_BOOK = 'SEARCH_BOOK';
 export const GET_BOOKMENU = 'GET_BOOKMENU';
 export const SEARCH_BOOK_BYTYPE = 'SEARCH_BOOK_BYTYPE';
 export const EVALUATION_BOOK = 'EVALUATION_BOOK';
+export const GET_SALENUMER_MAX ='GET_SALENUMER_MAX';
 import HttpRequest from 'superagent';
 export function searchBooks(params){
   return dispatch => {
@@ -104,6 +105,17 @@ export function evaluationBook(params) {
       .end(function(err,resp){
         dispatch({
           type: EVALUATION_BOOK,
+          data: resp.body
+        });
+    });
+  };
+}
+export function getSalenumberMax() {
+  return dispatch => {
+      HttpRequest.get('/api/book/sortBySaleNum')
+      .end(function(err,resp){
+        dispatch({
+          type: GET_SALENUMER_MAX,
           data: resp.body
         });
     });

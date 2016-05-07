@@ -462,9 +462,9 @@ db.once('open', function (callback) {
 	// dataModel['bookMenu'].create(bookMenu, function(err,data){
 	// 	console.log(data);
 	// })
-	// dataModel['bookInfo'].create(obj,function(err,data){
-	// 	if(err) return console.error(err);
-	// })
+	 dataModel['bookInfo'].create(obj,function(err,data){
+		if(err) return console.error(err);
+	})
 	var bookMenuConfigObj = [
 		{
 			type: 'A',
