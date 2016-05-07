@@ -1,5 +1,6 @@
 var db = require('../db');
 var  __pick = require('lodash/pick');
+var GR = require('../helper')
 function Books (book) {
 	this.bookName = book.bookName;
 }
@@ -132,6 +133,14 @@ Books.evaluationBook = function(req, res) {
 Books.sortBySaleNum = function(req, res) {
 	db['bookInfo'].find({}).sort({saleNumber: -1}).limit(10).exec(function(error,data){
 		res.send({data:data});
+	})
+}
+Books.promBook = function(req, res) {
+	db['promBook'].find({},function(error, data){
+		var bookIdList = GR.getKeyValueList(data, 'bookId');
+		db['bookInfo'].findByIdList(req, res, bookIdList, function(data){
+			res.send({data: data})
+		})
 	})
 }
 function calculatedAverage(list, key) {

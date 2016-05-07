@@ -125,6 +125,9 @@ db.once('open', function (callback) {
 		salePrice: Number,
 		sumMon: Number,
 	});
+	var promBookSchema = new Schema({
+		bookId: String,
+	})
 	var bookMenuSchema = new Schema({
 		flag: String,
 		name: String,
@@ -230,6 +233,7 @@ db.once('open', function (callback) {
 	dataModel['saleRecords'] = db.model('saleRecords', saleRecordsSchema, 'saleRecords');
 	dataModel['bookMenu'] = db.model('bookMen', bookMenuSchema, 'bookMen');
 	dataModel['bookMenuConfig'] = db.model('bookMenuConfig', bookMenuConfigSchema, 'bookMenuConfig');
+	dataModel['promBook'] = db.model('promBook', promBookSchema, 'promBook');
 	var obj = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
@@ -459,8 +463,22 @@ db.once('open', function (callback) {
 			}
 		]
 	}
+	var promBookIdList = [{bookId: '571b6464dada3e7b0cbb7d72'},
+						   {bookId: '571b64b1f2d21e910cec66a3'},
+						   {bookId: '571b645d13a810680c5dc882'},
+						   {bookId: '571b5e6e802d73070c08e9f7'},
+						   {bookId: '571b594c61808b120b1efdab'},
+						   {bookId: '571b593e1bcd7cc40ad7e00f'},
+						   {bookId: '571b590f443ac38a0ad1799f'},
+						   {bookId: '571cb729fe1e47b530f24305'},
+						   {bookId: '571b8c73bef9aa9b419a1c6f'},
+						   {bookId: '571b8c4ed2fd2e8741943588'},
+						   {bookId: '571b8c4d0ae1847d41b495cd'},]
 	// dataModel['bookMenu'].create(bookMenu, function(err,data){
 	// 	console.log(data);
+	// })
+	// dataModel['promBook'].create(promBookIdList,function(err, data){
+	// 	console.log(data)
 	// })
 	 dataModel['bookInfo'].create(obj,function(err,data){
 		if(err) return console.error(err);
