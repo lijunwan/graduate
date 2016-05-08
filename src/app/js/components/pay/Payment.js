@@ -22,7 +22,7 @@ export default class payment extends Component {
         const userInfo = this.props.client.toJS().info.data;
         const bookInfoList = [];
         bookInfo.map((bookItem)=>{
-            var obj = __pick(bookItem.shopCartInfo,['bookId', 'count']);
+            var obj = __pick(bookItem.shopCartInfo,['bookId', 'count','_id']);
             bookInfoList.push(obj);
         })
         var obj = {
