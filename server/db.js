@@ -26,10 +26,10 @@ db.once('open', function (callback) {
 		bookId: String,//书的id
 		count: Number,//数量
 		userId: String, //用户ID
-	//	aprice: Number,//售价
-	//	sumMon: Number, //金额
-	//	bookName: String,
-	//	cover: String,
+		aprice: Number,//售价
+		//sumMon: Number, //金额
+		bookName: String,
+		cover: String,
 	})
 	//暂时不用
 	var logSchema = new Schema({

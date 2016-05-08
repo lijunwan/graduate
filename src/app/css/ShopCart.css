@@ -40,3 +40,12 @@
   text-align: center;
   margin-top: 12.5px;
 }
+.ShopCart-button:hover{
+    color: #fff;
+}
+.ShopCart-button-disable{
+    background-color: #ccc;
+}
+.ShopCart-button-disable:hover{
+    cursor: default;
+}

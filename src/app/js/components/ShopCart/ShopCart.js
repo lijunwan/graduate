@@ -4,6 +4,7 @@ import '../../../css/ShopCart.css'
 import ShopCartItem from './ShopCartItem';
 import __concat from 'lodash/concat';
 import logoImg from '../../../images/logo.jpg';
+import __keys from 'lodash/keys';
 export default class  ShopCart extends Component {
 	constructor(props) {
 		super(props);
@@ -90,10 +91,12 @@ export default class  ShopCart extends Component {
 		let count = 0;
 		let sumMon = 0;
 		for(let i=0; i < flagAarr.length; i++) {
-			flagAarr[i] = !this.state.isChoiceAll;
-			if(!this.state.isChoiceAll) {
-				sumMon += Math.round(data[i].bookInfo.aprice * data[i].shopCartInfo.count * 100)/100;
-				count += data[i].shopCartInfo.count;
+			if(__keys(data[i].bookInfo).length > 0){//是否失效
+				flagAarr[i] = !this.state.isChoiceAll;
+				if(!this.state.isChoiceAll) {
+					sumMon += Math.round(data[i].bookInfo.aprice * data[i].shopCartInfo.count * 100)/100;
+					count += data[i].shopCartInfo.count;
+				}
 			}
 		}
 		this.setState({
@@ -148,7 +151,14 @@ export default class  ShopCart extends Component {
 						<Col span="4" style={{height: '63px', lineHeight: '63px', textAlign: 'center',color:'#323232',fontWeight: 'bold'}}>合计</Col>
 						<Col span="8"  style={{height: '63px', lineHeight: '63px', textAlign: 'left'}}>已选择<span style={{color: '#ff2832'}}>{this.state.count}</span>件商品</Col>
 						<Col span="6"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}>总计<span style={{fontSize: '18px', color: '#ff2832'}}>￥{this.state.sumMon}</span></Col>
-						<Col span="4"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}><a className="ShopCart-button" onClick={this.confirmPay.bind(this)}>结算</a></Col>
+						<Col span="4"  style={{height: '63px', lineHeight: '63px', textAlign: 'right'}}>
+							{
+								this.state.count < 1 ?
+								<a className="ShopCart-button ShopCart-button-disable">结算</a>
+								:
+								<a className="ShopCart-button" onClick={this.confirmPay.bind(this)}>结算</a>
+							}
+						</Col>
 					</Row>
 					</div>
 				</div>

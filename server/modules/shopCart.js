@@ -1,5 +1,6 @@
 var db = require('../db');
-var __pick = require('lodash/pick');
+var __pick = require('lodash/pick');;
+var __assign = require('lodash/assign');
 var GR = require('../help.js');
 function ShopCart (cart) {
 	this.userId = cart.userId;
@@ -18,15 +19,20 @@ ShopCart.addBook = function addBook (req, res) {
                 book.save();
                 res.send({bookId: obj.bookId})
             } else {
-                db['shopCart'].create(obj,function(err,shopCart){
-                    if(err) return console.error(err);
-                    db['users'].findOne({_id: obj.userId},function(err,user){
-                        if(err) return console.error(err);
-                        user.shopCart.push(shopCart['_id']);
-                        user.save();
-                        res.send({bookId: obj.bookId});
-                    });
-                });
+				db['bookInfo'].findById(obj.bookId, function(err, book){
+					var bookInfo = __pick(book, ['bookName','aprice','cover'])
+					var shopCartData = __assign({},bookInfo,obj);
+					console.log('bookInfo--',bookInfo)
+					db['shopCart'].create(shopCartData,function(err,shopCart){
+	                    if(err) return console.error(err);
+	                    db['users'].findOne({_id: obj.userId},function(err,user){
+	                        if(err) return console.error(err);
+	                        user.shopCart.push(shopCart['_id']);
+	                        user.save();
+	                        res.send({bookId: obj.bookId});
+	                    });
+	                });
+				})
             }
         })
     }else {
@@ -87,8 +93,6 @@ ShopCart.delShopCart = function(req, res) {
 	var userId = req.cookies.bookstore.id;
 	db['shopCart'].findByIdAndRemove(cartId, function(error, shopCart){
 		console.log(error);
-		db['shopCart'].find({userId: userId},function(error, shopCartData){
-			res.send({data: shopCartData});
-		})
+		ShopCart.getShopCartInfo(req, res)
 	})
 }
