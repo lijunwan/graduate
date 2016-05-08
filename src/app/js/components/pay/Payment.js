@@ -87,6 +87,10 @@ export default class payment extends Component {
     componentDidMount() {
         this.props.clientBoundAC.getAddress();
     }
+    redirectPerson() {
+        this.props.history.pushState(null, '/user');
+        localStorage.setItem("userMenu", 'address');
+    }
     render() {
         var data = localStorage.getItem("confirmOrder");
         var sumMon = JSON.parse(data).sumMon
@@ -105,7 +109,7 @@ export default class payment extends Component {
                     <Row>{this.createAddressCard()}</Row>
                     <div className="adminAdressLink">
                       <a onClick={this.addAddressHandel.bind(this)}>使用新的地址</a>
-                      <a>管理收货地址</a>
+                      <a onClick={this.redirectPerson.bind(this)}>管理收货地址</a>
                     </div>
                     <h2>确认订单信息</h2>
                     <OrderTable {...this.props}/>

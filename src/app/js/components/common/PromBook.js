@@ -31,7 +31,7 @@ export default class PromBook extends Component {
   		const promoBook = this.props.bookInfo.toJS().promoBook;
   		console.log(this.props.bookInfo.toJS().promoBook)
   		return(
-  			<div>
+  			<div className="PromBook">
   				<h2 className="title">推广商品</h2>
   				{this.createItem(promoBook)}
   			</div>
