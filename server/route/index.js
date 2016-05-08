@@ -40,6 +40,7 @@ app.use('/api/user/authorization/*', function(req, res, next){
 app.get('/api/user/authorization/addShopCarts', ShopCart.addBook);
 app.get('/api/user/authorization/getShopCarts', ShopCart.getShopCartInfo);
 app.get('/api/user/authorization/updateShopCart', ShopCart.updateShopCart);
+app.get('/api/user/authorization/delShopCart', ShopCart.delShopCart);
 app.get('/api/user/authorization/addFavorite', Favorite.addFavorite);
 app.get('/api/user/authorization/getFavorite', Favorite.getFavorite);
 app.get('/api/user/authorization/delFavorite', Favorite.delFavorite);

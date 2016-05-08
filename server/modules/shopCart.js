@@ -82,3 +82,13 @@ ShopCart.updateShopCart = function updateShopCart(req, res) {
 		});
 	}
 }
+ShopCart.delShopCart = function(req, res) {
+	var cartId = req.query.cartId;
+	var userId = req.cookies.bookstore.id;
+	db['shopCart'].findByIdAndRemove(cartId, function(error, shopCart){
+		console.log(error);
+		db['shopCart'].find({userId: userId},function(error, shopCartData){
+			res.send({data: shopCartData});
+		})
+	})
+}

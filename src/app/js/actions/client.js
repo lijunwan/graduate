@@ -167,6 +167,18 @@ export function updateShopCart(params) {
     });
   };
 }
+export function delShopCart(params) {
+  return dispatch => {
+      HttpRequest.get('/api/user/authorization/delShopCart')
+      .query(params)
+      .end(function(err,resp){
+        dispatch({
+          type: GET_SHOPCARTS,
+          data: resp.body
+        });
+    });
+  };
+}
 export function updatePassWord(params) {
   return dispatch => {
       HttpRequest.post('/api/user/authorization/updatePassWord')

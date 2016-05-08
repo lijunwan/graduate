@@ -50,6 +50,9 @@ export default class  ShopCartItem extends Component {
       isChecked: !this.state.isChecked,
     })
   }
+  delShopCart(cartId) {
+      this.props.clientBoundAC.delShopCart({cartId: cartId});
+  }
   render() {
     const data = this.props.data;
     const sumMon = (data.bookInfo.aprice * this.state.count).toFixed(2);
@@ -72,7 +75,7 @@ export default class  ShopCartItem extends Component {
         </Col>
         <Col span="4">
           <p><a>移入收藏夹</a></p>
-          <p><a>删除</a></p>
+          <p><a onClick={this.delShopCart.bind(this, data.shopCartInfo['_id'])}>删除</a></p>
         </Col>
       </Row>
     )
