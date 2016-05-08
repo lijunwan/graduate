@@ -179,7 +179,6 @@ export default class Register extends Component {
 			e.preventDefault();
 			var keys = __.keys(this.state.flag);
 			var flag = 0;
-			console.log(keys,"keys");
 			keys.map((key)=>{
 				if(this.state.flag[key]==-1){
 					flag = -1;
@@ -201,10 +200,12 @@ export default class Register extends Component {
 			return false;
 		}
 		componentWillReceiveProps(nextProps){
-			var registerInfo = nextProps.client.toJS().registerInfo
+			var registerInfo = nextProps.client.toJS().registerInfo;
+			console.log('???',registerInfo)
 			if(__.has(registerInfo,"errorCode")){
 				message.error('表单信息验证未通过!');
 			}else if(registerInfo.status && registerInfo.status=="ok"){
+				console.log('???')
 				message.success('注册成功');
 				this.props.history.pushState(null,'/login')
 			}

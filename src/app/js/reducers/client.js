@@ -17,6 +17,8 @@ export default function (state = Immutable.fromJS({info: {},phoneInfo:{},registe
     return state.set("info", action.data);
   case CHECK_PHONE:
     return state.set("phoneInfo",action.data);
+  case CREATE_USER:
+    return state.set("registerInfo", action.data);
   case ADD_BOOK:
     return state.set("addBookMess",action.data);
   case GET_SHOPCARTS:
