@@ -36,7 +36,16 @@ Users.checkLogin = function checkLogin(req,res){
 			    	console.log(item,"123")
 			    });
 			    res.statusCode=200;
-				res.send({phone:user.phone,id:user["_id"],data:{'favorite': user.favorite,'headImg': user.headImg}});
+				res.send({
+					phone:user.phone,
+					id:user["_id"],
+					data:
+					{
+						'favorite': user.favorite,
+						'headImg': user.headImg,
+						'ShippingAddress': user.ShippingAddress
+					}
+				});
 			}else{
 				 res.statusCode=404;
 				 res.send({errorCode:400403,message:"密码错误"})
@@ -203,6 +212,7 @@ Users.addAddress = function(req, res) {
 				console.log('----',index);
 				if(index>=0) {
 					data.ShippingAddress[index] = obj;
+					data.markModified('ShippingAddress');
 					data.save();
 					res.send({data: data.ShippingAddress})
 				} else {

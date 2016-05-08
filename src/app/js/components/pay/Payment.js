@@ -5,11 +5,15 @@ import '../../../css/payment.css';
 import __pick from 'lodash/pick';
 import SimpleStep from '../common/SimpleStep';
 import {Row, Col} from 'antd';
+import AddressModal from './AddressModal'
 export default class payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
             addressCard: 0,
+            isShowAddrModal: false,
+            addressData: {},
+            isAdd: true,//用于识别是添加还是修改地址
         }
     }
     createOrder() {
@@ -42,22 +46,46 @@ export default class payment extends Component {
         })
     }
     createAddressCard() {
-        const userInfo = this.props.client.toJS().info.data;
+        const address = this.props.client.toJS().addressList.data;
         const list = [];
-        if(userInfo){
-            userInfo.ShippingAddress.map((address,index)=>{
+        if(address){
+            address.map((address,index)=>{
                 let isActive = this.state.addressCard == index ? true : false;
                  list.push(
                     <Col span="5">
                         <div onClick={this.choiceAddress.bind(this, index)}>
-                        <AddressCard data={address} 
-                                    isActive={isActive}/>
+                        <AddressCard data={address}
+                                    isActive={isActive}
+                                    modifyAddress={this.modifyAddress.bind(this)}/>
                         </div>
                     </Col>
                 )
             })
         }
         return list;
+    }
+    modifyAddress() {
+        const address = this.props.client.toJS().addressList.data;
+        this.setState({
+            isShowAddrModal: true,
+            isAdd: false,
+            addressData: address[this.state.addressCard]
+        })
+    }
+    addAddressHandel() {
+        this.setState({
+            isShowAddrModal: true,
+            addressData: {},
+            isAdd: true,
+        })
+    }
+    closeAddressModal() {
+        this.setState({
+            isShowAddrModal: false,
+        })
+    }
+    componentDidMount() {
+        this.props.clientBoundAC.getAddress();
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
@@ -76,7 +104,7 @@ export default class payment extends Component {
                     <h2>选择收货地址</h2>
                     <Row>{this.createAddressCard()}</Row>
                     <div className="adminAdressLink">
-                      <a>使用新的地址</a>
+                      <a onClick={this.addAddressHandel.bind(this)}>使用新的地址</a>
                       <a>管理收货地址</a>
                     </div>
                     <h2>确认订单信息</h2>
@@ -87,7 +115,11 @@ export default class payment extends Component {
                       <a className="submitButton" onClick={this.createOrder.bind(this)}>提交订单</a>
                     </p>
                 </div>
-                
+                <AddressModal visibility={this.state.isShowAddrModal}
+                              isAdd={this.state.isAdd}
+                              addressData = {this.state.addressData}
+                              closeAddressModal = {this.closeAddressModal.bind(this)}
+                              {...this.props} />
             </div>
         )
     }
@@ -148,7 +180,11 @@ class AddressCard extends Component {
                 <p>
                     {data.address}-{data.phone}
                 </p>
-                <a>修改</a>
+                {
+                    this.props.isActive ?
+                    <a onClick={this.props.modifyAddress}>修改</a>
+                    : ""
+                }
             </div>
         )
     }
