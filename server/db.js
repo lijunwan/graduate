@@ -100,9 +100,9 @@ db.once('open', function (callback) {
 		bookId: String,
 		userId: String,
 		collectPrice: Number,//收藏夹
-		//aprice 此时的价格 bookInfo 数据库
-		//bookName bookInfo 数据库
-		//bookCover bookInfo 数据库
+		aprice:Number, //此时的价格 bookInfo 数据库
+		bookName: String,// bookInfo 数据库
+		cover:String //bookInfo 数据库
 		// flag 标志 bookInfo 降价 促销 缺货 正常
 	});
 	var orderSchema = new Schema({
