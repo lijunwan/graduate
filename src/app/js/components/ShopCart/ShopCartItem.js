@@ -58,8 +58,9 @@ export default class  ShopCartItem extends Component {
         removeModal: true,
     })
  }
- removeHandelOk(cartId){
-     //移入收藏夹
+ removeHandelOk(cartId,bookId){
+    this.props.clientBoundAC.delShopCart({cartId: cartId});
+    this.props.favoriteBoundAC.addFavorite({bookId: bookId});
     this.setState({
         removeModal:false,
     })
@@ -138,7 +139,7 @@ export default class  ShopCartItem extends Component {
               <p>是否删除该商品</p>
             </Modal>
             <Modal title="信息提示框" visible={this.state.removeModal}
-              onOk={this.removeHandelOk.bind(this,data.shopCartInfo['_id'])} onCancel={this.removeHandelCancel.bind(this)}>
+              onOk={this.removeHandelOk.bind(this,data.shopCartInfo['_id'],data.shopCartInfo.bookId)} onCancel={this.removeHandelCancel.bind(this)}>
               <p>是否将该商品移入收藏夹</p>
             </Modal>
         </div>
