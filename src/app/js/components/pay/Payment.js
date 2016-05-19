@@ -26,11 +26,14 @@ export default class payment extends Component {
             bookInfoList.push(obj);
         })
         var obj = {
-            address: JSON.stringify(userInfo.ShippingAddress[this.state.addressCard]),
+            address: this.joinAddress(userInfo.ShippingAddress[this.state.addressCard]),
             bookInfo: JSON.stringify(bookInfoList),
         }
         console.log(bookInfo)
         this.props.orderBoundAC.createOrder(obj);
+    }
+    joinAddress(address) {
+        return address.postion.join(' ') + ' '+ address.address + '(邮编'+address.mailNum + ')' + address.name+ '(收) ' + address.phone;
     }
     componentWillReceiveProps(nextProps){
       const orderInfo = nextProps.order.toJS().orderInfo.data;
