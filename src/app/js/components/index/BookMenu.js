@@ -66,7 +66,7 @@ class LevelMenu extends Component {
 		const list = [];
 		const menu = this.props.data;
 		menu.children.map((menuChild)=>{
-			list.push(<li><a className="BookMenu-level2" onClick={this.searchByType.bind(this, menuChild.flag)}>{menuChild.name}</a></li>)
+			list.push(<li><a className="BookMenu-level2" onClick={this.searchByType.bind(this, menuChild.value)}>{menuChild.label}</a></li>)
 		})
 		return list;
 	}
@@ -77,12 +77,12 @@ class LevelMenu extends Component {
 			const hideMenuLevel = [];
 			menuChild.children.map((data)=>{
 				hideMenuLevel.push(
-					<li><a onClick={this.searchByType.bind(this,data.flag)}>{data.name}</a></li>
+					<li><a onClick={this.searchByType.bind(this,data.value)}>{data.label}</a></li>
 				)
 			});
 			hideMenu.push(
 				<ul>
-					<p className="HideMenu-title">{menuChild.name}</p>
+					<p className="HideMenu-title">{menuChild.label}</p>
 					{hideMenuLevel}
 				</ul>
 			)
@@ -98,7 +98,7 @@ class LevelMenu extends Component {
 				 onMouseLeave = {this.hideMenu.bind(this)}>
 				<div className={bookMenuUlWrapCss}>
 					<ul className={bookMenuUlCss}>
-						<p><a className="BookMenu-meun">{this.props.data.name}</a></p>
+						<p><a className="BookMenu-meun">{this.props.data.label}</a></p>
 						{this.createItems()}
 					</ul>
 				</div>

@@ -10,7 +10,7 @@ export const ADD_ADDRESS = 'ADD_ADDRESS';
 export const GET_ADDRESS = 'GET_ADDRESS';
 export const DEL_ADDRESS = 'DEL_ADDRESS';
 import HttpRequest from 'superagent';
-//import { interceptorAction } from './interceptorAction';
+import intercep  from './interception';
 //import { loginCode } from './loginCode';
 
 // export function loadClientInfo() {
@@ -136,6 +136,7 @@ export function addBookIntoCars(params){
       HttpRequest.get('/api/user/authorization/addShopCarts')
       .query(params)
       .end(function(err,resp){
+        intercep(resp);
         dispatch({
           type: ADD_BOOK,
           data: resp.body
@@ -143,6 +144,14 @@ export function addBookIntoCars(params){
     //  window.location='/shopCart';
     });
   };
+}
+export function clearAddMess() {
+    return dispatch => {
+        dispatch({
+            type: ADD_BOOK,
+            data: {},
+        })
+    }
 }
 export function getShopCartInfo() {
   return dispatch => {

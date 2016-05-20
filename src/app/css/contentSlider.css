@@ -36,6 +36,8 @@
     height: 36px;
     line-height: 18px;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .ContentSlider-bookName a{
     color: #000;

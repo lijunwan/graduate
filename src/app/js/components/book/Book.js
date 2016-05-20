@@ -4,7 +4,8 @@ import NumberBox from './NumberBox'
 import ImgShow from './ImgShow';
 import BookTab from './BookTab';
 import BookDetail from './BookDetail'
-import {Icon, Row, Col,message} from 'antd';
+import {Icon, Row, Col,message,Modal} from 'antd';
+const confirm = Modal.confirm;
 import logoImg from '../../../images/logo.jpg';
 import Search from '../common/Search';
 import moment from 'moment';
@@ -16,6 +17,7 @@ export default class  Book extends Component{
         count: 1,
         isFavorite: false,
         favoriteLen: 0,
+        bookInfoData: {},
       }
     }
     componentDidMount () {
@@ -44,6 +46,15 @@ export default class  Book extends Component{
           favoriteLen: this.state.favoriteLen+1,
         })
       }
+      if(nextProps.client.toJS().addBookMess.bookId) {
+        this.props.clientBoundAC.clearAddMess();
+        this.props.history.pushState(null, '/shopCart');
+      }
+      console.log('new Data',nextProps.bookInfo.toJS().bookInfo)
+      this.setState({
+        bookInfoData: nextProps.bookInfo.toJS().bookInfo,
+      })
+
     }
     modifyMoney (value) {
       return Math.round(value).toFixed(2);
@@ -53,8 +64,9 @@ export default class  Book extends Component{
           bookId: this.props.params.bookId,
           count: this.state.count,
       }
-      this.props.clientBoundAC.addBookIntoCars(obj);
-      message.success('您已成功添加到购物车，请前往购物车查看');
+      if(this.isLoginHandle()) {
+         this.props.clientBoundAC.addBookIntoCars(obj);
+      }
     }
    addNumber() {
     this.setState({
@@ -68,7 +80,23 @@ export default class  Book extends Component{
       })
     }
   }
+  isLoginHandle() {
+    if(!this.props.client.toJS().info.phone) {
+          confirm({
+              title: '信息提示框',
+              content: '请先登录',
+              onOk(){
+                  window.location = '/login';
+              }
+          });
+          return false;
+    }
+    return true;
+  }
   addFavorite() {
+    if(!this.isLoginHandle()) {
+        return false;
+    }
     var obj = {
       bookId : this.props.params.bookId,
     };
@@ -80,8 +108,11 @@ export default class  Book extends Component{
     }
   }
   confirmPay() {
+    if(!this.isLoginHandle()) {
+      return false;
+    }
     const list = [];
-    const data = this.props.bookInfo.toJS().bookInfo.data;
+    const data = this.state.bookInfoData.data;
     const orderData = {}
     var obj = {
       bookInfo: data,
@@ -112,7 +143,7 @@ export default class  Book extends Component{
 		return list;
   }
   createEvaluation() {
-    const data = this.props.bookInfo.toJS().bookInfo.data;
+    const data = this.state.bookInfoData.data;
     const list = [];
     if(data) {
       data.evaluation.map((evaItem)=>{
@@ -134,7 +165,7 @@ export default class  Book extends Component{
     return list;
   }
     render() {
-        const bookInfo = this.props.bookInfo.toJS().bookInfo;
+        const bookInfo = this.state.bookInfoData;
         const favoriteStarClass = this.state.isFavorite ? 'anticon anticon-star Book-start-active' : 'anticon anticon-star Book-start';
         const favoriteText = this.state.isFavorite ? '已收藏' : '收藏商品';
         if(bookInfo.data) {

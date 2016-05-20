@@ -19,7 +19,7 @@ export default class PromBook extends Component {
 	  				<div className="item" style={{margin: '10px auto 20px'}}>
 	  						<img className="item-img" src={item.cover} />
 	  						<p className="bookName"><a onClick={this.showBookDetail.bind(this, item['_id'])}>{item.bookName}</a></p>
-	  						<p>￥{item.aprice}</p>	
+	  						<p>￥{item.aprice}</p>
 	  				</div>
   				)
   			})
@@ -28,8 +28,8 @@ export default class PromBook extends Component {
 
   	}
   	render() {
+		console.log(this.props, '推广商品')
   		const promoBook = this.props.bookInfo.toJS().promoBook;
-  		console.log(this.props.bookInfo.toJS().promoBook)
   		return(
   			<div>
   				<h2 className="title">推广商品</h2>

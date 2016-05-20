@@ -29,7 +29,12 @@ export default class Search extends Component {
         });
     }
     showBookDetai(id) {
-        this.props.history.pushState(null, '/book/'+ id);
+        const pathnameList = this.props.location.pathname.split('/');
+        if(pathnameList[1]==='book'){
+            this.props.bookeBoundAC.getBookInfo(id);
+        } else {
+            this.props.history.pushState(null, '/book/'+ id);
+        }
         this.props.bookeBoundAC.clearAutoComplete();
     }
     createBookList() {

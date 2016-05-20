@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {Row,Col} from 'antd';
 import SimpleStep from '../common/SimpleStep';
-import SearchBar from '../common/SearchBar'
+import SearchBar from '../common/SearchBar';
+import '../../../css/order.css';
 export default class OrderDetail extends Component {
   componentDidMount() {
     console.log(this.props.params.orderId,'====')
@@ -73,7 +74,7 @@ export default class OrderDetail extends Component {
               </tr>
             </tbody>
           </table>
-          <div>实付款：{(orderInfo.sumMon).toFixed(2)}<span></span></div>
+          <div className="OrderDetail-sumMon">实付款：{(orderInfo.sumMon).toFixed(2)}<span></span></div>
         </div>
       )
     }

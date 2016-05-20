@@ -40,23 +40,13 @@ Books.searchBook = function searchBook(req, res) {
 	})
 }
 Books.getOnSaleBooks = function getOnSaleBook (req, res) {
-	getBooks('bookOnSale', function(err, data){
-		if(data){
-			res.send({data:data})
-		}else {
-			res.statusCode=404;
-			res.send({errorCode:404601,message:"未知错误"})//数据库错误
-		}
+	db['bookInfo'].find({flag: 'onsale'}, function(error, data){
+		res.send({data: data});
 	})
 }
 Books.getNewBooks = function getOnSaleBook (req, res) {
-	getBooks('bookNew', function(err, data){
-		if(data){
-			res.send({data:data})
-		}else {
-			res.statusCode=404;
-			res.send({errorCode:404601,message:"未知错误"})//数据库错误
-		}
+	db['bookInfo'].find({flag: 'new'}, function(error, data){
+		res.send({data: data});
 	})
 }
 Books.getBookInfo = function getBookInfo (req, res) {
