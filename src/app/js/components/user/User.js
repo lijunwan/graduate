@@ -8,8 +8,13 @@ import Address from './Address';
 export default class  User extends Component {
 	constructor(props) {
 		super(props);
+		let initPageFlag = 'baseInfo'
+		if(localStorage.getItem("userMenu")){
+			initPageFlag = localStorage.getItem("userMenu");
+			localStorage.removeItem('userMenu');
+		}
 		this.state = {
-			pageFlag: 'baseInfo',
+			pageFlag: initPageFlag,
 		}
 	}
 	showContent(value) {

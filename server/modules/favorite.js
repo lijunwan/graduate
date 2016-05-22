@@ -19,6 +19,8 @@ Favorite.addFavorite = function addFavorite (req, res) {
     if(!result) {
       db['bookInfo'].findBookById(req, res, obj.bookId, function(book){
           obj.collectPrice = book.aprice;
+          obj.cover = book.cover;
+          obj.bookName = book.bookName;
           book.favorite.push(obj.userId);
           book.save();
           db['favorite'].createFavorite(req, res, obj,function(favorite){
@@ -44,7 +46,7 @@ Favorite.getFavorite = function getFavorite(req, res) {
       var bookIdList = [];
         favorite.map(function(data) {
           var favoriteData = {};
-          favoriteData.favorite =  __pick(data,['bookId','userId','collectPrice','time']);
+          favoriteData.favorite = data;
           list.push(favoriteData);
           bookIdList.push(data.bookId);
         });

@@ -16,6 +16,7 @@ Order.createOrder = function createOrder(req, res) {
 	var userId = req.cookies.bookstore.id;
 	var bookInfo = JSON.parse(req.query.bookInfo);
 	var bookIdList = GR.getKeyValueList(bookInfo, 'bookId');
+	var shopCartId = GR.getKeyValueList(bookInfo, '_id');
 	db['bookInfo'].findItemsByList(req, res, bookIdList, function(bookInfoList){
 		bookInfo.map(function(bookInfoItem){
 			var obj = GR.findItem(bookInfoList, '_id', bookInfoItem.bookId);
@@ -45,7 +46,10 @@ Order.createOrder = function createOrder(req, res) {
 					})
 					user.save();
 				}
-				res.send({data: data})
+				db['shopCart'].where('_id').in(shopCartId).remove({}).exec(function(error,shopCart){
+					res.send({data: data})
+				})
+				
 			})
 		})
 	})

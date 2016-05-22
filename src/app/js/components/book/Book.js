@@ -118,7 +118,8 @@ export default class  Book extends Component{
       bookInfo: data,
       shopCartInfo: {
         count: 1,
-        bookId: data['_id']
+        bookId: data['_id'],
+        '_id': null,
       }
     }
     list.push(obj);

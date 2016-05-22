@@ -1,6 +1,7 @@
 .Footer{
   width: 960px;
   margin: 50px auto;
+  clear: both;
 }
 .Footer>p{
   text-align: center;

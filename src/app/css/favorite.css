@@ -14,3 +14,10 @@
 .favoriteItem:hover .trash {
   display: inline-block;
 }
+.bookName:hover {
+    color: #fa5000;
+    text-decoration: underline;
+}
+.bookName {
+  color: #3c3c3c;
+}
