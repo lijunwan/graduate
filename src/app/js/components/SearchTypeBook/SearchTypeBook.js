@@ -1,15 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SearchBar from '../common/SearchBar';
 import BookMenu from '../index/BookMenu'
-<<<<<<< HEAD
-import {Row, Col,Carousel} from 'antd';
-import sliderImg1 from '../../../images/slider1.jpg';
-import sliderImg2 from '../../../images/slider2.jpg';
-import sliderImg3 from '../../../images/slider3.jpg';
-import sliderImg4 from '../../../images/slider4.jpg';
-import sliderImg5 from '../../../images/slider5.jpg';
-import PromBook from '../common/PromBook';
-=======
 import {Row, Col,Carousel,Pagination} from 'antd';
 import sliderImg1 from '../../../images/bookTypeSlider1.jpg';
 import sliderImg2 from '../../../images/bookTypeSlider2.jpg';
@@ -19,7 +10,6 @@ import sliderImg5 from '../../../images/bookTypeSlider5.jpg';
 import '../../../css/searchTypeBook.css';
 import PromBook from '../common/PromBook';
 import __slice from 'lodash/slice';
->>>>>>> be58a79475f4da7b89b66c30b72148a59553bf91
 export default class SearchTypeBook extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +25,7 @@ export default class SearchTypeBook extends Component {
       const end = start + pageSize;
       const dataCuren = __slice(data,start, end);
       return dataCuren;
-    
+
     }
     componentWillReceiveProps(nextProps) {
      const data =  nextProps.bookInfo.toJS().bookListType.data;
@@ -104,24 +94,6 @@ export default class SearchTypeBook extends Component {
                     <Col span="4" style={{width: '190px'}}>
                         <BookMenu {...this.props} />
                     </Col>
-<<<<<<< HEAD
-                    <Col span="4" style={{width: '720px',marginLeft: '10px'}}>
-                        <div style={{height: '296px'}}>
-                            <Carousel autoplay="true">
-                                    <div><img style={{width: '100%', height: '100%'}} src={sliderImg1} /></div>
-                                    <div><img style={{width: '100%', height: '100%'}} src={sliderImg2} /></div>
-                                    <div><img style={{width: '100%', height: '100%'}} src={sliderImg3} /></div>
-                                    <div><img style={{width: '100%', height: '100%'}} src={sliderImg4} /></div>
-                                    <div><img style={{width: '100%', height: '100%'}} src={sliderImg5} /></div>
-                                </Carousel>
-                        </div>
-                        <div style={{margin: '50px 0 20px'}}>{this.creatTypeMenu()}</div>
-                        {this.createBookItem()}
-                    </Col>
-                    <Col span="4" width={{width:'200px'}}>
-                        <PromBook {...this.props} />
-                    </Col>
-=======
                     <Col span="4" style={{width: '720px', marginLeft: '10px'}}>
                         <div className="SearchTypeBook-slider">
                             <Carousel autoplay="true">
@@ -135,16 +107,15 @@ export default class SearchTypeBook extends Component {
                         <div>{this.creatTypeMenu()}</div>
                         <Row>{this.createBookItem()}</Row>
                         <div style={{marginTop: '10px'}}>
-                             <Pagination total = {this.state.bookList.length} 
+                             <Pagination total = {this.state.bookList.length}
                                     current={this.state.currentPage}
-                                    pageSize = {this.state.pageSize}  
+                                    pageSize = {this.state.pageSize}
                                     onChange = {this.changePage.bind(this)}/>
                         </div>
                     </Col>
                     <Col span="4" style={{width: '218px', marginLeft: '10px'}}>
                         <PromBook {...this.props} />
                     </Col>
->>>>>>> be58a79475f4da7b89b66c30b72148a59553bf91
                 </Row>
             </div>
         )
