@@ -8,15 +8,6 @@ function Order(order) {
 }
 module.exports = Order;
 Order.createOrder = function createOrder(req, res) {
-	// var orderObj = {};
-	// orderObj.userId = req.cookies.bookstore.id;
-	//	orderObj.sumMon = 0;
-	// orderObj.time = new Date();
-	// orderObj.address = req.query.address;
-	var userId = req.cookies.bookstore.id;
-	var bookInfo = JSON.parse(req.query.bookInfo);
-	var bookIdList = GR.getKeyValueList(bookInfo, 'bookId');
-	var shopCartId = GR.getKeyValueList(bookInfo, '_id');
 	db['bookInfo'].findItemsByList(req, res, bookIdList, function(bookInfoList){
 		bookInfo.map(function(bookInfoItem){
 			var obj = GR.findItem(bookInfoList, '_id', bookInfoItem.bookId);
