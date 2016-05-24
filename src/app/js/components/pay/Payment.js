@@ -33,7 +33,7 @@ export default class payment extends Component {
         this.props.orderBoundAC.createOrder(obj);
     }
     joinAddress(address) {
-        return address.postion.join(' ') + ' '+ address.address + '(邮编'+address.mailNum + ')' + address.name+ '(收) ' + address.phone;
+        return address.postion + ' '+ address.address + '(邮编'+address.mailNum + ')' + address.name+ '(收) ' + address.phone;
     }
     componentWillReceiveProps(nextProps){
       const orderInfo = nextProps.order.toJS().orderInfo.data;

@@ -20,7 +20,7 @@ export default class  ContentSlider extends Component{
                     bookItem.push(
                         <div className="ContentSlider-Item">
                             <img src={item.cover} />
-                            <p className="ContentSlider-bookName"><a title={item.bookName} onClick = {this.redirectBookPage.bind(this, item.detail)}>{item.bookName}</a></p>
+                            <p className="ContentSlider-bookName"><a title={item.bookName} onClick = {this.redirectBookPage.bind(this, item['_id'])}>{item.bookName}</a></p>
                             <p className="ContentSlider-Item-author">{item.author}</p>
                             <p className='ContentSlider-Item-price'>
                                 <span className="ContentSlider-Item-priceDis">￥{salePrice}</span>

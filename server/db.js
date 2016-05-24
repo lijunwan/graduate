@@ -31,29 +31,29 @@ db.once('open', function (callback) {
 		bookName: String,
 		cover: String,
 	})
-	//暂时不用
-	var logSchema = new Schema({
-		id:String,
-		phone:String,
-		userName:String,
-		lastTime:Date,
-	});
-	var baseInfoSchema = new Schema({
-		sex:Number,//性别 1 男 2 女 0 其他
-		birthday:String,//生日
-		headImg:String,//头像 保存图片的地址
-		name: String,//真实姓名
-		ShippingAddress:[],//收货地址
-	});
+	// //暂时不用
+	// var logSchema = new Schema({
+	// 	id:String,
+	// 	phone:String,
+	// 	userName:String,
+	// 	lastTime:Date,
+	// });
+	// var baseInfoSchema = new Schema({
+	// 	sex:Number,//性别 1 男 2 女 0 其他
+	// 	birthday:String,//生日
+	// 	headImg:String,//头像 保存图片的地址
+	// 	name: String,//真实姓名
+	// 	ShippingAddress:[],//收货地址
+	// });
 	var bookInfoSchema = new Schema({
 		bookName:String,//书名
 		author:String,//作者
 		pubHouse:String,//出版社
 		pubDate:String,//出版时间
 		comment:[],//评论 存放评论的id
-		price: Number,//定价
-		discount: Number,//折扣
-		aprice: Number,//售价
+		price: String,//定价
+		discount: String,//折扣
+		aprice: String,//售价
 		cover:String,//封面 保存 照片位置
 		picture:[],//书籍的图片
 		editions:String,//版次
@@ -129,8 +129,8 @@ db.once('open', function (callback) {
 		bookId: String,
 	})
 	var bookMenuSchema = new Schema({
-		flag: String,
-		name: String,
+		label: String,
+		value: String,
 		children: [],
 	});
 	var bookMenuConfigSchema = new Schema({
@@ -221,8 +221,8 @@ db.once('open', function (callback) {
 		}
 	}
 	dataModel["users"] = db.model('users',userSchema,'users');
-	dataModel["baseInfo"] = db.model('baseInfo',baseInfoSchema,'baseInfo');
-	dataModel["logs"] = db.model('logs',logSchema);
+	//dataModel["baseInfo"] = db.model('baseInfo',baseInfoSchema,'baseInfo');
+	// dataModel["logs"] = db.model('logs',logSchema);
 	dataModel["bookInfo"] = db.model('bookInfo',bookInfoSchema,'bookInfo');
 	dataModel['bookClass'] = db.model('bookClass', bookClassSchema, 'bookClass');
 	dataModel['bookOnSale'] = db.model('bookOnSale', bookOnSaleSchema, 'bookOnSale');
@@ -234,17 +234,17 @@ db.once('open', function (callback) {
 	dataModel['bookMenu'] = db.model('bookMen', bookMenuSchema, 'bookMen');
 	dataModel['bookMenuConfig'] = db.model('bookMenuConfig', bookMenuConfigSchema, 'bookMenuConfig');
 	dataModel['promBook'] = db.model('promBook', promBookSchema, 'promBook');
-	var obj = {
-		bookName:"javascript权威指南",
+	var obj = [{
+		bookName:"Node.js深入浅出",
 		author:"朴灵",
 		pubHouse:"人民邮电出版社",
-		pubDate:"2013-12",
+		pubDate:"2013-12-03",
 		comment:[],
-		price: 69.00,
-		discount: 8.92,
-		aprice: 61.55,
+		price: '69.00',
+		discount: '8.92',
+		aprice: '61.55',
 		cover:"/book/cover.jpg",
-		picture:['/book/cover.jpg','/book/testImage2.jpg', '/book/testImage3.jpg', '/book/testImage4.jpg', '/book/testImage5.jpg'],
+		picture:['/book/testImage2.jpg', '/book/testImage3.jpg', '/book/testImage4.jpg', '/book/testImage5.jpg'],
 		editions:"1",
 		pages:348,
 		words:514000,
@@ -255,7 +255,31 @@ db.once('open', function (callback) {
 		introduce:["本书从不同的视角介绍了 Node 内在的特点和结构。由首章Node 介绍为索引，涉及Node的各个方面，主要内容包含模块机制的揭示、异步I/O 实现原理的展现、异步编程的探讨、内存控制的介绍、二进制数据Buffer的细节、Node 中的网络编程基础、Node 中的Web 开发、进程间的消息传递、Node 测试以及通过Node构建产品需要的注意事项。最后的附录介绍了Node 的安装、调试、编码规范和NPM 仓库等事宜。","本书适合想深入了解 Node 的人员阅读。"],
 		scores:0,
 		favorite:[],
-	}
+		flag: 'extend',
+	},
+	{
+		bookName:"JavaScript权威指南（第6版）",
+		author:"朴灵",
+		pubHouse:"人民邮电出版社",
+		pubDate:"2013-12-06",
+		comment:[],
+		price: '100.00',
+		discount: '9.00',
+		aprice: '90.00',
+		cover:"/book/cover1.jpg",
+		picture:['/book/nodePic1.jpg', '/book/nodePic2.jpg', '/book/nodePic3.jpg', '/book/nodePic4.jpg'],
+		editions:"1",
+		pages:348,
+		words:514000,
+		type:"AAB",
+		authorIntro:["真名田永强，文艺型码农，就职于阿里巴巴数据平台，资深工程师，Node.js布道者，写了多篇文章介绍Node.js的细节。活跃于CNode社区，是线下会议NodeParty的组织者和JSConfChina（沪JS和京JS）的组织者之一。热爱开源，多个Node.js模块的作者。叩首问路，码梦为生。"],
+		stocks:900,
+		saleNumber:0,
+		introduce:["本书从不同的视角介绍了 Node 内在的特点和结构。由首章Node 介绍为索引，涉及Node的各个方面，主要内容包含模块机制的揭示、异步I/O 实现原理的展现、异步编程的探讨、内存控制的介绍、二进制数据Buffer的细节、Node 中的网络编程基础、Node 中的Web 开发、进程间的消息传递、Node 测试以及通过Node构建产品需要的注意事项。最后的附录介绍了Node 的安装、调试、编码规范和NPM 仓库等事宜。","本书适合想深入了解 Node 的人员阅读。"],
+		scores:0,
+		favorite:[],
+		flag: 'extend',
+	},]
 	var objOnSale = {
 		bookName:"javascript权威指南",
 		author:"朴灵",
@@ -265,199 +289,199 @@ db.once('open', function (callback) {
 		detail: '5709b6499180abb00defee0a'
 	}
 	var bookMenu = {
-		flag:'A',
-		name:'教育',
+		value:'A',
+		label:'教育',
 		children:[
 			{
-				flag:'AA',
-				name:'教材',
+				value:'AA',
+				label:'教材',
 				children:[
 					{
-						flag:'AAA',
-						name:'研究生/本科'
+						value:'AAA',
+						label:'研究生/本科'
 					},
 					{
-						flag:'AAB',
-						name:'高职高专教材'
+						value:'AAB',
+						label:'高职高专教材'
 					},
 					{
-						flag: 'AAC',
-						name: '中职教材'
+						value: 'AAC',
+						label: '中职教材'
 					},
 					{
-						flag: 'AAD',
-						name: '成人教育教材'
+						value: 'AAD',
+						label: '成人教育教材'
 					},
 					{
-						flag: 'AAE',
-						name: '职业技术培训'
+						value: 'AAE',
+						label: '职业技术培训'
 					},
 					{
-						flag: 'AAF',
-						name: '公共课'
+						value: 'AAF',
+						label: '公共课'
 					},
 					{
-						flag: 'AAG',
-						name: '经济管理类'
+						value: 'AAG',
+						label: '经济管理类'
 					},
 					{
-						flag: 'AAH',
-						name: '工学类'
+						value: 'AAH',
+						label: '工学类'
 					},
 					{
-						flag: 'AAI',
-						name: '文法类'
+						value: 'AAI',
+						label: '文法类'
 					},
 					{
-						flag: 'AAJ',
-						name: '医学类'
+						value: 'AAJ',
+						label: '医学类'
 					},
 					{
-						flag: 'AAK',
-						name: '理学类'
+						value: 'AAK',
+						label: '理学类'
 					},
 					{
-						flag: 'AAI',
-						name: '农学'
+						value: 'AAI',
+						label: '农学'
 					},
 
 				]
 			},
 			{
-				flag:'AB',
-				name:'外语',
+				value:'AB',
+				label:'外语',
 				children:[
 					{
-						flag:'ABA',
-						name:'英语专项训练'
+						value:'ABA',
+						label:'英语专项训练'
 					},
 					{
-						flag:'ABB',
-						name:'英语读物'
+						value:'ABB',
+						label:'英语读物'
 					},
 					{
-						flag:'ABC',
-						name:'英语考试'
+						value:'ABC',
+						label:'英语考试'
 					},
 					{
-						flag:'ABD',
-						name:'小语种'
+						value:'ABD',
+						label:'小语种'
 					},
 					{
-						flag:'ABE',
-						name:'日语'
+						value:'ABE',
+						label:'日语'
 					},
 					{
-						flag:'ABF',
-						name:'法语'
+						value:'ABF',
+						label:'法语'
 					},
 					{
-						flag:'ABF',
-						name:'韩语'
+						value:'ABF',
+						label:'韩语'
 					},
 				]
 			},
 			{
-				flag: 'AC',
-				name: '考试',
+				value: 'AC',
+				label: '考试',
 				children:[
 					{
-						flag: 'ACA',
-						name: '学历考试',
+						value: 'ACA',
+						label: '学历考试',
 					},
 					{
-						flag: 'ACB',
-						name: '公务员',
+						value: 'ACB',
+						label: '公务员',
 					},
 					{
-						flag: 'ACC',
-						name: '财税外贸保险',
+						value: 'ACC',
+						label: '财税外贸保险',
 					},
 					{
-						flag: 'ACD',
-						name: '计算机',
+						value: 'ACD',
+						label: '计算机',
 					},
 					{
-						flag: 'ACE',
-						name: '建筑工程',
+						value: 'ACE',
+						label: '建筑工程',
 					},
 					{
-						flag: 'ACF',
-						name: '医药卫生',
+						value: 'ACF',
+						label: '医药卫生',
 					},
 					{
-						flag: 'ACG',
-						name: '艺术/体育',
+						value: 'ACG',
+						label: '艺术/体育',
 					},
 					{
-						flag: 'ACH',
-						name: '考研',
+						value: 'ACH',
+						label: '考研',
 					},
 					{
-						flag: 'ACI',
-						name: 'MBA/MPA/MPAc',
+						value: 'ACI',
+						label: 'MBA/MPA/MPAc',
 					},
 					{
-						flag: 'ACJ',
-						name: '会计',
+						value: 'ACJ',
+						label: '会计',
 					},
 					{
-						flag: 'ACK',
-						name: '建造师',
+						value: 'ACK',
+						label: '建造师',
 					},
 					{
-						flag: 'ACL',
-						name: '医师资格',
+						value: 'ACL',
+						label: '医师资格',
 					},
 					{
-						flag: 'ACM',
-						name: '人力资源管理',
+						value: 'ACM',
+						label: '人力资源管理',
 					},
 				]
 			},
 			{
-				flag: 'AD',
-				name: '中小学教辅',
+				value: 'AD',
+				label: '中小学教辅',
 				children: [
 					{
-						flag: 'ADA' ,
-						name: '小学' ,
+						value: 'ADA' ,
+						label: '小学' ,
 					},
 					{
-						flag: 'ADB' ,
-						name: '初中' ,
+						value: 'ADB' ,
+						label: '初中' ,
 					},
 					{
-						flag: 'ADC' ,
-						name: '高中' ,
+						value: 'ADC' ,
+						label: '高中' ,
 					},
 					{
-						flag: 'ADD' ,
-						name: '中小学阅读' ,
+						value: 'ADD' ,
+						label: '中小学阅读' ,
 					},
 					{
-						flag: 'ADE' ,
-						name: '英语专项' ,
+						value: 'ADE' ,
+						label: '英语专项' ,
 					},
 					{
-						flag: 'ADF' ,
-						name: '语文作文' ,
+						value: 'ADF' ,
+						label: '语文作文' ,
 					},
 					{
-						flag: 'ADG' ,
-						name: '工具书' ,
+						value: 'ADG' ,
+						label: '工具书' ,
 					},
 					{
-						flag: 'ADH' ,
-						name: '写字/字帖' ,
+						value: 'ADH' ,
+						label: '写字/字帖' ,
 					},
 					{
-						flag: 'ADI' ,
-						name: '学习方法' ,
+						value: 'ADI' ,
+						label: '学习方法' ,
 					},
 					{
-						flag: 'ADJ' ,
-						name: '教育理论' ,
+						value: 'ADJ' ,
+						value: '教育理论' ,
 					},
 				]
 			}
@@ -474,27 +498,30 @@ db.once('open', function (callback) {
 						   {bookId: '571b8c73bef9aa9b419a1c6f'},
 						   {bookId: '571b8c4ed2fd2e8741943588'},
 						   {bookId: '571b8c4d0ae1847d41b495cd'},]
-	// dataModel['bookMenu'].create(bookMenu, function(err,data){
+ //    for (var i = 0; i < 10; i++) {
+ //    	dataModel['bookMenu'].create(bookMenu, function(err,data){
 	// 	console.log(data);
 	// })
+
+ //    };
 	// dataModel['promBook'].create(promBookIdList,function(err, data){
 	// 	console.log(data)
 	// })
-	//  dataModel['bookInfo'].create(obj,function(err,data){
-	// 	if(err) return console.error(err);
-	// })
+	 dataModel['bookInfo'].create(obj,function(err,data){
+		if(err) return console.error(err);
+	})
 	var bookMenuConfigObj = [
 		{
-			type: 'A',
-			name: '教育',
+			label: 'A',
+			value: '教育',
 		},
 		{
-			type: 'AA',
-			name: '教材',
+			label: 'AA',
+			value: '教材',
 		},
 		{
-			type: 'AAA',
-			name: '研究生/本科生',
+			label: 'AAA',
+			value: '研究生/本科生',
 		}
 	]
 	// dataModel['bookMenuConfig'].create(bookMenuConfigObj,function(err,data){

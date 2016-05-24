@@ -215,11 +215,18 @@ class TableRow extends Component {
 						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 					</Col>
 				)
+			case 'UNCONFIRM':
+			    return(
+					<Col span="4">
+						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
+						<p style={{lineHeight: '1.5'}}><a onClick={this.confirmReceipt.bind(this,['_id'])}>确认收货</a></p>
+					</Col>
+				)
 			default:
 				return (
 					<Col span="4">
 						<p style={{lineHeight: '1.5',marginTop: '30px'}}><a onClick={this.showOrder.bind(this, item['_id'])}>查看订单</a></p>
-						<p style={{lineHeight: '1.5'}}><a onClick={this.confirmReceipt.bind(this, item['_id'])}>确认收货</a></p>
 						<p style={{lineHeight: '1.5'}}><a onClick={this.showDelMess.bind(this)}>删除订单</a></p>
 					</Col>
 				)

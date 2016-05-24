@@ -32,9 +32,6 @@ Users.checkLogin = function checkLogin(req,res){
 					'lastTime':Date().toString(),
 				}
 				res.cookie("bookstore",obj,{maxAge:6000000})
-			    saveOne(obj,"logs",function(err,item){
-			    	console.log(item,"123")
-			    });
 			    res.statusCode=200;
 				res.send({
 					phone:user.phone,

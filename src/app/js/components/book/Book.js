@@ -9,6 +9,7 @@ const confirm = Modal.confirm;
 import logoImg from '../../../images/logo.jpg';
 import Search from '../common/Search';
 import moment from 'moment';
+import PromBook from '../common/PromBook';
 export default class  Book extends Component{
     constructor(props) {
       super(props);
@@ -212,7 +213,6 @@ export default class  Book extends Component{
                         </div>
                     </div>
                     <div className="clearfix" style={{marginTop : '20px'}}>
-                      <div className="recommend">推荐区</div>
                       <div className="book-detai">
                         <h3  className="BookDetai-blockName">商品详情</h3>
                         <div className="detail-content clearfix">

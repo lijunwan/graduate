@@ -67,7 +67,7 @@ export default class  Favorite extends Component {
           </Col>
         </Row>
         <hr style={{border: 'none', borderBottom: '4px solid #ff2832', margin: '30px auto'}}></hr>
-        <h2>我的收藏夹</h2>
+        <h2 style={{margin: '30px auto 0',width: '1200px'}}>我的收藏夹</h2>
         <Row style={{margin: '30px auto 0',width: '1200px'}}>
           <div>
             {this.createFavorite()}

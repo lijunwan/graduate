@@ -126,12 +126,9 @@ Books.sortBySaleNum = function(req, res) {
 	})
 }
 Books.promBook = function(req, res) {
-	db['promBook'].find({}).limit(10).exec(function(error,data){
-		var bookIdList = GR.getKeyValueList(data, 'bookId');
-		db['bookInfo'].findByIdList(req, res, bookIdList, function(data){
+	db['bookInfo'].find({flag: 'extend'}).limit(10).exec(function(error,data){
 			res.send({data: data})
 		})
-	})
 }
 function calculatedAverage(list, key) {
 	var sum = 0;
