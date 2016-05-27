@@ -242,9 +242,8 @@ Users.delAddress = function(req, res) {
 	db['users'].findById(id, function(error,data){
 		if(data) {
 			var newAddress = __remove(data.ShippingAddress, function(obj) {
-				if(obj['id'] == addressId) {
-					return true;
-				}
+				console.log(addressId)
+				return obj.id != addressId;
 			})
 			data.ShippingAddress = newAddress;
 			data.save();

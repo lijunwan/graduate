@@ -241,7 +241,7 @@ class TableRow extends Component {
 			'CLOSED': '交易已关闭',
 		}
 		const item = this.props.item;
-		console.log(this.state.delInfoModal)
+		console.log('交易时间', item.time)
 		return(
 			<div className="Order-item">
 				<Row>
@@ -250,7 +250,7 @@ class TableRow extends Component {
 				<Row style={{lineHeight: '110px', textAlign: 'center'}}>
 					<Col span="4"><img src={item.cover} style={{width: '80px'}}/></Col>
 					<Col span="4"><div>{item.sumMon}</div></Col>
-					<Col span="4">{moment(item.time).format("YYYY-MM-DD hh:mm:ss")}</Col>
+					<Col span="4">{moment(item.time).format("YYYY-MM-DD HH:mm:ss")}</Col>
 					<Col span="4">{payStatus[item.orderStatus]}</Col>
 					{this.createOperation(item.orderStatus, item)}
 				</Row>

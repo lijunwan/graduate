@@ -13,7 +13,9 @@
   margin-top: 10px;
 }
 .Index-bookMenu {
-    float: left;
+  width: 190px;
+  min-height: 100px;
+  float: left;
 }
 .Index-container {
     

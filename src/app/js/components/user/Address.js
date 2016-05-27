@@ -111,7 +111,7 @@ export default class  Address extends Component {
                     <td>{obj.postion}</td>
                     <td>{obj.address}</td>
                     <td>{obj.phone}</td>
-                    <td><a onClick={this.showDelModal.bind(this,obj['_id'])}>删除</a>|<a onClick={this.modifyAddress.bind(this, obj)}>修改</a></td>
+                    <td><a onClick={this.showDelModal.bind(this,obj['id'])}>删除</a>|<a onClick={this.modifyAddress.bind(this, obj)}>修改</a></td>
                   </tr>
               );
           })

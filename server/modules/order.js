@@ -2,7 +2,7 @@ var db = require('../db');
 var GR = require('../helper');
 var schedule = require('node-schedule');
 var moment = require('moment');
-var __remove = require('lodash/remove')
+var __remove = require('lodash/remove');
 function Order(order) {
 
 }
@@ -11,7 +11,7 @@ Order.createOrder = function createOrder(req, res) {
 	var userId = req.cookies.bookstore.id;
 	var bookInfo = JSON.parse(req.query.bookInfo);
 	var bookIdList = GR.getKeyValueList(bookInfo, 'bookId');
-	var shopCartId = GR.getKeyValueList(bookInfo, '_id');
+	var shopCartId = GR.getKeyValueList(bookInfo, 'shopCartId');
 	db['bookInfo'].findItemsByList(req, res, bookIdList, function(bookInfoList){
 		bookInfo.map(function(bookInfoItem){
 			var obj = GR.findItem(bookInfoList, '_id', bookInfoItem.bookId);
@@ -20,7 +20,10 @@ Order.createOrder = function createOrder(req, res) {
 				bookInfoItem.cover = obj.cover;
 				bookInfoItem.bookName = obj.bookName;
 				bookInfoItem.sumMon = (obj.aprice * bookInfoItem.count).toFixed(2);
-				bookInfoItem.time = new Date();
+				var date = new Date();
+				bookInfoItem.time = date;
+				moment.locale('zn');
+				console.log('bookInfoTime',bookInfoItem.time);
 				bookInfoItem.address = req.query.address;
 				bookInfoItem.userId = req.cookies.bookstore.id;
 				bookInfoItem.orderStatus = "UNPAY";
@@ -34,7 +37,6 @@ Order.createOrder = function createOrder(req, res) {
 			}
 		});
 		db['order'].createItem(req, res, bookInfo, function(data){
-			console.log(userId, '????')
 			db['users'].findById(userId, function(error, user){
 				if(user){
 					data.map(function(item){
@@ -63,7 +65,6 @@ Order.getOrderList = function getOrderList(req, res) {
 }
 Order.getOrderInfo = function getOrderInfo(req, res) {
 	var orderId = req.query.orderId;
-	console.log(orderId, 'orderId--------------')
 	db['order'].findItemById(req, res, orderId, function(data){
 		res.send({data: data});
 	})
@@ -74,7 +75,6 @@ Order.payOrder = function payOrder(req, res) {
 	const orderInfo = JSON.parse(req.query.orderInfo);
 	const orderIdList = GR.getKeyValueList(orderInfo,'_id');
 	const bookList = GR.getKeyValueList(orderInfo,'bookId');
-	console.log('---',bookList)
 	db['order'].findById(orderIdList[0], function(error, firstOrder){
 		if(firstOrder.orderStatus == 'UNSEND') {
 			res.statusCode = "404"
@@ -105,10 +105,8 @@ Order.delOrder = function(req, res) {
 	var orderId = req.query.orderId;
 	db['users'].findById(userId, function(error, user){
 		var newOrder = __remove(user.payOrder, function(item) {
-			console.log('---', item, orderId);
 			return item != orderId;
 		});
-		console.log('---',newOrder)
 		user.payOrder = newOrder;
 		user.save();
 		db['order'].findItemsByList(req, res, newOrder,function(orderList){
@@ -121,7 +119,6 @@ Order.delOrder = function(req, res) {
 Order.confirmReceipt = function(req, res) {
 	var userId = req.cookies.bookstore.id;
 	var orderId = req.query.orderId;
-	console.log('confirmReceipt')
 	db['order'].findById(orderId, function(error, data){
 		if(error) console.error(error)
 		if(data) {
@@ -139,14 +136,12 @@ Order.confirmReceipt = function(req, res) {
 Order.filterOrder = function() {
 	var date = Date.parse(new Date());
 	db['order'].find({orderStatus: 'UNPAY'},function(err, data){
-		console.log(data)
 		data.map(function(item){
 			if(date - Date.parse(item.time) > 300000){
 				item.orderStatus = 'CLOSED';
 			}
 			item.save();
 			db['bookInfo'].findById(item.bookId, function(err, book){
-				console.log(item.bookId,'book------')
 				book.stocks += item.count;
 				book.save();
 			})

@@ -208,7 +208,7 @@ db.once('open', function (callback) {
 	}
 	function findItemsByList() {
 		return function(req, res, list, callback) {
-			this.where('_id').in(list).exec(function(error,data){
+			this.where('_id').in(list).sort({_id: -1}).exec(function(error,data){
 				if(error) return console.error(error);
 				if(data) {
 					callback(data);

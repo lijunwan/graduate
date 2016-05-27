@@ -174,3 +174,7 @@ h2.AddressModal-head {
     top: 8px;
     right: 8px;
 }
+td.OrderTable-bookInfo {
+  text-align: left;
+  padding-left: 20px;
+}

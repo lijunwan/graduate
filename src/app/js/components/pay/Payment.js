@@ -4,9 +4,11 @@ import logoImg from '../../../images/logo.jpg';
 import '../../../css/payment.css';
 import __pick from 'lodash/pick';
 import SimpleStep from '../common/SimpleStep';
-import {Row, Col} from 'antd';
-import AddressModal from './AddressModal'
-export default class payment extends Component {
+import {Row, Col,Modal} from 'antd';
+const confirm = Modal.confirm;
+import AddressModal from './AddressModal';
+import moment from 'moment';
+export default class Payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,27 +21,38 @@ export default class payment extends Component {
     createOrder() {
         var data = localStorage.getItem("confirmOrder");
         var bookInfo = JSON.parse(data).bookInfo;
-        const userInfo = this.props.client.toJS().info.data;
-        const bookInfoList = [];
-        bookInfo.map((bookItem)=>{
-            var obj = __pick(bookItem.shopCartInfo,['bookId', 'count','_id']);
-            bookInfoList.push(obj);
-        })
-        var obj = {
-            address: this.joinAddress(userInfo.ShippingAddress[this.state.addressCard]),
-            bookInfo: JSON.stringify(bookInfoList),
+        const addressList = this.props.client.toJS().addressList.data;
+        if(addressList.length > 0) {
+            const bookInfoList = [];
+            bookInfo.map((bookItem)=>{
+                var obj = __pick(bookItem.shopCartInfo,['bookId', 'count','_id']);
+                var shopCartId = obj['_id'];
+                delete obj['_id'];
+                obj.shopCartId = shopCartId;
+                bookInfoList.push(obj);
+            })
+            var obj = {
+                address: this.joinAddress(addressList[this.state.addressCard]),
+                bookInfo: JSON.stringify(bookInfoList),
+            }
+            console.log(bookInfo)
+            this.props.orderBoundAC.createOrder(obj);
+        } else {
+            confirm({
+                title: '信息提示框',
+                content: '请填写地址',
+            })
         }
-        console.log(bookInfo)
-        this.props.orderBoundAC.createOrder(obj);
     }
     joinAddress(address) {
+        console.log(address, '???')
         return address.postion + ' '+ address.address + '(邮编'+address.mailNum + ')' + address.name+ '(收) ' + address.phone;
     }
     componentWillReceiveProps(nextProps){
       const orderInfo = nextProps.order.toJS().orderInfo.data;
-      console.log('===',orderInfo);
         if(orderInfo && orderInfo.length > 0) {
-            localStorage.setItem('orderInfo', JSON.stringify(orderInfo))
+            localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+            this.props.orderBoundAC.clearOrder();
             this.props.history.pushState(null,'/pay');
         }
     }
@@ -96,7 +109,7 @@ export default class payment extends Component {
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
-        var sumMon = JSON.parse(data).sumMon
+        var sumMon = JSON.parse(data).sumMon;
         return(
             <div className="payment">
                 <Row>
@@ -134,16 +147,17 @@ export default class payment extends Component {
 class OrderTable extends Component {
     createBook() {
         var data = localStorage.getItem("confirmOrder");
-        const list = [];
+        const list = []; 
         if(data) {
             var orderInfo = JSON.parse(data).bookInfo;
-            console.log('orderInfo', orderInfo);
             orderInfo.map((item)=>{
+                const money = item.bookInfo.aprice * item.shopCartInfo.count; 
                 list.push(
                     <tr>
-                        <td style={{width: '300px'}}><img className="pay-img" src={item.bookInfo.cover}/>{item.bookInfo.bookName}</td>
+                        <td className="OrderTable-bookInfo" style={{width: '300px'}}><img className="pay-img" src={item.bookInfo.cover}/>{item.bookInfo.bookName}</td>
                         <td>{item.bookInfo.aprice}</td>
                         <td>{item.shopCartInfo.count}</td>
+                        <td>￥{money}</td>
                     </tr>
                 )
             })

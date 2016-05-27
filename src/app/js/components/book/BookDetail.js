@@ -15,19 +15,9 @@ export default class  BookDetai extends Component{
     return (
       <div>
         <Row style={{marginBottom: '10px'}}>
-          <Col span="8">版次:1</Col>
-          <Col span="8">页数:730</Col>
-          <Col span="8">字数:1092000</Col>
-        </Row>
-        <Row style={{marginBottom: '10px'}}>
-          <Col span="8">印刷时间: 2012-3-1</Col>
-          <Col span="8">开本: 16开</Col>
-          <Col span="8">纸张: 胶版纸</Col>
-        </Row>
-        <Row style={{marginBottom: '10px'}}>
-          <Col span="8">印次: 1</Col>
-          <Col span="8">包装: 平装</Col>
-          <Col span="8">丛书名:</Col>
+          <Col span="8">版次:{this.props.data.edtions}</Col>
+          <Col span="8">页数:{this.props.data.pages}</Col>
+          <Col span="8">字数:{this.props.data.words}</Col>
         </Row>
         <div className="BookDetai-recom">
             <h3>内容推荐</h3>

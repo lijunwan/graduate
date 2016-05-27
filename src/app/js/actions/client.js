@@ -157,6 +157,7 @@ export function getShopCartInfo() {
   return dispatch => {
       HttpRequest.get('/api/user/authorization/getShopCarts')
       .end(function(err,resp){
+        intercep(resp);
         dispatch({
           type: GET_SHOPCARTS,
           data: resp.body
@@ -224,6 +225,7 @@ export function getAddress() {
   };
 }
 export function delAddress(params) {
+  console.log(params, '?????')
   return dispatch => {
       HttpRequest.get('/api/user/authorization/delAddress')
       .query(params)

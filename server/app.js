@@ -53,10 +53,10 @@ app.get("/*",function(req,res){
           }
      })
 })
-    //每分钟扫描订单
+   // 每分钟扫描订单
     var rule = new schedule.RecurrenceRule();
     var times = [];
-    for(var i=1;i<60;i++) {
+    for(var i=1;i<60;i+=5) {
     	times.push(i);
     }
     rule.minute = times;
