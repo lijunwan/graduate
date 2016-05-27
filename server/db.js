@@ -134,8 +134,8 @@ db.once('open', function (callback) {
 		children: [],
 	});
 	var bookMenuConfigSchema = new Schema({
-		type: String,
-		name: String,
+		label: String,
+		value: String,
 	})
 	userSchema.statics.findUserById = findItemById({errorCode:404405,message:"未找到相关的用户"});
 	bookInfoSchema.statics.findBookById = findItemById({errorCode:404406,message:"未找到相关的书籍"});
@@ -512,17 +512,193 @@ db.once('open', function (callback) {
 	})
 	var bookMenuConfigObj = [
 		{
-			label: 'A',
-			value: '教育',
+			value: 'A',
+			label: '教育',
 		},
 		{
-			label: 'AA',
-			value: '教材',
+			value: 'AA',
+			label: '教材',
 		},
 		{
-			label: 'AAA',
-			value: '研究生/本科生',
-		}
+			value:'AAA',
+			label:'研究生/本科'
+		},
+		{
+			value:'AAB',
+			label:'高职高专教材'
+		},
+		{
+			value: 'AAC',
+			label: '中职教材'
+		},
+		{
+			value: 'AAD',
+			label: '成人教育教材'
+		},
+		{
+			value: 'AAE',
+			label: '职业技术培训'
+		},
+		{
+			value: 'AAF',
+			label: '公共课'
+		},
+		{
+			value: 'AAG',
+			label: '经济管理类'
+		},
+		{
+			value: 'AAH',
+			label: '工学类'
+		},
+		{
+			value: 'AAI',
+			label: '文法类'
+		},
+		{
+			value: 'AAJ',
+			label: '医学类'
+		},
+		{
+			value: 'AAK',
+			label: '理学类'
+		},
+		{
+			value: 'AAI',
+			label: '农学'
+		},
+		{
+			value:'AB',
+			label:'外语',
+		},
+		{
+			value:'ABA',
+			label:'英语专项训练'
+		},
+		{
+			value:'ABB',
+			label:'英语读物'
+		},
+		{
+			value:'ABC',
+			label:'英语考试'
+		},
+		{
+			value:'ABD',
+			label:'小语种'
+		},
+		{
+			value:'ABE',
+			label:'日语'
+		},
+		{
+			value:'ABF',
+			label:'法语'
+		},
+		{
+			value:'ABF',
+			label:'韩语'
+		},
+		{
+			value: 'AC',
+			label: '考试',
+		},
+		{
+			value: 'ACA',
+			label: '学历考试',
+		},
+		{
+			value: 'ACB',
+			label: '公务员',
+		},
+		{
+			value: 'ACC',
+			label: '财税外贸保险',
+		},
+		{
+			value: 'ACD',
+			label: '计算机',
+		},
+		{
+			value: 'ACE',
+			label: '建筑工程',
+		},
+		{
+			value: 'ACF',
+			label: '医药卫生',
+		},
+		{
+			value: 'ACG',
+			label: '艺术/体育',
+		},
+		{
+			value: 'ACH',
+			label: '考研',
+		},
+		{
+			value: 'ACI',
+			label: 'MBA/MPA/MPAc',
+		},
+		{
+			value: 'ACJ',
+			label: '会计',
+		},
+		{
+			value: 'ACK',
+			label: '建造师',
+		},
+		{
+			value: 'ACL',
+			label: '医师资格',
+		},
+		{
+			value: 'ACM',
+			label: '人力资源管理',
+		},
+		{
+			value: 'AD',
+			label: '中小学教辅',
+		},
+		{
+			value: 'ADA' ,
+			label: '小学' ,
+		},
+		{
+			value: 'ADB' ,
+			label: '初中' ,
+		},
+		{
+			value: 'ADC' ,
+			label: '高中' ,
+		},
+		{
+			value: 'ADD' ,
+			label: '中小学阅读' ,
+		},
+		{
+			value: 'ADE' ,
+			label: '英语专项' ,
+		},
+		{
+			value: 'ADF' ,
+			label: '语文作文' ,
+		},
+		{
+			value: 'ADG' ,
+			label: '工具书' ,
+		},
+		{
+			value: 'ADH' ,
+			label: '写字/字帖' ,
+		},
+		{
+			value: 'ADI' ,
+			label: '学习方法' ,
+		},
+		{
+			value: 'ADJ' ,
+			label: '教育理论' ,
+		},
 	]
 	// dataModel['bookMenuConfig'].create(bookMenuConfigObj,function(err,data){
 	// 		if(err) return console.error(err);

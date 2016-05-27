@@ -71,17 +71,17 @@ Books.searchByType = function(req, res) {
 	var reg = new RegExp('^'+type,'i');
 	db['bookInfo'].find({type: reg},function(err, data){
 		if(data) {
-			const typeList = req.query.type.split('');
-			console.log('---',typeList)
+			const value = req.query.type;
 			const typeName = [];
-			db['bookMenuConfig'].findOne({type: typeList[0]}, function(err, menu){
+			db['bookMenuConfig'].findOne({value: 'A'}, function(err, menu){
+				console.log(err);
 				if(menu) {
 					typeName.push(menu);
-					if(typeList[1]) {
-						db['bookMenuConfig'].findOne({type: typeList[0]+typeList[1]}, function(err, menuLevel) {
+					if(value.length > 1) {
+						db['bookMenuConfig'].findOne({value: value.slice(0,2)}, function(err, menuLevel) {
 							typeName.push(menuLevel);
-							if(typeList[2]) {
-								db['bookMenuConfig'].findOne({type: typeList[0]+typeList[1]+typeList[2]}, function(err, menuLevel2) {
+							if(value.length > 3) {
+								db['bookMenuConfig'].findOne({value: value.slice(0, 3)}, function(err, menuLevel2) {
 									typeName.push(menuLevel2);
 									res.send({data: data, type: typeName})
 								})
@@ -92,6 +92,10 @@ Books.searchByType = function(req, res) {
 					} else {
 						res.send({data: data, type: typeName})
 					}
+				} else {
+					res.statusCode = 404;
+					res.send({errorCode: 404601 , message: '目录配置未找到'})
+					console.log(value.slice(0,1),'----找不到？？')
 				}
 			})
 		}
