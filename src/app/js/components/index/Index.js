@@ -50,7 +50,6 @@ export default class  Index extends Component{
 		return list;
 	}
 	render(){
-		console.log(this.props.bookInfo.toJS())
 		return(
 			<div className="Index">
 				<div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>

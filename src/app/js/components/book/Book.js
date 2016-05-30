@@ -164,6 +164,11 @@ export default class  Book extends Component{
         )
       })
     }
+    if(list.length < 1) {
+      list.push(
+       <div　style={{textAlign: 'center',padding: '10px 0', margin: '10px 0',backgroundColor: '#F9F9F9'}}>暂无评价</div>
+     )
+    }
     return list;
   }
     render() {
@@ -198,10 +203,17 @@ export default class  Book extends Component{
                               <p><span className="price-key letter01 marginRight">折扣价</span><span className="price-money">￥{bookInfo.data.aprice}</span><span className="marginLeft">({bookInfo.data.discount}折)</span></p>
                             </div>
                             <div style={{paddingTop: '30px'}}>
-                              <NumberBox maxNumber= {parseInt(100)}
+                              <Row>
+                                <Col span="4">
+                                  <NumberBox maxNumber= {parseInt(100)}
                                          count={this.state.count}
                                          addNumber={this.addNumber.bind(this)}
                                          subNumber={this.subNumber.bind(this)}/>
+                                </Col>
+                                <Col span="4">
+                                  <span style={{lineHeight: '28px'}}>剩余库存量:{bookInfo.data.stocks}</span>
+                                </Col>
+                              </Row>
                             </div>
                             <a className="Book-button shop-button" onClick = {this.addBookIntoCars.bind(this)}>加入购物车</a>
                             <a className="Book-button buy-button" onClick={this.confirmPay.bind(this)}>立即购买</a>

@@ -22,7 +22,6 @@ export default class BookMenu extends Component {
 		this.props.bookeBoundAC.getBookMenu();
 	}
 	render() {
-		console.log(this.props.bookInfo.toJS().bookMenu.data,"BookMenu")
 		const bookMenu = this.props.bookInfo.toJS().bookMenu.data;
 		if(bookMenu) {
 			return(
@@ -56,7 +55,6 @@ class LevelMenu extends Component {
 	}
 	searchByType(type) {
 		this.props.history.pushState(null, '/searchTypeBook/'+ type);
-		console.log(this.props.routes, '????')
 		const routes = this.props.routes;
 		if(routes[1] && routes[1].name == 'searchTypeBook') {
 			this.props.bookeBoundAC.searchByType({type:type});

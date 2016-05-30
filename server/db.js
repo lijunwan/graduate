@@ -507,9 +507,9 @@ db.once('open', function (callback) {
 	// dataModel['promBook'].create(promBookIdList,function(err, data){
 	// 	console.log(data)
 	// })
-	 dataModel['bookInfo'].create(obj,function(err,data){
-		if(err) return console.error(err);
-	})
+	//  dataModel['bookInfo'].create(obj,function(err,data){
+	// 	if(err) return console.error(err);
+	// })
 	var bookMenuConfigObj = [
 		{
 			value: 'A',
@@ -742,9 +742,9 @@ db.once('open', function (callback) {
 // 		}
 // 	]
 // }
-// 	dataModel['bookClass'].create(obj,function(err,data){
-// 		if(err) return console.error(err);
-// 		console.log(data);
-// 	})
+	// dataModel['bookClass'].create(obj,function(err,data){
+	// 	if(err) return console.error(err);
+	// 	console.log(data);
+	// })
 })
 module.exports = dataModel;

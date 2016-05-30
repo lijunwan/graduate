@@ -39,28 +39,36 @@ export default class BookItem extends Component {
       this.props.clientBoundAC.addBookIntoCars(obj);
       message.success('您已成功添加到购物车，请前往购物车查看');
     }
+    componentDidMount() {
+     
+    }
     componentWillMount() {
-      const userInfo = this.props.client.toJS().info.data;
-      if(userInfo) {
-        const bookInfo = this.props.data;
-        userInfo.favorite.map((bookId)=>{
-          console.log(bookId, bookInfo.id)
-          if(bookId === bookInfo.id) {
+      // const userInfo = this.props.client.toJS().info.data;
+      // if(userInfo) {
+      //   const bookInfo = this.props.data;
+      //   userInfo.favorite.map((bookId)=>{
+      //     console.log(bookId, bookInfo.id)
+      //     if(bookId === bookInfo.id) {
+      //       this.setState({
+      //         isaddFavorite: true,
+      //       })
+      //     }
+      //   })
+      // }
+    }
+    componentWillReceiveProps(nextProps) {
+      const favorite = nextProps.favorite.toJS().favorite.data;
+      const bookInfo = nextProps.data;
+      if(favorite) {
+        console.log(favorite, '>>')
+        favorite.map((favObj)=>{
+          if(favObj.favorite.bookId === bookInfo.id) {
             this.setState({
               isaddFavorite: true,
             })
-          }
-        })
-      }
-    }
-    componentWillReceiveProps(nextProps) {
-      const userInfo = nextProps.client.toJS().info.data;
-      const bookInfo = nextProps.data;
-      if(userInfo) {
-        userInfo.favorite.map((bookId)=>{
-          if(bookId === bookInfo.id) {
+          } else {
             this.setState({
-              isaddFavorite: true,
+              isaddFavorite: false,
             })
           }
         })

@@ -35,7 +35,6 @@ export default class  ContentSlider extends Component{
                     </div>
                 );
             }
-            console.log('content===',content);
             return content;
         }
         return [];

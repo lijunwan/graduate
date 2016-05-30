@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 export default function (state = Immutable.fromJS({addFavoriteMess: {},favorite:{}}), action) {
   switch (action.type) {
   case ADD_FAVORITE:
-    return state.set("addFavoriteMess", action.data);
+    return state.set("favorite", action.data);
   case GET_FAVORITE:
     return state.set("favorite",action.data);
   case DEL_FAVORITE:

@@ -56,14 +56,14 @@ export default class SearchTypeBook extends Component {
         if(type && type.length>0) {
             type.map((item, index)=>{
                 list.push(
-                    <a key={index} onClick={this.searchByType.bind(this,item.type)}>{item.name}/</a>
+                    <a key={index} onClick={this.searchByType.bind(this,item.value)}>{item.label}/</a>
                 )
             })
         }
         return list;
     }
     redirectBookPage(bookId) {
-        this.props.pushState(null, 'book/'+bookId);
+        this.props.history.pushState(null, 'book/'+bookId);
     }
     createBookItem() {
         const data = this.state.currentData;
@@ -73,7 +73,7 @@ export default class SearchTypeBook extends Component {
                 list.push(
                     <Col span="6" key={index}>
                     <img style={{width:'100px'}} src={item.cover} />
-                    <p className="ContentSlider-bookName"><a title={item.bookName} onClick = {this.redirectBookPage.bind(this, item.detail)}>{item.bookName}</a></p>
+                    <p className="ContentSlider-bookName"><a title={item.bookName} onClick = {this.redirectBookPage.bind(this, item['_id'])}>{item.bookName}</a></p>
                     <p className="ContentSlider-Item-author">{item.author}</p>
                     <p className='ContentSlider-Item-price'>
                         <span className="ContentSlider-Item-priceDis">￥{item.aprice}</span>
@@ -82,6 +82,10 @@ export default class SearchTypeBook extends Component {
                     </Col>
                 )
             })
+        } else {
+            list.push(
+                <p className="SearchTypeBook-mess">未搜索到相关记录</p>
+            )
         }
         return list;
     }

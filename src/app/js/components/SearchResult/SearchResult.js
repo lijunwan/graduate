@@ -27,6 +27,7 @@ export default class SearchResult extends Component {
   }
   componentDidMount() {
      this.props.bookeBoundAC.getBookList({searchKey: this.props.location.query.searchKey});
+     this.props.favoriteBoundAC.getFavorite();
   }
   componentWillReceiveProps(nextProps) {
      const data = nextProps.bookInfo.toJS().bookList.data

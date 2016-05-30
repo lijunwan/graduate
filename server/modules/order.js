@@ -142,8 +142,10 @@ Order.filterOrder = function() {
 			}
 			item.save();
 			db['bookInfo'].findById(item.bookId, function(err, book){
-				book.stocks += item.count;
-				book.save();
+				if(book) {
+					book.stocks += item.count;
+					book.save();
+				}
 			})
 		})
 		//data.save();

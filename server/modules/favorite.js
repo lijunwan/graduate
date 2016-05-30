@@ -22,17 +22,24 @@ Favorite.addFavorite = function addFavorite (req, res) {
           obj.cover = book.cover;
           obj.bookName = book.bookName;
           book.favorite.push(obj.userId);
+          var bookInfo = __pick(book,['cover', 'bookName', 'aprice']);
           book.save();
           db['favorite'].createFavorite(req, res, obj,function(favorite){
             var favoriteData = __pick(favorite,['userId','bookId','time','collectPrice']);
             db['users'].findUserById(req, res, obj.userId, function(data) {
               data.favorite.push(obj.bookId);
               data.save();
-              res.send({data: favoriteData});
+              var resultData= {};
+              resultData.bookInfo = bookInfo;
+              resultData.favorite = favoriteData; 
+              var list = [];
+              list.push(resultData);
+              res.send({data: list});
             })
           })
       })
     } else {
+      res.statusCode= 404;
       res.send({errorCode: 404060,message:'操作失败'});
     }
   })
@@ -54,7 +61,7 @@ Favorite.getFavorite = function getFavorite(req, res) {
           list.map(function(data){
             var bookItem = GR_findItem(bookList,'_id',data.favorite.bookId);
             if(bookItem) {
-              data.bookInfo = __pick(bookItem, ['cover', 'bookName', 'aprice', 'flag']);
+              data.bookInfo = __pick(bookItem, ['cover', 'bookName', 'aprice']);
             }else {
               data.bookInfo = {};
             }

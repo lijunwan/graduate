@@ -15,7 +15,7 @@ export default class  BookDetai extends Component{
     return (
       <div>
         <Row style={{marginBottom: '10px'}}>
-          <Col span="8">版次:{this.props.data.edtions}</Col>
+          <Col span="8">版次:{this.props.data.editions}</Col>
           <Col span="8">页数:{this.props.data.pages}</Col>
           <Col span="8">字数:{this.props.data.words}</Col>
         </Row>

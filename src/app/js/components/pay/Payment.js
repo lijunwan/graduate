@@ -109,7 +109,7 @@ export default class Payment extends Component {
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
-        var sumMon = JSON.parse(data).sumMon;
+        var sumMon = JSON.parse(data).sumMon.toFixed(2);
         return(
             <div className="payment">
                 <Row>

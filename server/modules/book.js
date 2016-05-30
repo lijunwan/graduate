@@ -95,7 +95,6 @@ Books.searchByType = function(req, res) {
 				} else {
 					res.statusCode = 404;
 					res.send({errorCode: 404601 , message: '目录配置未找到'})
-					console.log(value.slice(0,1),'----找不到？？')
 				}
 			})
 		}
@@ -114,7 +113,6 @@ Books.evaluationBook = function(req, res) {
 		db['bookInfo'].findById(bookId, function(error, data){
 			data.evaluation.push(evaluation);
 			data.scores = calculatedAverage(data.evaluation, 'scores');
-			console.log(data.evaluation,'????')
 			data.save();
 			db['order'].findById(orderId, function(error, order){
 				order.orderStatus = 'EVALUATIONED';
@@ -126,6 +124,7 @@ Books.evaluationBook = function(req, res) {
 }
 Books.sortBySaleNum = function(req, res) {
 	db['bookInfo'].find({}).sort({saleNumber: -1}).limit(10).exec(function(error,data){
+		console.log(data, '????');
 		res.send({data:data});
 	})
 }
