@@ -17,8 +17,9 @@ export default class  ShopCartItem extends Component {
     this.setState({
       count: this.state.count + 1,
     });
+    console.log('bookId',this.props.data);
     const obj = {
-      bookId: this.props.data.bookId,
+      bookId: this.props.data.shopCartInfo.bookId,
       count: this.state.count + 1,
     }
     this.props.clientBoundAC.updateShopCart(obj);

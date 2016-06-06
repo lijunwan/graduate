@@ -109,7 +109,7 @@ export default class Payment extends Component {
     }
     render() {
         var data = localStorage.getItem("confirmOrder");
-        var sumMon = JSON.parse(data).sumMon.toFixed(2);
+        var sumMon = JSON.parse(data).sumMon;
         return(
             <div className="payment">
                 <Row>
@@ -151,7 +151,7 @@ class OrderTable extends Component {
         if(data) {
             var orderInfo = JSON.parse(data).bookInfo;
             orderInfo.map((item)=>{
-                const money = item.bookInfo.aprice * item.shopCartInfo.count; 
+                const money = (item.bookInfo.aprice * item.shopCartInfo.count).toFixed(2); 
                 list.push(
                     <tr>
                         <td className="OrderTable-bookInfo" style={{width: '300px'}}><img className="pay-img" src={item.bookInfo.cover}/>{item.bookInfo.bookName}</td>

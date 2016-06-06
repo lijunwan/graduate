@@ -16,7 +16,10 @@ export default class OrderDetail extends Component {
     if(orderInfo) {
       const statusConfig = {
         'UNPAY': 0,
-        'UNSEND': 1
+        'UNSEND': 1,
+        'UNCONFIRM': 2,
+        'UNEVALUATION': 3,
+        'SUCCESS': 4,
       }
       const payStatusConfig = {
   			'UNPAY': '未支付',
@@ -28,7 +31,7 @@ export default class OrderDetail extends Component {
             <SearchBar {...this.props}/>
           </div>
           <div>
-            您的位置：
+            您的位置：我的订单／订单详情
           </div>
           <div style={{margin: '30px 0'}}>
             <SimpleStep stepIndex={statusConfig[orderInfo.orderStatus]} />

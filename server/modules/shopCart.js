@@ -75,6 +75,7 @@ ShopCart.getShopCartInfo = function getShopCartInfo(req, res) {
 }
 ShopCart.updateShopCart = function updateShopCart(req, res) {
 	var obj = __pick(req.query, ['bookId','count']);
+	console.log(obj.bookId, '????')
 	if(obj.bookId && obj.count) {
 		obj.userId = req.cookies.bookstore.id;
 		db['shopCart'].findOne({bookId: obj.bookId, userId: obj.userId}, function(err, shopCart){

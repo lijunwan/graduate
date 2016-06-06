@@ -87,6 +87,7 @@ export default class Order extends Component {
 						<Option value="UNSEND">待发货</Option>
 						<Option value="UNCONFIRM">未确认收货</Option>
 						<Option value="UNEVALUATION">未评价</Option>
+						<Option value="SUCCESS">交易完成</Option>
 						<Option value="CLOSED">已关闭</Option>
 						</Select>
 					</Col>
@@ -237,8 +238,9 @@ class TableRow extends Component {
 			'UNPAY': '未支付',
 			'UNSEND':'买家已支付等待卖家发货',
 			'UNEVALUATION': '已收货',
-			'EVALUATIONED': '已评价,交易完成',
+			'SUCCESS': '已评价,交易完成',
 			'CLOSED': '交易已关闭',
+			'UNCONFIRM': '未收货',
 		}
 		const item = this.props.item;
 		console.log('交易时间', item.time)
