@@ -47,7 +47,7 @@ Order.createOrder = function createOrder(req, res) {
 				db['shopCart'].where('_id').in(shopCartId).remove({}).exec(function(error,shopCart){
 					res.send({data: data})
 				})
-				
+
 			})
 		})
 	})
@@ -109,11 +109,21 @@ Order.delOrder = function(req, res) {
 		});
 		user.payOrder = newOrder;
 		user.save();
-		db['order'].findItemsByList(req, res, newOrder,function(orderList){
-			res.send({
-				data: orderList,
+		if(req.query.orderType === 'CLOSED') {
+			db['order'].findByIdAndRemove(req.query.orderId, function(error, data){
+				db['order'].findItemsByList(req, res, newOrder,function(orderList){
+					res.send({
+						data: orderList,
+					})
+				})
 			})
-		})
+		} else {
+			db['order'].findItemsByList(req, res, newOrder,function(orderList){
+				res.send({
+					data: orderList,
+				})
+			})
+		}
 	})
 }
 Order.confirmReceipt = function(req, res) {

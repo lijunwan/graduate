@@ -20,15 +20,30 @@ export default class Order extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		const data = nextProps.order.toJS().orderList.data
+		const data = nextProps.order.toJS().orderList.data;
+		const actData = this.filterData(data, this.state.orderStatus);
 		this.setState({
-			currentData: this.getCurentData(data,1,this.state.pageSize),
+			currentData: this.getCurentData(actData,1,this.state.pageSize),
 			originalData: data ,
-			actData: data,
+			actData: actData,
 		})
 	}
 	componentWillMount() {
 		this.props.orderBoundAC.getOrder();
+	}
+	filterData(data, key) {
+		var list = [];
+		if(key != 'ALL'){
+			data.map((item)=>{
+				if(item.orderStatus == key) {
+					list.push(item)
+				}
+			})
+			return list;
+		} else {
+			return data;
+		}
+
 	}
 	getCurentData(data, current, pageSize) {
 		const start = (current-1) * pageSize;
@@ -149,8 +164,8 @@ class TableRow extends Component {
 			confiremModal: true,
 		})
 	}
-	delOrder(orderId){
-		this.props.orderBoundAC.delOrder({orderId: orderId});
+	delOrder(orderId, orderType){
+		this.props.orderBoundAC.delOrder({orderId: orderId, orderType: orderType});
 	}
 	confirmhandleOk(orderId){
 		this.props.orderBoundAC.confirmReceipt({orderId: orderId})
@@ -168,8 +183,8 @@ class TableRow extends Component {
 			delInfoModal: false,
 		})
 	}
-	handleOk(orderId){
-		this.delOrder(orderId);
+	handleOk(item){
+		this.delOrder(item['_id'], item.orderStatus);
 		this.setState({
 			delInfoModal: false,
 		})
@@ -238,7 +253,7 @@ class TableRow extends Component {
 			'UNPAY': '未支付',
 			'UNSEND':'买家已支付等待卖家发货',
 			'UNEVALUATION': '已收货',
-			'SUCCESS': '已评价,交易完成',
+			'EVALUATIONED': '已评价,交易完成',
 			'CLOSED': '交易已关闭',
 			'UNCONFIRM': '未收货',
 		}
@@ -257,7 +272,7 @@ class TableRow extends Component {
 					{this.createOperation(item.orderStatus, item)}
 				</Row>
 				<Modal title="信息提示框" visible={this.state.delInfoModal}
-				  onOk={this.handleOk.bind(this,item['_id'])} onCancel={this.handleCancel.bind(this)}>
+				  onOk={this.handleOk.bind(this,item)} onCancel={this.handleCancel.bind(this)}>
 				  <p>是否删除该订单</p>
 				</Modal>
 				<Modal title="信息提示框" visible={this.state.confiremModal}
