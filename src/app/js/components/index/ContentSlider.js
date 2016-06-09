@@ -23,7 +23,7 @@ export default class  ContentSlider extends Component{
                             <p className="ContentSlider-bookName"><a title={item.bookName} onClick = {this.redirectBookPage.bind(this, item['_id'])}>{item.bookName}</a></p>
                             <p className="ContentSlider-Item-author">{item.author}</p>
                             <p className='ContentSlider-Item-price'>
-                                <span className="ContentSlider-Item-priceDis">￥{salePrice}</span>
+                                <span className="ContentSlider-Item-priceDis">￥{item.aprice}</span>
                                 <span><s>￥{item.price}</s></span>
                             </p>
                         </div>

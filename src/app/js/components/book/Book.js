@@ -177,6 +177,8 @@ export default class  Book extends Component{
         const favoriteText = this.state.isFavorite ? '已收藏' : '收藏商品';
         if(bookInfo.data) {
             const money = this.modifyMoney(bookInfo.data.price);
+            const picture = bookInfo.data.picture.slice(0);
+            picture.unshift(bookInfo.data.cover);
             return(
                 <div>
                   <div className="Index-header clearfix" style={{width:'1200px',margin: '50px auto'}}>
@@ -188,7 +190,7 @@ export default class  Book extends Component{
                 <div className="Book clearfix">
                     <div className="Book-infor">
                         <div className="Book-img">
-                            <ImgShow data = {bookInfo.data.picture}/>
+                            <ImgShow data = {picture}/>
                         </div>
                         <div className="Book-basic-info clearfix">
                           <div className="Info-box">
