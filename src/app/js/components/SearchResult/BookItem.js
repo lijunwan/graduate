@@ -40,7 +40,7 @@ export default class BookItem extends Component {
       message.success('您已成功添加到购物车，请前往购物车查看');
     }
     componentDidMount() {
-     
+
     }
     componentWillMount() {
       // const userInfo = this.props.client.toJS().info.data;
@@ -59,16 +59,13 @@ export default class BookItem extends Component {
     componentWillReceiveProps(nextProps) {
       const favorite = nextProps.favorite.toJS().favorite.data;
       const bookInfo = nextProps.data;
+
       if(favorite) {
         console.log(favorite, '>>')
         favorite.map((favObj)=>{
           if(favObj.favorite.bookId === bookInfo.id) {
             this.setState({
               isaddFavorite: true,
-            })
-          } else {
-            this.setState({
-              isaddFavorite: false,
             })
           }
         })

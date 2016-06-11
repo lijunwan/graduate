@@ -50,7 +50,7 @@ export default class SearchResult extends Component {
      });
      return list;
   }
-  changeSort(sortKey) {
+  changeSort(sortKey,bool=true) {//bool代表升序还是降序 true 降序
     console.log('sortKey')
     this.setState({
       sortKey: sortKey,
@@ -60,8 +60,7 @@ export default class SearchResult extends Component {
         currentData: this.getCurentData(this.props.bookInfo.toJS().bookList.data, 1, this.state.pageSize)
       })
     }else {
-      var newData = this.sortItem(this.state.bookList, sortKey)
-      console.log(newData,'???');
+      var newData = bool ? this.sortItem(this.state.bookList, sortKey) : this.sortItemAsc(this.state.bookList, sortKey)
       this.setState({
         currentData: this.getCurentData(newData, 1, this.state.pageSize)
       })
@@ -69,11 +68,15 @@ export default class SearchResult extends Component {
   }
   sortItem(list, key) {
     let result = list.sort(function(a, b){
-        console.log(a[key],b[key], '???')
         return  b[key] - a[key];
     });
-    console.log('list', result);
     return list;
+  }
+  sortItemAsc(list, key) {
+      let result = list.sort(function(a, b){
+          return  a[key]-b[key];
+      });
+      return list;
   }
   createSortItem() {
     var sortKeyConfig = {
@@ -86,13 +89,19 @@ export default class SearchResult extends Component {
     var sortKeyList = __keys(sortKeyConfig);
     const list = [];
     sortKeyList.map((sortKey)=>{
-      let keyClass = this.state.sortKey == sortKey ? 'sortKey-active' : 'sortKey'
+      let keyClass = this.state.sortKey == sortKey ? 'sortKey-active' : 'sortKey';
+      if(sortKey === 'aprice') {
       list.push(
-        <li><a className={keyClass} onClick={this.changeSort.bind(this, sortKey)}>{sortKeyConfig[sortKey]}</a></li>
+        <li><a className={keyClass}>{sortKeyConfig[sortKey]}</a><i className="fa fa-long-arrow-up" onClick={this.changeSort.bind(this,sortKey)}></i> <i className="fa fa-long-arrow-down" onClick={this.changeSort.bind(this,sortKey,false)}></i></li>
       )
-    })
-    return list;
-  }
+  } else {
+          list.push(
+            <li><a className={keyClass} onClick={this.changeSort.bind(this, sortKey)}>{sortKeyConfig[sortKey]}</a></li>
+          )
+    }
+})
+return list;
+}
   render() {
       console.log('======!!!',this.state.currentData)
       if(this.props.bookInfo.toJS().bookList.data){
